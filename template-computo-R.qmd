@@ -520,7 +520,7 @@ In this section, we study  the efficiency of GeomFPOP using simulations of multi
 
 *Overview of our simulations.* First, as a quality control we made sure that the output of PELT and GeomFPOP were identical on a number of simulated profiles. Second, we studied cases where the PELT approach is not efficient, that is when the data has no or few changes relative to $n$. Indeed, it was shown in @Killick and @Maidstone that the run time of PELT is close to $\mathcal{O}(n^2)$ in such cases. So we considered simulations of multivariate time series without change (only one segment). By these simulations we evaluated the pruning efficiency of GeomFPOP (using S and R types) for  dimension $2\le p\le 10$ (see @fig-Figure5 in @sec-NC). For small dimensions ($2 \le p \le 4$)  we also evaluated  the run time of GeomFPOP and  PELT and compare them (see @fig-Figure6 in  @sec-TCsmall).  In addition, we considered  another approximation of the $Z^i_t$ where we applied our $\cap_{R}$ and $\setminus_R$ operators only for a randomly selected subset of the past and future balls. In practice, this strategy turned out to be faster computationally than the full/original GeomFPOP and PELT (see @fig-Figure7 in @sec-GeomFPOP_random). For this strategy we also generated time series of a fixed size ($10^6$ data points) and varying number of segments and evaluated how the run time vary with the number of segments for small dimensions ($2 \le p \le 4$). Our empirical results confirmed that the GeomFPOP (R-type: $\mathtt{random/random}$) approach is computationally comparable to PELT when the number of changes is large (see @fig-Figure9 in @sec-Run_time_segment_nb).
 
-## The Number of change point Candidates Stored Over Time {#sec-NC}
+## The Number of Change Point Candidates stored over Time {#sec-NC}
 
 We evaluate the functional pruning efficiency of the GeomFPOP method using simulations with $10^4$ data points (without change, i.e. i.i.d $\mathcal{N}_p(0, I_p)$). For such signals, PELT typically does not pruned (e.g. for $t=10^4$, $p=2$ it stores on average $t$ candidates).
 
@@ -549,7 +549,7 @@ Run times were limited to three minutes and were recorded for simulations (witho
 Run time of GeomFROP (S and R types) and PELT using multivariate time series without change points. The maximum run time of the algorithms is 3 minutes. Averaged over $100$ data sets.
 :::
 
-## Empirical Time Complexity of a randomized GeomFPOP {#sec-GeomFPOP_random}
+## Empirical Time Complexity of a Randomized GeomFPOP {#sec-GeomFPOP_random}
 
 R-type GeomFPOP is designed in such a way that at each iteration we need to consider all past and future spheres of change $i$. In practice, it is often sufficient to consider just a few of them to get an empty set. Having this in mind, we propose a further approximation of the $Z^i_t$ where we apply our $\cap_{R}$ and $\setminus_R$ operators only for a randomly selected subset of the past and future sets. In detail, we propose to redefine the output of the $\mathtt{select}()$ function in Algorithm 1 on any sets $\mathcal{P}^i$ and $\mathcal{F}^i(t)$ as:
 
@@ -575,7 +575,7 @@ Although the $\mathtt{(random/random)}$ approach reduces the quality of pruning 
 Run time of the $\mathtt{(random/random)}$ approach of { GeomFPOP} (R-type) and PELT using p-variate time series without change points ($p=2,\dots, 10,100$). The maximum run time of the algorithms is 3 minutes. Averaged over $100$ data sets.
 :::
 
-## Empirical complexity of the algorithm as a function of $p$ {#sec-Run_time_p}
+## Empirical Complexity of the Algorithm as a Function of $p$ {#sec-Run_time_p}
 
 We also evaluate the slope coefficient $\alpha$ of the run time curve of GeomFPOP with random sampling of the past and future candidates for all considered dimensions. In @fig-Figure8 we can see that already for $p\ge 7$ $\alpha$ is close to $2$.
 
@@ -586,7 +586,7 @@ We also evaluate the slope coefficient $\alpha$ of the run time curve of GeomFPO
 Run time dependence of $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) on dimension $p$.
 :::
 
-## Run time as a function of the number of segments {#sec-Run_time_segment_nb}
+## Run Time as a Function of the Number of Segments {#sec-Run_time_segment_nb}
 
 For small dimensions ($2\le p \le 4$) we also generated time series with $10^6$ data points with increasing number of segments. We have considered the following number of segments: $(1,2,5) \times 10^i$( $i=0,\dots,3$) and $10^4$. The mean was equal to $1$ for even segments,  and $0$ for odd segments. In @fig-Figure9 we can see the run time dependence of the $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) and PELT on the number of segments for this type of time series. Interestingly, the run time of GeomFPOP $\mathtt{(random/random)}$ is comparable to PELT even when the number of segment is large. For smaller number of segments (as already observed) GeomFPOP $\mathtt{(random/random)}$ is an order of magnitude faster.
 
