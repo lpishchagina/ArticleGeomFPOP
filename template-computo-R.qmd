@@ -1,36 +1,25 @@
 ---
-title: "Geometric-Based Pruning Rules For Change Point Detection in Multiple Independent Time Series"
+title: "Geometric-Based Pruning Rules for Change Point Detection in Multiple Independent Time Series"
 author:
   - name: Liudmila Pishchagina
     corresponding: true
     email: liudmila.pishchagina@univ-evry.fr
     url: https://github.com/lpishchagina
-    orcid: 0000-0000-0000-0000
     affiliations:
-      - name: UEVE
-        department: LaMME
-        url: http://www.math-evry.cnrs.fr/
+      - name: Université Paris-Saclay, CNRS, Univ Evry, LaMME, France
   - name: Guillem Rigaill
-    url: https://johndoe.someplace.themoon.org
-    orcid: 0000-0000-0000-0000
     affiliations:
-      - name: INRAE, UEVE
-        department: 
-        url: 
+      - name: Université Paris-Saclay, CNRS, Univ Evry, LaMME, INRAE, IPS2, France
   - name: Vincent Runge
     url: https://johndoe.someplace.themoon.org
-    orcid: 0000-0000-0000-0000
     affiliations:
-      - name: UEVE
-        department: LaMME
-        url: http://www.math-evry.cnrs.fr/
-        
-date: 2023-05-22
+      - name: Université Paris-Saclay, CNRS, Univ Evry, LaMME, France
+date: 2023-05-23
 date-modified: last-modified
 
 abstract: >+
  We consider the problem of detecting multiple changes in multiple independent time series. It can be expressed as finding the segmentation that minimizes a given cost function. We focus on dynamic programming algorithms that solve this minimization problem exactly. When the number of changes is proportional to data length, an inequality-based pruning rule encoded in the PELT algorithm leads to a linear time complexity. Another type of pruning, called functional pruning, gives a close-to-linear time complexity whatever the number of changes, but only for a univariate cost function. We propose a few extensions of functional pruning for multiple independent time series based on the use of simple geometric shapes (balls and hyperrectangles). We focus on the Gaussian case, but some of our rules can be extended to the exponential family. In a simulation study, we compare the computational efficiency of different geometric-based pruning rules and show that for small dimensions (2, 3, 4) some of them ran significantly faster than inequality-based approaches in particular when the underlying number of changes is small compared to the data length.
-keywords: [Multiple change point detection, dynamic programming, functional pruning, computational geometry]
+keywords: [multiple change point detection, dynamic programming, functional pruning, computational geometry]
 citation:
   type: article-journal
   container-title: "Computo"
@@ -48,196 +37,216 @@ format:
   computo-pdf: default
 ---
 
-# Introduction
+# Introduction {.unnumbered}
 
-A National Research Council report (@NRCreport2013) has identified change point detection as one of the "inferential giants" in massive data analysis. Detecting change points, either a posteriori or online, is important in areas as diverse as bioinformatics (@olshen2004circular, @Picard2005), econometrics (@bai2003computation, @Aue_monitoring), medicine (@Bosc2003, @Staudacher2005ANM, @Malladi2013OnlineBC), climate and oceanography (@Reeves2007, @DucrRobitaille2003, @Killick,  @Naoki2010), finance (@Andreou, @Fryzlewicz_2014), autonomous driving (@galceran2017multipolicy), entertainment (@Rybach, @Radke, @Davis2006), computer vision (@ranganathan2012pliss) or neuroscience (@jewell2020fast). The most common and prototypical change point detection problem is that of detecting changes in mean of a univariate Gaussian signal and a large number of approaches have been proposed to this problem (see among many others @Yao, @Lebarbier2005, @harchaoui2010multiple, @Frick2013, @fryzlewicz2020detecting and the reviews @truong2020selective, @aminikhanghahi2017survey).
+A National Research Council report (@NRCreport2013) has identified change point detection as one of the "inferential giants" in massive data analysis. Detecting change points, either a posteriori or online, is important in areas as diverse as bioinformatics (@olshen2004circular, @Picard2005), econometrics (@bai2003computation, @Aue_monitoring), medicine (@Bosc2003, @Staudacher2005ANM, @Malladi2013OnlineBC), climate and oceanography (@Reeves2007, @DucrRobitaille2003, @Killick,  @Naoki2010), finance (@Andreou, @Fryzlewicz_2014), autonomous driving (@galceran2017multipolicy), entertainment (@Rybach, @Radke, @Davis2006), computer vision (@ranganathan2012pliss) or neuroscience (@jewell2020fast). The most common and prototypical change point detection problem is that of detecting changes in mean of a univariate Gaussian signal and a large number of approaches have been proposed to this problem (see among many others: @Yao, @Lebarbier2005, @harchaoui2010multiple, @Frick2013, @fryzlewicz2020detecting and the reviews: @truong2020selective, @aminikhanghahi2017survey).
 
-*Penalized cost methods.* Some of these methods optimize a penalized cost function (see for example @Lebarbier2005, @Auger, @jackson2005algorithm, @Killick, @Rigaill2010, @Maidstone). These methods have good statistical guarantees (@Yao, @lavielle2000least, @Lebarbier2005) and have shown good performances in benchmark simulations (@fearnhead2018detecting) and on many applications ( @lai2005comparative, @liehrmann2021increased). From a computational perspective, these methods rely on dynamic programming algorithms that are at worst quadratic in the size of the data, $n$. However using inequality-based and functional pruning techniques (@Rigaill2010, @Killick, @Maidstone) the average run times are typically much smaller allowing to process very large profiles ($n> 10^5$) in a matter of seconds or minutes. In detail, for one time series:
+*Penalized cost methods.* Some of these methods optimize a penalized cost function (see for example @Lebarbier2005, @Auger, @jackson2005algorithm, @Killick, @Rigaill2010, @Maidstone). These methods have good statistical guarantees (@Yao, @lavielle2000least, @Lebarbier2005) and have shown good performances in benchmark simulation (@fearnhead2018detecting) and on many applications (@lai2005comparative, @liehrmann2021increased). From a computational perspective, these methods rely on dynamic programming algorithms that are at worst quadratic in the size of the data, $n$. However using inequality-based and functional pruning techniques (@Rigaill2010, @Killick, @Maidstone) the average run times are typically much smaller allowing to process very large profiles ($n> 10^5$) in a matter of seconds or minutes. In detail, for one time series:
 
-- if the number of change points is proportional to $n$ both PELT (inequality-based pruning) and FPOP (functional pruning) (@Killick, @Maidstone) are on average linear.
+- if the number of change points is proportional to $n$ both PELT (inequality-based pruning) and FPOP (functional pruning) are on average linear (@Killick, @Maidstone);
 - if the number of change points is fixed, FPOP is quasi-linear (on simulations) while PELT is quadratic (@Maidstone).
 
 *Multivariate extensions.* In this paper, we focus on the multivariate problem assuming the cost function or log-likelihood of a segment (denoted $\mathcal C$) can be decomposed as a sum over all $p$ dimensions. Informally that is
+
 $$
-\mathcal C(segment) = \sum_{k=1}^{p} \mathcal C(segment, \hbox{ time series } k)\,.
+\mathcal C(segment) = \sum_{k = 1}^p \mathcal C(segment, \hbox{ time series } k)\,.
 $$
+
 In this context, the PELT algorithm can easily be extended for multiple time series. However, as for the univariate case, it will be algorithmically efficient only if the number of change points is large compared to $n$. In this paper, we study the extension of functional pruning techniques (and more specifically FPOP) to the multivariate case.
 
-At each iteration, FPOP updates the set of parameter values for which a change position $\tau$ is optimal. As soon as this set is empty the change is pruned. For univariate time series, this set is a union of intervals in $\mathbb{R}$. For multi-parametric models, this set is equal to the intersection and difference of convex sets in $\mathbb{R}^p$ (@runge2020finite). It is typically non-convex, hard to update, and deciding whether it is empty or not is not straightforward.
+At each iteration, FPOP updates the set of parameter values for which a change position $\tau$ is optimal. As soon as this set is empty the change is pruned. For univariate time series, this set is a union of intervals in $\mathbb R$. For multi-parametric models, this set is equal to the intersection and difference of convex sets in $\mathbb R^p$ (@runge2020finite). It is typically non-convex, hard to update, and deciding whether it is empty or not is not straightforward.
 
 In this work, we present a new algorithm, called Geometric Functional Pruning Optimal Partitioning (GeomFPOP). The idea of our method is to approximate the sets that are updated at each iteration of FPOP using simpler geometric shapes. Their simplicity of description and simple updating allow for a quick emptiness test.
 
-The paper has the following structure. In @sec-changesMulti we introduce the penalized optimization problem for segmented multivariate time series. We then review the existing pruned dynamic programming methods for solving this problem. We define the geometric problem that occurs when using functional pruning. The new method, called GeomFPOP, is described in Section @sec-GeomFPOP and based on approximating intersection and exclusion set operators. In @sec-approximation we introduce two approximation types (sphere-like and rectangle-like) and define the approximation operators for each of them. We then compare in @sec-study the empirical efficiency of GeomFPOP with PELT on simulated data. 
+The paper has the following structure. In @sec-changesMulti we introduce the penalized optimization problem for segmented multivariate time series. We then review the existing pruned dynamic programming methods for solving this problem. We define the geometric problem that occurs when using functional pruning. The new method, called GeomFPOP, is described in @sec-GeomFPOP and based on approximating intersection and exclusion set operators. In @sec-approximation we introduce two approximation types (sphere-like and rectangle-like) and define the approximation operators for each of them. We then compare in @sec-study the empirical efficiency of GeomFPOP with PELT on simulated data. 
 
 
 # Functional Pruning for Multiple Time Series{#sec-changesMulti}
 
 ## Model and Cost{#sec-model}
 
-We consider the problem of change point detection in multiple time series of length $n$ and dimension $p$. Our aim is to partition time into segments, such that in each segment the parameter associated to each time series is constant. For a time series $y$ we write $y = y_{1:n}=(y_1,\dots, y_n) \in(\mathbb{R}^p)^n$ with $y_i^k$ the $k$-th component of the $p$-dimensional point $y_i\in\mathbb{R}^p$ in position $i$ in vector $y_{1:n}$. We also use the notation $y _{i:j} = (y_i,\dots, y_j)$ to denote points from index $i$ to $j$. If we assume that there are $M$ change points in a time series, this corresponds to time series splits into $M+1$ distinct segments. Each segment $m \in \{1,\dots, M+1\}$ is generated by independent random variables from a multivariate distribution with  the segment-specific parameter $\theta_m = (\theta_m^1,\dots, \theta_m^p)  \in \mathbb{R}^p$. A segmentation with $M$ change points is defined by the vector of integers $\tau =(\tau_0 = 0, \tau_1,\dots,\tau_M,\tau_{M+1}=n)$. Segments are given by the sets of indices $\{\tau_i+1,\dots, \tau_{i+1}\}$ with $i$ in $\{0,1,\ldots,M\}$. 
+We consider the problem of change point detection in multiple time series of length $n$ and dimension $p$. Our aim is to partition time into segments, such that in each segment the parameter associated to each time series is constant. For a time series $y$ we write $y = y_{1:n} = (y_1,\dots, y_n) \in(\mathbb R^p)^n$ with $y_i^k$ the $k$-th component of the $p$-dimensional point $y_i\in\mathbb R^p$ in position $i$ in vector $y_{1:n}$. We also use the notation $y _{i:j} = (y_i,\dots, y_j)$ to denote points from index $i$ to $j$. If we assume that there are $M$ change points in a time series, this corresponds to time series splits into $M+1$ distinct segments. Each segment $m \in \{1,\dots, M+1\}$ is generated by independent random variables from a multivariate distribution with  the segment-specific parameter $\theta_m = (\theta_m^1,\dots, \theta_m^p)  \in \mathbb R^p$. A segmentation with $M$ change points is defined by the vector of integers $\tau =(\tau_0 = 0, \tau_1,\dots,\tau_M,\tau_{M+1}=n)$. Segments are given by the sets of indices $\{\tau_i+1,\dots, \tau_{i+1}\}$ with $i$ in $\{0,1,\ldots,M\}$. 
 
 We define the set $S_t$ of all possible change point locations related to the segmentation of data points between positions $1$ to $t$ as
+
 $$
-S_t = \{\tau = (\tau_0,\tau_1,\dots,\tau_M, \tau_{M+1}) \in \mathbb{N}^{M+2} | 0=\tau_{0} <\tau_1 < \dots < \tau_M < \tau_{M+1}=t\}\,.
+S_t = \{\tau = (\tau_0,\tau_1,\dots,\tau_M, \tau_{M+1}) \in \mathbb N^{M+2} | 0=\tau_{0} <\tau_1 < \dots < \tau_M < \tau_{M+1}=t\}\,.
 $$
+
 Usually the number of changes $M$ is unknown, and has to be estimated. Many approaches to detecting change points define a cost function for segmentation using the opposite log-likelihood (times two). Here the opposite log-likelihood (times two) linked to data point $y_j$ is given by function $\theta \mapsto \Omega(\theta,y_j)$, where $\theta = (\theta^1,\dots, \theta^p) \in \mathbb R^p$. Over a segment from $i$ to $t$, the parameter remains the same and the segment cost $\mathcal C$ is given by
+
 $$
-		\begin{gathered}
-			\mathcal C(y_{i:t}) = \min_{\theta \in \mathbb{R}^p} \sum_{j=i}^{t}\Omega(\theta, y_j) = \min_{\theta \in \mathbb{R}^p} \sum_{j=i}^{t} \left(\sum_{k=1}^{p} \omega(\theta^k, y_j^k)\right)\,,
-		\end{gathered}
-$${#eq-Cy_it}	
+\mathcal C(y_{i:t}) = \min_{\theta \in \mathbb{R}^p} \sum_{j=i}^{t}\Omega(\theta, y_j) = \min_{\theta \in \mathbb{R}^p} \sum_{j=i}^{t} \left(\sum_{k=1}^{p} \omega(\theta^k, y_j^k)\right)\,,
+$$ {#eq-Cy_it}	
+
 with $\omega$ the atomic likelihood function associated with $\Omega$ for each univariate time series. This decomposition is made possible by the independence hypothesis between dimensions. Notice that function $\omega$ could have been dimension-dependent with a mixture of different distributions (Gauss, Poisson, negative binomial, etc.). In our study, we consider the same data model for all dimensions.
 
 We consider a penalized version of the cost by a penalty $\beta > 0$, because without a penalty we would end up with $n$ segments. Summing over all segments we end up with a penalty that is linear in the number of segments. Such choice is common in the literature (@yao1988estimating, @Killick) although some other penalties have been proposed (@Zhang2007, @Lebarbier2005, @Verzelen2020). The optimal penalized cost associated with our segmentation problem is then defined by
+
 $$
 	Q_n = \min_{\tau \in S_n} \sum_{i=0}^{M} \{\mathcal C(y_{(\tau_{i}+1):\tau_{i+1}})+\beta\}\,.
-$${#eq-Q_n}
+$$ {#eq-Q_n}
+
 The optimal segmentation $\tau$ is obtained by the argminimum in @eq-Q_n.
 
 ## Functional Pruning Dynamic Programming Algorithm {#sec-UpdateRule}
+
 The idea of the Optimal Partitioning (OP) method (@jackson2005algorithm) is to search for the last change point defining the last segment in data $y_{1:t}$ at each iteration (with $Q_0 = 0$), which leads to the recursion: 
+
 $$
-Q_{t} = \min_{i\in\{0,\dots,t-1\}}\Big(Q_i + \mathcal C(y_{({i+1}:t})+ \beta \Big)\,.
-$${#eq-OP}
+Q_{t} = \min_{i\in\{0,\dots,t-1\}}\Big(Q_i + \mathcal C(y_{({i+1}:t}) + \beta \Big)\,.
+$$ 
 
 *Functional description.* In the FPOP method we introduce a last segment parameter $\theta = (\theta^1,\dots, \theta^p) \in \mathbb R^p$ and define a functional cost $\theta \mapsto Q_t(\theta)$ depending on $\theta$, that takes the following form:
+
 $$
 Q_t(\theta) = \min_{\tau \in S_t} \Big( \sum_{i=0}^{M-1} \{\mathcal C(y_{(\tau_{i}+1):\tau_{i+1}})+\beta\} + \sum_{j=\tau_{M}+1}^{t}\Omega(\theta, y_j) + \beta \Big)\,.
 $$
+
 As explained in @Maidstone, we can compute the function $Q_{t+1}(\cdot)$ based only on the knowledge of $Q_{t}(\cdot)$ as for each integer $t$ from $0$ to $n-1$. We have:
+
 $$
-	 	Q_{t+1}(\theta) = \min \{Q_t(\theta),m_t +\beta \} + \Omega(\theta, y_{t+1})\,,	
-$${#eq-Q_tpl1}
-for all $\theta \in \mathbb{R}^p$, with $m_t = \min_\theta Q_t(\theta)$ and the initialization $Q_0(\theta) = 0$, so that $Q_1(\theta) = \Omega(\theta,y_1)$.
-By looking closely at this relation, we see that each function $Q_t$ is a piece-wise continuous function consisting of at most $t$ different functions  on $\mathbb R^p$, denoted  $q^i_t$:
+Q_{t+1}(\theta) = \min \{Q_t(\theta),m_t +\beta \} + \Omega(\theta, y_{t+1})\,,	
+$$ {#eq-Q_tpl1}
+
+for all $\theta \in \mathbb R^p$, with $m_t = \min_\theta Q_t(\theta)$ and the initialization $Q_0(\theta) = 0$, so that $Q_1(\theta) = \Omega(\theta,y_1)$. By looking closely at this relation, we see that each function $Q_t$ is a piece-wise continuous function consisting of at most $t$ different functions on $\mathbb R^p$, denoted  $q^i_t$:
+
 $$
-	\begin{gathered}
-		Q_t(\theta) = \min_{i \in \{1,\dots,t \}} \left\{q_t^i(\theta)\right\}\,,	
-	\end{gathered}
-$${#eq-Qq_it}
+Q_t(\theta) = \min_{i \in \{1,\dots,t \}} \left\{q_t^i(\theta)\right\}\,,	
+$$
+
 where the $q_t^i$ functions are given by explicit formulas: 
+
 $$
-	\begin{gathered}
-		q_t^i(\theta) = m_{i-1} + \beta + \sum_{j = i}^{t} \Omega(\theta,y_j)\,,\quad\theta \in \mathbb R^p\,,\quad i = 1,\dots,t.	
-	\end{gathered}
-$${#eq-q_it}
+q_t^i(\theta) = m_{i-1} + \beta + \sum_{j = i}^{t} \Omega(\theta,y_j)\,,\quad\theta \in \mathbb R^p\,,\quad i = 1,\dots,t.	
+$$
+
 and
+
 $$
 	m_{i-1} =  \min_{\theta \in \mathbb R^p}Q_{i-1}(\theta) = \min_{j \in \{ 1,\dots,i-1\}}\left\{ \min_{\theta \in \mathbb R^p}q_{i-1}^j(\theta) \right\}.
 $${#eq-m_im1}
+
 It is important to notice that each $q_t^i$ function is associated with the last change point $i-1$ and the last segment is given by indices from $i$ to $t$. Consequently, the last change point at step $t$ in $y_{1:t}$ is denoted as $\hat\tau_t$ $( \hat \tau_t \le t-1)$ and is given by
+
 $$
-		\begin{gathered}
-			\hat\tau_t = Arg\,min_{i \in \{1,\dots,t\}} \left\{ \min_{\theta \in \mathbb{R}^p} q_t^i(\theta)\right\}-1.
-		\end{gathered}
-$${#eq-tau_t}
+\hat\tau_t = \underset{i \in \{1,\dots,t\}}{Arg\min} \left\{ \min_{\theta \in \mathbb{R}^p} q_t^i(\theta)\right\}-1.
+$$
+
 
 *Backtracking.* Knowing the values of $\hat{\tau}_t$ for all $t=1, \dots, n$, we can always restore the optimal segmentation at time $n$ for $y_{1:n}$. This procedure is called backtracking. The vector $cp(n)$ of ordered change points in the optimal segmentation of $y_{1:n}$ is determined recursively by the relation $cp(n) = (cp(\hat \tau_n), \hat \tau_n)$ with stopping rule $cp(0)=\emptyset$.	
 
-*Parameter space description.* Applying functional pruning requires a precise analysis of the recursion {eq-Q_tpl1} that depends on the property of the cost function~$\Omega$. In what follows we consider three choices based on a Gaussian, Poisson, and negative binomial distribution assumption on the data. The exact formulas of these cost functions are given in @sec-logLikeExamples.
+*Parameter space description.* Applying functional pruning requires a precise analysis of the recursion {eq-Q_tpl1} that depends on the property of the cost function~$\Omega$. In what follows we consider three choices based on a Gaussian, Poisson, and negative binomial distribution assumption on the data. The exact formulas of these cost functions are given in Appendix A.
 
 We denote the set of parameter values for which the function $q^i_t(\cdot)$ is optimal as:
-$$
-		\begin{gathered}
-	      Z_t^i = \left\{ \theta \in \mathbb R^p|Q_t(\theta) = q_{t}^i(\theta) \right\}, \quad i = 1,\dots,t.
-		\end{gathered}
-$${#eq-defZ}
 
-The key idea behind functional pruning is that the $Z_t^i$ are nested ($Z_{t+1}^i \subset Z_t^i$) thus as soon as we can prove the emptiness of one set $Z_t^i$, we delete its associated $q_t^i$ function and do not have to consider its minimum anymore at any further iteration (proof in next @sec-geometry). In dimension $p = 1$ this is reasonably easy. In this case, the sets $Z^i_t$ ($i=1,\dots, t$) are unions of intervals and an efficient functional pruning rule is possible by updating a list of these intervals for $Q_{t}$. This approach is implemented in FPOP (@Maidstone).
+$$
+Z_t^i = \left\{ \theta \in \mathbb R^p|Q_t(\theta) = q_{t}^i(\theta) \right\}, \quad i = 1,\dots,t.
+$$
+
+The key idea behind functional pruning is that the $Z_t^i$ are nested ($Z_{t+1}^i \subset Z_t^i$) thus as soon as we can prove the emptiness of one set $Z_t^i$, we delete its associated $q_t^i$ function and do not have to consider its minimum anymore at any further iteration (proof in @sec-geometry). In dimension $p = 1$ this is reasonably easy. In this case, the sets $Z^i_t$ ($i=1,\dots, t$) are unions of intervals and an efficient functional pruning rule is possible by updating a list of these intervals for $Q_t$. This approach is implemented in FPOP (@Maidstone).
  
 In dimension $p \ge 2$ it is not so easy anymore to keep track of the emptiness of the sets $Z^i_t$. We illustrate the dynamics of the $Z^i_t$ sets in @fig-Figure1 in the bi-variate Gaussian case. Each color is associated with a set $Z_t^i$ (corresponding to a possible change at $i-1$) for $t$ equal $1$ to $5$. This plot shows that sets $Z_t^i$ can be non-convex.
 
-::: {#fig-Figure1}  
-![](images/Figure 1 Z sets over time set_seed_617.png)
+::: {#fig-Figure1} 
 
-The sets $Z^i_t$ over time for the bi-variate independent Gaussian model on time series without change $y= \left \{\{0,29; 1,86; 0,9; -1,26; 1,22\},\{ 1,93;  -0,02;  -2,51; 0,91;  1,11\}\right\}$. 
-From left to right we represent at time $t=1, 2, 3, 4,$ and $5$ the parameter space $(\theta^1, \theta^2).$ Each $Z^i_t$ is represented by a color. The change $1$ associated with  quadratics $2$ is pruned at $t = 3$. Notice that each time sequence of $Z^i_t$ with $i$ fixed is a nested sequence of sets.
+![](images/Figure 1 Z sets over time set_seed_617.png) 
+
+The sets $Z^i_t$ over time for the bi-variate independent Gaussian model on time series without change $y= \left \{\{0,29; 1,86; 0,9; -1,26; 1,22\},\{ 1,93;  -0,02;  -2,51; 0,91;  1,11\}\right\}$. From left to right we represent at time $t=1, 2, 3, 4,$ and $5$ the parameter space $(\theta^1, \theta^2).$ Each $Z^i_t$ is represented by a color. The change $1$ associated with  quadratics $2$ is pruned at $t = 3$. Notice that each time sequence of $Z^i_t$ with $i$ fixed is a nested sequence of sets.
 :::
 
-## Geometric Formulation of Functional Pruning{#sec-geometry}
+## Geometric Formulation of Functional Pruning {#sec-geometry}
 
-To build an efficient pruning strategy for dimension $p\ge2$ we need to test the emptiness of the sets $Z^i_t$ at each iteration. Note that to get $Z_t^i$ we need to compare the functional cost $q^i_t$ with any other functional cost $q^j_{t}$, $j=1,\dots, t,\, j\neq i$. This leads to the definition of the following sets.
+To build an efficient pruning strategy for dimension $p \ge 2$ we need to test the emptiness of the sets $Z^i_t$ at each iteration. Note that to get $Z_t^i$ we need to compare the functional cost $q^i_t$ with any other functional cost $q^j_{t}$, $j=1,\dots, t,\, j\neq i$. This leads to the definition of the following sets.
 
 ::: {#def-defS}
-## S-type set
-We define $S$-type set $S^i_j$ using the function $\Omega$ as 
-$$
-S_j^i = \left\{ \theta \in \mathbb{R}^p \,|\, \sum_{u=i+1}^j \Omega(\theta, y_u) \le m_{j}-m_{i}\right\}\,,\hbox{ when } i < j
-$$
-and $S_i^i = \mathbb R^p$. We denote the set of all possible S-type sets as $\mathbf{S}$.
 
-To ease some of our calculations, we now introduce some additional notations. For $\theta = (\theta^1,\dots,\theta^p) \in \mathbb{R}^p$, $1 \le i < j \le n$ we define $p$ univariate functions $\theta^k \mapsto s^k_{ij}(\theta^k)$ associated to the $k$-th time series as
+## S-type set
+
+We define $S$-type set $S^i_j$ using the function $\Omega$ as 
+
 $$
-    \begin{aligned}
-       &s^k_{ij}(\theta^k) & =&\sum_{u = i+1}^{j} \omega(\theta^k,y_u^k), \quad  k = 1,\dots,p\,.
-    \end{aligned}
+S_j^i = \left\{ \theta \in \mathbb R^p \,|\, \sum_{u=i+1}^j \Omega(\theta, y_u) \le m_{j}-m_{i}\right\}\,,\hbox{ when } i < j
+$$
+
+and $S_i^i = \mathbb R^p$. We denote the set of all possible S-type sets as $\mathbf S$.
+
+To ease some of our calculations, we now introduce some additional notations. For $\theta = (\theta^1,\dots,\theta^p) \in \mathbb R^p$, $1 \le i < j \le n$ we define $p$ univariate functions $\theta^k \mapsto s^k_{ij}(\theta^k)$ associated to the $k$-th time series as
+
+$$
+s^k_{ij}(\theta^k)  = \sum_{u = i+1}^{j} \omega(\theta^k,y_u^k), \quad  k = 1,\dots,p\,.
 $${#eq-setS}
+
 We introduce a constant $\Delta_{ij}$ and a function $\theta \mapsto s_{ij}(\theta)$:
+
 $$
-    \left\{
+\left\{
     \begin{aligned}
        \Delta_{ij} & =  \,m_j - m_{i}\,,\\
        s_{ij}(\theta) & =  \sum_{k=1}^p s^k_{ij}(\theta^k)- \Delta_{ij}\,,
     \end{aligned}
     \right.
-$${#eq-setSfunc}
+$$ {#eq-setSfunc}
+
 where $m_{i}$ and $m_j$ are defined as in @eq-m_im1. The sets $S_j^i$ for $i < j$ are also described by relation 
+
 $$
-	\begin{gathered}
-	    S_j^i = s_{ij}^{-1} (-\infty,0]\,.
-	\end{gathered}
-$${#eq-setS}
+S_j^i = s_{ij}^{-1} (-\infty,0]\,.
+$$ {#eq-setS}
 In @fig-Figure2 we present the level curves for three different parametric models given by $s_{ij}^{-1} (\{w\})$ with $w$ a real number. Each of these curves encloses an S-type set.
 :::
-::: {#fig-Figure2}  
-![](images/Figure 2 Contoure of S-type sets and cost .png)
+
+::: {#fig-Figure2}
+
+![](images/Figure 2 Contoure of S-type sets and cost .png){width=90%}
 
 Three examples of the level curves of a function $s_{ij}$ for bi-variate time series $\{x,y\}$. We use the following simulations for univariate time series : (a) $x\sim \mathcal{N}(0,1)$, $y\sim \mathcal{N}(0,1)$, (b) $x \sim \mathcal{P}(1)$, $y \sim \mathcal{P}(3)$, (c) $x\sim \mathcal{NB}(0.5,1)$, $y\sim \mathcal{NB}(0.8, 1)$.
 :::
 
-At time $t = 1,\dots, n$ we define the following sets
- associated to the last change point index $i-1$:
+At time $t = 1,\dots, n$ we define the following sets associated to the last change point index $i-1$:
  
-$\mathtt{past}\,\mathtt{set} \,\mathcal{P}^i$
+-$\mathtt{past}\,\mathtt{set} \,\mathcal P^i$
 $$
-		\begin{gathered}
-			\mathcal{P}^i =\{S_{i}^u,\, u = 1,\dots,i-1\}\,.
-		\end{gathered}
-$${#eq-setE}
-$\mathtt{future}\, \mathtt{set} \,\mathcal{F}^i(t)$ 
+\mathcal P^i =\{S_{i}^u,\, u = 1,\dots,i-1\}\,.
+$$ 
+
+-$\mathtt{future}\, \mathtt{set} \,\mathcal F^i(t)$ 
 $$
-		\begin{gathered}
-			\mathcal{F}^i(t) =\{S_{v}^i, \, v = i,\dots,t\}\,.
-		\end{gathered}
-$${#eq-setI}
+\mathcal F^i(t) =\{S_{v}^i, \, v = i,\dots,t\}\,.
+$$
+
 We denote the cardinal of a set $\mathcal{A}$ as $|\mathcal{A}|$. Using these two sets of sets, the $Z^i_t$ have the following description.
 
 :::{#prp-proposition_sets}
-At iteration $t$, the functional cost  $Q_t(\cdot)$ defines the subsets  $Z_t^i$ ($i=1,\dots, t$), each of them being the intersection of  the sets in $\mathcal{F}^i(t)$ minus the union of the sets in $\mathcal{P}^i$. 
+At iteration $t$, the functional cost  $Q_t(\cdot)$ defines the subsets  $Z_t^i$ ($i=1,\dots, t$), each of them being the intersection of  the sets in $\mathcal{F}^i(t)$ minus the union of the sets in $\mathcal P^i$. 
+
 $$
-	\begin{gathered}
-		Z_t^i = (\cap_{S\in \mathcal{F}^i(t)}S) \setminus (\cup_{S\in \mathcal{P}^i}S)\,,\quad i = 1,\dots,t.
-	\end{gathered}
+Z_t^i = (\cap_{S\in \mathcal{F}^i(t)}S) \setminus (\cup_{S\in \mathcal{P}^i}S)\,,\quad i = 1,\dots,t.
 $${#eq-setsZ}
+
 :::
+
 ::: {.proof}
-Based on the definition of the set $Z_t^i$, the proof is straightforward. Parameter value $\theta$ is in  $Z_t^i$ if and only if $q_t^i(\theta) \le q_t^u(\theta)$ for all $u \ne i$; these inequalities define the past set (when $u < i$) and the future set (when $u>i$). Notice that, in case $i = t$, $\cap_{S\in \mathcal{F}^i(t)}S = \mathbb R^p$. 
+Based on the definition of the set $Z_t^i$, the proof is straightforward. Parameter value $\theta$ is in  $Z_t^i$ if and only if $q_t^i(\theta) \le q_t^u(\theta)$ for all $u \ne i$; these inequalities define the past set (when $u < i$) and the future set (when $u>i$). Notice that, in case $i = t$, $\cap_{S\in \mathcal F^i(t)}S = \mathbb R^p$. 
 :::
+
 :::{#cor-col1}
 The sequence $\zeta^i = (Z_t^i)_{t\ge i}$ is a nested sequence of sets.
 :::
+
 Indeed, $Z_{t+1}^i$ is equal to $Z_t^i$ with an additional intersection in the future set. Based on @cor-col1, as soon as we prove that the set $Z_t^i$, is empty, we delete its associated $q_t^i$ function and, consequently, we can prune the change point $i-1$. In this context, functional and inequality-based pruning have a simple geometric interpretation.
 
-*Functional pruning geometry.* The position $i-1$ is pruned at step $t+1$, in $Q_{t+1}(\cdot),$ if the intersection set of $\cap_{S\in \mathcal{F}^i(t)}S$ is covered by the union set $\cup_{S\in \mathcal{P}^i}S$.
+*Functional pruning geometry.* The position $i-1$ is pruned at step $t+1$, in $Q_{t+1}(\cdot),$ if the intersection set of $\cap_{S\in \mathcal F^i(t)}S$ is covered by the union set $\cup_{S\in \mathcal P^i}S$.
 
-*Inequality-based pruning geometry.* The inequality-based pruning of PELT is equivalent to the geometric rule: position $i-1$ is pruned at step $t+1$ if the set $S_t^i$ is empty. In that case, the intersection  set $\cap_{S\in \mathcal{F}^i(t)}S$ is empty, and therefore $Z_t^i$ is also empty using @eq-setsZ. This shows that if a change is pruned using inequality-based pruning it is also pruned using functional pruning. For the dimension $p =1$ this claim was theoretically proved in @Maidstone.
+*Inequality-based pruning geometry.* The inequality-based pruning of PELT is equivalent to the geometric rule: position $i-1$ is pruned at step $t+1$ if the set $S_t^i$ is empty. In that case, the intersection  set $\cap_{S\in \mathcal F^i(t)}S$ is empty, and therefore $Z_t^i$ is also empty using @eq-setsZ. This shows that if a change is pruned using inequality-based pruning it is also pruned using functional pruning. For the dimension $p =1$ this claim was theoretically proved in @Maidstone.
  
 The construction of set $Z^i_t$ using @prp-proposition_sets is illustrated in @fig-Figure3 for a bi-variate independent Gaussian case: we have the intersection of three S-type sets and the subtraction of three S-type sets.
 
-:::{#fig-Figure3}  
-![](images/Figure 3 Bilding Z with 3 past and 3 future disks set_seed_21.pdf)
+:::{#fig-Figure3} 
 
-Examples of building a set $Z^i_t$ with $\lvert\mathcal{P}^i\rvert = \lvert\mathcal{F}^i(t)\rvert = 3$ for the Gaussian case in 2-D ($\mu = 0,\sigma=1$). The green disks are S-type sets of the past set $\mathcal{P}^i$. The blue disks are  S-type sets of the future set $\mathcal{F}^i(t)$.
+![](images/Figure 3 Bilding Z with 3 past and 3 future disks set_seed_21.pdf){width=60%}
+
+Examples of building a set $Z^i_t$ with $\lvert\mathcal P^i\rvert = \lvert\mathcal F^i(t)\rvert = 3$ for the Gaussian case in 2-D ($\mu = 0,\sigma=1$). The green disks are S-type sets of the past set $\mathcal P^i$. The blue disks are  S-type sets of the future set $\mathcal{F}^i(t)$.
 :::
 
 # Geometric Functional Pruning Optimal Partitioning {#sec-GeomFPOP}
@@ -246,97 +255,136 @@ Examples of building a set $Z^i_t$ with $\lvert\mathcal{P}^i\rvert = \lvert\math
 
 Rather than considering an exact representation of the $Z^i_t$, our idea is to consider a hopefully slightly larger set that is easier to update. To be specific for each $Z^i_t$ we introduce $\tilde{Z}^i_t$, called *testing set*, such that $Z^i_t\subset \tilde{Z}^i_t$. If at time $t$ $\tilde{Z}^i_t$ is empty thus is $Z^i_t$ and thus change $i-1$ can be pruned. From proposition \eqref{proposition_sets} we have that starting from $Z = \mathbb{R}^p$ the set $Z^i_t$ is obtained by successively applying two types of operations: intersection with an S-type set  $S$ $(Z\cap S)$ or subtraction of an S-type set $S$ $(Z\setminus S)$. Similarly, starting from $\tilde{Z} = \mathbb{R}^p$ we obtain $\tilde{Z}^i_t$ by successively applying approximation of these intersection and subtraction operations. Intuitively, the complexity of the resulting algorithm is a combination of the efficiency of the pruning and the easiness of updating the testing set. 
 
-*A Generic Formulation of GeomFPOP.* In what follows we will generically describe GeomFPOP, that is without specifying the precise structure of the testing set $\tilde{Z}^i_t$. We call $\mathbf{\tilde{Z}}$ the set of all possible $\tilde{Z}^i_t$ and assume the existence of two operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$. We have the following assumptions for these operators.
+*A Generic Formulation of GeomFPOP.* In what follows we will generically describe GeomFPOP, that is without specifying the precise structure of the testing set $\tilde{Z}^i_t$. We call $\widetilde{\mathbf{Z}}$ the set of all possible $\tilde{Z}^i_t$ and assume the existence of two operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$. We have the following assumptions for these operators.
 
 :::{#def-assumption1}
 The two operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$ are such that:
 
-  1. the left input is a $\tilde{Z}$-type set (that is an element of $\tilde{\mathbf{Z}}$);
+  1. the left input is a $\tilde{Z}$-type set (that is an element of $\widetilde{\mathbf{Z}}$);
   2. the right input is a $S$-type set;
   3. the output is a $\tilde{Z}$-type set;
   4. $\tilde{Z} \cap S \subset \tilde{Z} \cap_{\tilde{Z}} S$ and $\tilde{Z} \setminus S \subset \tilde{Z} \setminus_{\tilde{Z}} S$.
 :::
+
 We give a proper description of two types of testing sets and their approximation operators in @sec-approximation.
 
-At each iteration $t$ GeomFPOP will construct $\tilde{Z}^i_{t+1}$ from $\tilde{Z}^i_{t}$, $\mathcal{P}^i$ and, $\mathcal{F}^i(t)$ iteratively using the two operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$. To be specific, we define $S_j^F$ the j-th element of $\mathcal{F}^i(t)$ and $S_P^j$ the j-th element of $\mathcal{P}^i$, we use the following iteration:
+At each iteration $t$ GeomFPOP will construct $\tilde{Z}^i_{t+1}$ from $\tilde{Z}^i_{t}$, $\mathcal P^i$ and, $\mathcal F^i(t)$ iteratively using the two operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$. To be specific, we define $S_j^F$ the j-th element of $\mathcal F^i(t)$ and $S_P^j$ the j-th element of $\mathcal P^i$, we use the following iteration:
+
 $$
-    \left\{
+\left\{
  	  \begin{aligned}
        A_{0} =\tilde{Z}^i_{t} \,, & \quad A_j = A_{j-1}\,\cap_{\tilde{Z}}\, S_j^F\,, & j = 1,\dots , |\mathcal{F}^i(t)|\,,\\
         B_{0} =A_{|\mathcal{F}^i(t)|}\,, & \quad B_j = B_{j-1}\,\setminus_{\tilde{Z}} \, S_P^j\,, & j = 1,\dots , |\mathcal{P}^i| \,,\\
     \end{aligned}  
-    \right.
+\right.
 $$
-and define $\tilde{Z}^i_{t+1} = B_{|\mathcal{P}^i|}.$
-Using the fourth property of @def-assumption1 and @prp-proposition_sets, we get that at any time of the algorithm $\tilde{Z}^i_t$ contains ${Z}^i_t.$
 
-The pseudo-code of this procedure is described in @fig-alg1. The $\mathtt{select}(\mathcal{A})$ step in @fig-alg1, where $\mathcal{A} \subset  \mathbf S$, returns a subset of $\mathcal{A}$ in  $\mathbf S$. By default, $\mathtt{select}(\mathcal{A}) := \mathcal{A}$.
+and define $\tilde{Z}^i_{t+1} = B_{|\mathcal P^i|}.$ Using the fourth property of @def-assumption1 and @prp-proposition_sets, we get that at any time of the algorithm $\tilde{Z}^i_t$ contains ${Z}^i_t.$
 
-::: {#fig-alg1}
-![](images/alg1.png)
+The pseudo-code of this procedure is described in Algorithm 1. The $\mathtt{select}(\mathcal{A})$ step in Algorithm 1, where $\mathcal{A} \subset  \mathbf S$, returns a subset of $\mathcal{A}$ in  $\mathbf S$. By default, $\mathtt{select}(\mathcal{A}) := \mathcal{A}$.
 
-Geometric update rule of $\tilde{Z}^i_t$
-:::
-We denote the set of change points candidates at time $t$ as $\tau_t$. Note that for any $(i-1)\in \tau_t$  the sum of $|\mathcal P^i|$ and $|\mathcal F^i(t)|$ is $|\tau_t|$. 
-With the default $\mathtt{select}()$ procedure we do $\mathcal{O}(p|\tau_t|)$ operations in @fig-alg1. By limiting the number of elements returned by $\mathtt{select}()$ we can reduce the complexity.
+```{.pseudocode}
+\begin{algorithm}[H]
+\caption{Geometric update rule of $\tilde{Z}^i_t$}
+\begin{algorithmic}[1]
+\Procedure{$\mathtt{updateZone}$}{$\tilde{Z}_{t-1}^i,\mathcal{P}^i, \mathcal{F}^i(t),i,t$}
+\State $\tilde{Z}_t^i\gets \tilde{Z}_{t-1}^i$
+\For{$S\in \mathtt{select}(\mathcal{F}^i(t))$}
+    \State $ \tilde{Z}_t^i \gets \tilde{Z}_t^i\cap_{\tilde{Z}} S$
+ \EndFor
+\For{$S \in \mathtt{select}(\mathcal{P}^i)$}
+    \State $ \tilde{Z}_t^i \gets \tilde{Z}_t^i \setminus_{\tilde{Z}} S$
+\EndFor
+\Return  $\tilde{Z}_t^i$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+```
+
+We denote the set of change points candidates at time $t$ as $\tau_t$. Note that for any $(i-1)\in \tau_t$  the sum of $|\mathcal P^i|$ and $|\mathcal F^i(t)|$ is $|\tau_t|$. With the default $\mathtt{select}()$ procedure we do $\mathcal{O}(p|\tau_t|)$ operations in Algorithm 1. By limiting the number of elements returned by $\mathtt{select}()$ we can reduce the complexity.
 
 :::{.remark}
 For example, if the operator $\mathcal{A} \mapsto \mathtt{select}(\mathcal{A})$, regardless of $|\mathcal A|$, always returns a subset of constant size, then the overall complexity of GeomFPOP is at worst equal to that of PELT with $\sum_{t=1}^{n}\mathcal{O}(p|\tau_t|)$ time complexity.
 :::
 
 
-Using this $\mathtt{updateZone}()$ procedure we can now informally describe the GeomFPOP algorithm. At each iteration the algorithm will
+Using this $\mathtt{updateZone}()$ procedure we can now informally describe the GeomFPOP algorithm. At each iteration the algorithm will:
 
 1. find the minimum value for $Q_t$, $m_t$; and the best position for last change point $\hat \tau_t$ (note that this step is standard: as in the PELT algorithm we need to minimize the cost of the last segment defined in @eq-Cy_it);
 2. compute all sets $\tilde{Z}_{t}^{i}$ using $\tilde{Z}_{t+1}^{i}$, $\mathcal{P}^i$, and $\mathcal{F}^i(t)$ with the $\mathtt{updateZone}()$ procedure;
 3. remove changes such that $\tilde{Z}_{t+1}^{i}$ is empty.
 
-
 To simplify the pseudo-code of GeomFPOP, we also define the following operators:
 
-1. $\mathtt{bestCost\&Tau}(t)$ operator returns two values: the minimum value of $Q_t$, $m_t$, and the best position for last change point $\hat \tau_t$ at time $t$ (see {sec-UpdateRule); 
-2. $\mathtt{getPastFutureSets}(i,t)$ operator returns a pair of sets ($\mathcal{F}^i(t)$, $\mathcal{P}^i$) for change point candidate $i-1$ at time $t$;
+1. $\mathtt{bestCost\&Tau}(t)$ operator returns two values: the minimum value of $Q_t$, $m_t$, and the best position for last change point $\hat \tau_t$ at time $t$ (see @sec-UpdateRule); 
+2. $\mathtt{getPastFutureSets}(i,t)$ operator returns a pair of sets ($\mathcal F^i(t)$, $\mathcal P^i$) for change point candidate $i-1$ at time $t$;
 3. $\mathtt{backtracking}(\hat\tau, n)$ operator returns the optimal segmentation for $y_{1:n}$. 
 
-The pseudo-code of GeomFPOP is presented in @fig-alg2.
+The pseudo-code of GeomFPOP is presented in Algorithm 2.
 
-::: {#fig-alg2}
-![](images/alg2.png)
+```{.pseudocode}
+\begin{algorithm}[!h]
+\caption{GeomFPOP algorithm}
+\begin{algorithmic}[1]
+\Procedure{$\mathtt{GeomFPOP}$}{$(y, \Omega(\cdot, \cdot),  \beta)$}
+\State $m_0 \gets 0,\quad Q_0(\theta) \gets 0\,,\quad \tau_0 \gets \emptyset, \quad \{\tilde{Z}^{i}_{i-1}\}_{i\in \{1,\dots,n\}}\gets  \mathbb{R}^p$
+\For{$t = 1,\dots, n$}
+    \State $Q_t(\theta) \gets \min \{ Q_{t-1}(\theta), m_{t-1} + \beta\} + \Omega(\theta, y_t)$
+    \State $(m_t, \hat\tau_t) \gets \mathtt{bestCost\&Tau}(t)$
+    \For{$i-1\in \tau_t$}
+        \State $(\mathcal{P}^i, \mathcal{F}^i(t))\gets \mathtt{getPastFutureSets}(i,t)$
+        \State$\tilde{Z}_t^i \gets \mathtt{updateZone}(\tilde{Z}_{t-1}^i,\mathcal{P}^i, \mathcal{F}^i(t),i,t)$
+        \If{$\tilde{Z}_t^i = \emptyset$}{$\tau_t \gets \tau_t \backslash\{i-1\}$}
+        \EndIf
+    \EndFor
+ \State $\tau_t \gets (\tau_{t-1}, t-1)$
+\EndFor
+\Return  $cp(n) \gets \mathtt{backtracking}(\hat\tau, n)$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
-GeomFPOP algorithm
-:::
+```
 
 # Approximation Operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$ {#sec-approximation}
 
-The choice of the geometric structure and the way it is constructed directly affects the computational cost of the algorithm. We consider two types of testing set $\tilde{Z} \in \mathbf{\tilde{Z}}$, a S-type set $\tilde{S}\in \mathbf{S}$ (see @def-defS) and a hyperrectangle $\tilde{R}\in  \mathbf{R}$ defined below.
+The choice of the geometric structure and the way it is constructed directly affects the computational cost of the algorithm. We consider two types of testing set $\tilde{Z} \in \widetilde{\mathbf{Z}}$, a S-type set $\tilde{S}\in \mathbf{S}$ (see @def-defS) and a hyperrectangle $\tilde{R}\in  \mathbf{R}$ defined below.
+
+
+
+
+
 
 :::{#def-Hyperrectangle}
+
 ## Hyperrectangle
 Given two vectors in $\mathbb{R}^p$, $\tilde{l}$ and $\tilde{r}$ we define the set $\tilde{R}$, called *hyperrectangle*, as:
+
 $$
-            \tilde{R} = [\tilde{l}_1,\tilde{r}_1]\times \dots \times[\tilde{l}_p,\tilde{r}_p]\,. \\
-$$ {#eq-setR}
+\tilde{R} = [\tilde{l}_1,\tilde{r}_1]\times \dots \times[\tilde{l}_p,\tilde{r}_p]\,. \\
+$$
+
 We denote the set of all possible sets $\tilde{R}$ as $\mathbf{R}$.
 :::
+
 To update the testing sets we need to give the strict definition of the operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$ for each type of testing set. To facilitate the following discussion, we rename them. For the first type of geometric structure, we rename the testing set $\tilde{Z}$ as $\tilde{S}$, the operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$ as $\cap_{S}$ and $\setminus_{S}$ and $\tilde{Z}$-type approximation as S-type approximation. And, likewise, we rename the testing set $\tilde{Z}$ as $\tilde{R}$, the operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$ as $\cap_{R}$ and $\setminus_{R}$ and $\tilde{Z}$-type approximation as R-type approximation for the second type of geometric structure.
 
 ## S-type Approximation
 
-With this approach, our goal is to keep track of the fact that at time $t = 1,\dots, n$ there is a pair of changes $(u_1,u_2)$, with $u_1 < i < u_2\le t$
-such that $S^i_{u_2}\subset S^{u_1}_{i}$ or there is a pair of changes $(v_1,v_2)$, with $i  < v_1 < v_2\le t$  such that $S^i_{v_1}\cap S^i_{v_2}$ is empty. If at time $t$ at least one of these conditions is met, we can guarantee that the set $\tilde{S}$ is empty, otherwise, we propose to keep as the result of approximation the last future S-type set $S^i_t$, because it always includes the set $Z^i_t$. This allows us to quickly check and prove (if $\tilde{S} =\emptyset$) the emptiness of set $Z^i_t$.
+With this approach, our goal is to keep track of the fact that at time $t = 1,\dots, n$ there is a pair of changes $(u_1,u_2)$, with $u_1 < i < u_2\le t$ such that $S^i_{u_2}\subset S^{u_1}_{i}$ or there is a pair of changes $(v_1,v_2)$, with $i  < v_1 < v_2\le t$  such that $S^i_{v_1}\cap S^i_{v_2}$ is empty. If at time $t$ at least one of these conditions is met, we can guarantee that the set $\tilde{S}$ is empty, otherwise, we propose to keep as the result of approximation the last future S-type set $S^i_t$, because it always includes the set $Z^i_t$. This allows us to quickly check and prove (if $\tilde{S} =\emptyset$) the emptiness of set $Z^i_t$.
 
-We consider two generic S-type sets, $S$ and $\tilde{S}$  from $\mathbf{S}$, described as in @eq-setS by the functions $s$ and  $\tilde{s}$:
+We consider two generic S-type sets, $S$ and $\tilde{S}$  from $\mathbf{S}$, described as in @def-defS by the functions $s$ and  $\tilde{s}$:
+
 $$
-         s(\theta) = \sum_{k=1}^p s^k(\theta^k)- \Delta\,,\quad\quad
-        \tilde{s}(\theta) = \sum_{k=1}^p {\tilde{s}}^{k}(\theta^k)- \tilde{\Delta}\,. 
-$$ {#eq-setSStilde}
+s(\theta) = \sum_{k=1}^p s^k(\theta^k)- \Delta\,,\quad\quad \tilde{s}(\theta) = \sum_{k=1}^p {\tilde{s}}^{k}(\theta^k)- \tilde{\Delta}\,. 
+$$
     
 :::{#def-def_oper_S}
-For all  $S$ and $\tilde{S}$ in $\mathbf{S}$ 
-we define the operators $\cap_{S}$ and $\setminus_{S}$ as:
+For all  $S$ and $\tilde{S}$ in $\mathbf{S}$ we define the operators $\cap_{S}$ and $\setminus_{S}$ as:
 
 $$
-    \begin{aligned}
+\begin{aligned}
         &\tilde{S}\, \cap_{S}\, S& = \left\{
         \begin{aligned}
             & \emptyset \,,  & \hbox{ if }  \tilde{S}\cap S = \emptyset \,,\\
@@ -349,25 +397,25 @@ $$
         & \tilde{S}\,, & \hbox{otherwise}\,.\\
         \end{aligned} 
         \right.
-    \end{aligned}
-$$ {#eq-Zempty}
+    \end{aligned}    
+$$
 
 :::
+
 As a consequence, we only need an easy way to detect any of these two geometric configurations: $\tilde{S}\cap S$ and $\tilde{S} \subset S$.
 
-In the Gaussian case, the S-type sets are $p$-balls and an easy solution exists based on comparing radii (see @sec-InterandExclBalls for details). In the case of other models (as Poisson or negative binomial), intersection and inclusion tests are performed through an iterative algorithm solving convex problems (see @append:IntersectionSsets). This iterative approach is not constant in time, which is why we also considered another type of testing set.
+In the Gaussian case, the S-type sets are $p$-balls and an easy solution exists based on comparing radii (see Appendix B for details). In the case of other models (as Poisson or negative binomial), intersection and inclusion tests are performed through an iterative algorithm solving convex problems (see Appendix C). This iterative approach is not constant in time, which is why we also considered another type of testing set.
 
 ## R-type Approximation
 
 Here, we approximate the sets $Z^i_t$ by hyperrectangles $\tilde{R}^i_t \in \mathbf{R}$. A key insight of this approximation is that given a hyperrectangle $R$ and an S-type set $S$ we can efficiently (in $\mathcal{O}(p)$ using @prp-prop_solution_rect) recover the best hyperrectangle approximation of $R \cup S$ and $R \setminus S.$ Formally we define these operators as follows.
 
 :::{#def-operR}
-## Hyperrectangles Operators $\cap_{R}$, $\setminus_{R}$ ) 
 For all  $R, \tilde{R} \in \mathbf{R}$ and $S\in \mathbf{S}$  we define the operators $\cap_{R}$ and $\setminus_{R}$ as:
 $$
     \begin{aligned}
-     R \cap_{R} S = \cap_{\{\tilde{R} | R \cap S \subset \mathbf{R}\}} \tilde{R}\,,\\
-      R \setminus_{R} S = \cap_{\{\tilde{R} | R \setminus S \subset \mathbf{R}\}} \tilde{R}\,.
+     R \cap_R S = \cap_{\{\tilde{R} | R \cap S \subset \mathbf{R}\}} \tilde{R}\,,\\
+      R \setminus_R S = \cap_{\{\tilde{R} | R \setminus S \subset \mathbf{R}\}} \tilde{R}\,.
 \end{aligned}
 $$
 :::
@@ -375,30 +423,36 @@ $$
 We now explain how we compute these two operators. First, we note that they can be recovered by solving a $2p$ one-dimensional optimization problem.
 
 :::{#prp-proposition}
-The $k$-th minimum coordinates $\tilde{l}_k$ and maximum coordinates $\tilde{r}_k$ of   $\tilde{R} = R \cap_{R} S$ (resp. $\tilde{R} = R \setminus_{R} S$) is obtained as
+The $k$-th minimum coordinates $\tilde{l}_k$ and maximum coordinates $\tilde{r}_k$ of   $\tilde{R} = R \cap_R S$ (resp. $\tilde{R} = R \setminus_R S$) is obtained as
+
 $$
-    \tilde{l}_k \hbox{ or } \tilde{r}_k = 
-    \left\{
+\tilde{l}_k \hbox{ or } \tilde{r}_k = 
+\left\{
     \begin{aligned}
-        &\min_{\theta_k \in \mathbb{R}} \hbox{ or } \max_{\theta_k \in \mathbb{R}}  \theta_k\,,\\
+        &\min_{\theta_k \in \mathbb{R}} \hbox{ or } \max_{\theta_k \in \mathbb R}  \theta_k\,,\\
         & \hbox{subject to } \varepsilon s(\theta) \le 0 \,,\\
         & \quad \quad \quad \quad \quad l_j \le \theta_j \le r_j\,,\quad j = 1,\dots,p \,,\\
     \end{aligned}
-    \right.  
+\right.      
 $${#eq-inclusionOptim}
-with $\varepsilon = 1$ (resp. $\varepsilon = -1$). 
+with $\varepsilon = 1$ (resp. $\varepsilon = -1$).
+
 :::
 
 To solve the previous problems ($\varepsilon = 1$ or $-1$), we define the following characteristic points.
 
 :::{#def-points}
+
 ## Minimal, closest and farthest points
 
-Let $S \in \mathbf{S}$, described by function $s(\theta) = \sum_{k=1}^{p} s^k(\theta^k) - \Delta$ from the family of functions (@eq-setSfunc), with $\theta\in \mathbb{R}^p$. We define the minimal point $\mathbf{c}\in \mathbb{R}^p$ of $S$ as:
+Let $S \in \mathbf S$, described by function $s(\theta) = \sum_{k=1}^{p} s^k(\theta^k) - \Delta$ from the family of functions ([-@eq-setSfunc]), with $\theta\in \mathbb R^p$. We define the minimal point $\mathbf{c}\in \mathbb R^p$ of $S$ as:
+
 $$
-    \mathbf{c} = \left\{\mathbf{c}^k\right\}_{k=1,\dots,p}, \quad \text { with }\quad \mathbf{c}^k =\underset{\theta^k \in \mathbb R} Arg\min \{ s^k(\theta^k) \}\,.
+\mathbf{c} = \left\{\mathbf{c}^k\right\}_{k=1,\dots,p}, \quad \text { with }\quad \mathbf{c}^k =\underset{\theta^k \in \mathbb R} {Arg\min} \{ s^k(\theta^k) \}\,.
 $$ {#eq-c}
-Moreover, with $R \in \mathbf{R}$ defined through vectors $l,r \in \mathbb{R}^p$, we define two points of $R$, the closest point $\mathbf{m} \in \mathbb{R}^p$ and the farthest point $\mathbf{M} \in \mathbb{R}^p$ relative to $S$ as 
+
+Moreover, with $R \in \mathbf R$ defined through vectors $l,r \in \mathbb R^p$, we define two points of $R$, the closest point $\mathbf{m} \in \mathbb R^p$ and the farthest point $\mathbf M \in \mathbb R^p$ relative to $S$ as 
+
 $$
 \begin{aligned}
     \mathbf{m} =\left\{\mathbf{m}^k\right\}_{k=1,\dots,p},\quad \text { with }\quad 
@@ -406,11 +460,12 @@ $$
     \mathbf{M} =\left\{\mathbf{M}^k\right\}_{k=1,\dots,p},\quad \text { with }\quad 
     \mathbf{M}^k = \underset{l^k \le \theta^k \le r^k}{Arg\max}  \left\{s^k(\theta^k)\right\}\,.
     \end{aligned}
-$${#eq-mk}
+$$
+
 :::
 
 :::{.remark}
-In the Gaussian case, $S$ is a ball in $\mathbb{R}^p$ and 
+In the Gaussian case, $S$ is a ball in $\mathbb R^p$ and 
 
 - $\mathbf{c}$ is the center of the ball;
 - $\mathbf{m}$ is the closest point to $\mathbf{c}$ inside $R$;
@@ -418,7 +473,8 @@ In the Gaussian case, $S$ is a ball in $\mathbb{R}^p$ and
 :::
 
 :::{#fig-Figure4}  
-![](images/Figure 4 Minimal closest and farthest points.png)
+
+![](images/Figure 4 Minimal closest and farthest points.png){width=90%}
 
 Three examples  of minimal point $\mathbf{c}$, closest point $\mathbf{m}$ and farthest point $\mathbf{M}$ for bi-variate Gaussian case: (a) $R \subset S$; (b) $R \cap S \neq \emptyset$; (c) $R \cap S = \emptyset$.
 :::
@@ -427,17 +483,21 @@ Three examples  of minimal point $\mathbf{c}$, closest point $\mathbf{m}$ and fa
 Let  $\tilde{R} = R \cap_{R} S$ (resp. $R\setminus_{R} S$), with $R \in \mathbf{R}$ and $S \in \mathbf{S}$. We compute the boundaries $(\tilde{l}, \tilde{r})$ of $\tilde{R}$ using the following rule:
 
 i) We define the point $\tilde{\theta}\in \mathbb{R}^p$ as the closest point $\mathbf{m}$ (resp. farthest $\mathbf{M}$). For all $k = 1,\dots p$ we find the roots $\theta^{k_1}$ and $\theta^{k_2}$ of the one-variable $(\theta^k)$ equation 
+
 $$
 s^k(\theta^k)+\sum_{j\neq k} s^j(\tilde{\theta}^j) -\Delta= 0 \,.
-$${#eq-eqs_k}
+$$
+
 If the roots are real-valued we consider that $\theta^{k_1} \le \theta^{k_2}$, otherwise we write $\Big[\theta^{k_1},\theta^{k_2}\Big] = \emptyset$.
 ii) We compute the boundary values $\tilde{l}^k$ and $\tilde{r}^k$ of 
 $\tilde{R}$ as:
 
 - For $R\cap_{R} S$ $(k = 1,\dots,p)$:
+
 $$
 \Big[\tilde{l}^k,\tilde{r}^k\Big] = \Big[\theta^{k_1},\theta^{k_2}\Big] \cap \Big[l^k, r^k\Big]\,.
 $$  {#eq-updateIntersection}
+
 - For $R\setminus_{R} S$ $(k = 1,\dots,p)$:
 $$
 \Big[\tilde{l}^k,\tilde{r}^k\Big] =
@@ -448,29 +508,362 @@ $$
 \end{aligned} 
 \right.
 $$
+
 If there is a dimension $k$ for which $\Big[\tilde{l}^k, \tilde{r}^k\Big]=\emptyset$, then the set $\tilde{R}$ is empty.
 :::
 
-The proof of @prp-prop_solution_rect is presented in @sec-proof_prop_solution_rect. 
+The proof of @prp-prop_solution_rect is presented in Appendix D. 
 
 # Simulation Study of GeomFPOP {#sec-study}
 
 In this section, we study  the efficiency of GeomFPOP using simulations of multivariate independent time series. For this, we implemented GeomFPOP (with S and R types) and PELT for the Multivariate Independent Gaussian Model in the R-package 'GeomFPOP'  [https://github.com/lpishchagina/GeomFPOP](https://github.com/lpishchagina/GeomFPOP)   written in R/C++. By default, the value of penalty $\beta$ for each simulation was defined by the Schwarz Information Criterion proposed in @Yao ($\beta = 2p \log{n}$).
 
-*Overview of our simulations.* First, as a quality control we made sure that the output of PELT and GeomFPOP were identical on a number of simulated profiles. Second, we studied cases where the PELT approach is not efficient, that is when the data has no or few changes relative to $n$. Indeed, it was shown in @Killick and @Maidstone that the run time of PELT is close to $\mathcal{O}(n^2)$ in such cases. So we considered simulations of multivariate time series without change (only one segment). 
-By these simulations we evaluated the pruning efficiency of GeomFPOP (using S and R types) for  dimension $2\le p\le 10$ (see @fig-Figure5 in @sec-NC). 
- For small dimensions ($2 \le p \le 4$)  we also evaluated  the run time of GeomFPOP and  PELT and compare them (see @fig-Figure6 in  @sec-TCsmall).  In addition, we considered  another approximation of the $Z^i_t$ where we applied our $\cap_{R}$ and $\setminus_R$ operators only for a randomly selected subset of the past and future balls. In practice, this strategy turned out to be faster computationally than the full/original GeomFPOP and PELT (see @fig-Figure7 in @sec-GeomFPOP_random). 
-For this strategy we also generated time series of a fixed size ($10^6$ data points) and varying number of segments and evaluated how the run time vary with the number of segments for small dimensions ($2 \le p \le 4$). Our empirical results confirmed that the GeomFPOP (R-type: $\mathtt{random/random}$) approach is computationally comparable to PELT when the number of changes is large (see @fig-Figure9 in @sec-Run_time_segment_nb).
+*Overview of our simulations.* First, as a quality control we made sure that the output of PELT and GeomFPOP were identical on a number of simulated profiles. Second, we studied cases where the PELT approach is not efficient, that is when the data has no or few changes relative to $n$. Indeed, it was shown in @Killick and @Maidstone that the run time of PELT is close to $\mathcal{O}(n^2)$ in such cases. So we considered simulations of multivariate time series without change (only one segment). By these simulations we evaluated the pruning efficiency of GeomFPOP (using S and R types) for  dimension $2\le p\le 10$ (see @fig-Figure5 in @sec-NC). For small dimensions ($2 \le p \le 4$)  we also evaluated  the run time of GeomFPOP and  PELT and compare them (see @fig-Figure6 in  @sec-TCsmall).  In addition, we considered  another approximation of the $Z^i_t$ where we applied our $\cap_{R}$ and $\setminus_R$ operators only for a randomly selected subset of the past and future balls. In practice, this strategy turned out to be faster computationally than the full/original GeomFPOP and PELT (see @fig-Figure7 in @sec-GeomFPOP_random). For this strategy we also generated time series of a fixed size ($10^6$ data points) and varying number of segments and evaluated how the run time vary with the number of segments for small dimensions ($2 \le p \le 4$). Our empirical results confirmed that the GeomFPOP (R-type: $\mathtt{random/random}$) approach is computationally comparable to PELT when the number of changes is large (see @fig-Figure9 in @sec-Run_time_segment_nb).
 
+## The Number of change point Candidates Stored Over Time {#sec-NC}
+
+We evaluate the functional pruning efficiency of the GeomFPOP method using simulations with $10^4$ data points (without change, i.e. i.i.d $\mathcal{N}_p(0, I_p)$). For such signals, PELT typically does not pruned (e.g. for $t=10^4$, $p=2$ it stores on average $t$ candidates).
+
+We report in @fig-Figure5 the percentage of candidates that are kept by GeomFPOP as a function of $n$, $p$ and the type of pruning (R or S). Regardless of the type of approximation and contrary to PELT, we observe that there is some pruning. However when increasing the dimension $p$, the quality of the pruning decreases. 
+
+Comparing  @fig-Figure5 left and the right we see that for dimension $p=2$ to $p=5$ R-type prunes more than the S-type, while for larger dimensions the S-type  prunes more than the R-type. For example, for $p = 2$ at time $t=10^4$  by GeomFPOP (R-type) the number of candidates stored over $t$  does not exceed $1\%$ versus $3\%$ by GeomFPOP (S-type). This intuitively makes sense. One the one hand the R-type approximation of a sphere gets worst with the dimension. On the other hand with R-type approximation every new approximation is included in the previous one. For small dimensions this memory effect out weight the roughness of the approximation.
+
+:::{#fig-Figure5}  
+
+![](images/Figure 5 Number of candidates.png){width=90%}
+
+Percentage of candidate change points stored over time by GeomFPOP with R (left) or S (right) type pruning for dimension $p = 2,\dots, 10$. We simulated 100 i.i.d Gaussian data $\mathcal{N}_p(0, I_p)$ and report the average.
+:::
+
+Based on these results we expect that R-type pruning GeomFPOP will be more efficient than S-type pruning for small dimensions.
+
+## Empirical Time Complexity of GeomFPOP {#sec-TCsmall}
+
+We studied the run time of GeomFPOP (S and R-type) and compared it to PELT for small dimensions ($p=2, 3, 4$).
+Run times were limited to three minutes and were recorded for simulations (without change, i.e i.i.d $\mathcal{N}_p(0, I_p)$). The results are presented in Figure \ref{Figure6}. We observe that GeomFPOP is faster than PELT only for $p=2$. For $p=3$ run times are comparable and for $p=4$ GeomFPOP is slower. This lead us to consider a randomized version of GeomFPOP (see next subsection).
+
+:::{#fig-Figure6}  
+
+![](images/Figure 6 Time complexity PELT GeomFPOP small p.png){width=90%}
+
+Run time of GeomFROP (S and R types) and PELT using multivariate time series without change points. The maximum run time of the algorithms is 3 minutes. Averaged over $100$ data sets.
+:::
+
+## Empirical Time Complexity of a randomized GeomFPOP {#sec-GeomFPOP_random}
+
+R-type GeomFPOP is designed in such a way that at each iteration we need to consider all past and future spheres of change $i$. In practice, it is often sufficient to consider just a few of them to get an empty set. Having this in mind, we propose a further approximation of the $Z^i_t$ where we apply our $\cap_{R}$ and $\setminus_R$ operators only for a randomly selected subset of the past and future sets. In detail, we propose to redefine the output of the $\mathtt{select}()$ function in Algorithm 1 on any sets $\mathcal{P}^i$ and $\mathcal{F}^i(t)$ as:
+
+
+- $\mathtt{select}(\mathcal{P}^i)$ returns one random set from $\mathcal{P}^i$.
+- $\mathtt{select}(\mathcal{F}^i(t))$  returns the last set $S^i_t$ and one random  set from $\mathcal{F}^i(t)$.
+
+Thus, we consider the following geometric update rule:
+
+- $(\mathtt{random / random})$ At time $t$ we update hyperrectangle:
+  1. by only two intersection operations: one with the last S-type set $S^i_t$ from $\mathcal{F}^i(t)$, and one with a random  S-type set from $\mathcal{F}^i(t)$;
+  2. by only one exclusion operation with a random  S-type set from $\mathcal{P}^i$.
+
+In this approach at time $t$ we do no more than three operations to update the testing set $\tilde{Z}^i_t$ for each $(i-1) \in \tau_t$. Even with large values of  $p$, the overall complexity of GeomFPOP should not be worse than that of PELT. We investigated other randomized strategies but this simple one was sufficient to significantly improve run times. The run time of our optimization approach and PELT in dimension ($p= 2, \dots, 10, 100$) are presented in  @fig-Figure7. 
+As in @sec-TCsmall, run times were limited to three minutes and were recorded for simulations of length ranging from $2^{10}$ to $2^{23}$ data points (without change, i.e i.i.d $\mathcal{N}_p(0, I_p)$).
+
+Although the $\mathtt{(random/random)}$ approach reduces the quality of pruning (see Appendix E), it gives a significant gain in run time compared to PELT in small dimensions. To be specific, with a run time of five minutes GeomFPOP, on average,   processes a time series with a length of about $8\times 10^6$, $10^6$  and $2,5\times 10^5$ data points in the dimensions $p=2,3$ and $4$, respectively. At the same time, PELT manages to process time series with a length of at most $6,5\times10^4$ data points in these dimensions. 
+
+:::{#fig-Figure7} 
+
+![](images/Figure 7 Time complexity PELT GeomFPOP p_2_10_100.png)
+
+Run time of the $\mathtt{(random/random)}$ approach of { GeomFPOP} (R-type) and PELT using p-variate time series without change points ($p=2,\dots, 10,100$). The maximum run time of the algorithms is 3 minutes. Averaged over $100$ data sets.
+:::
+
+## Empirical complexity of the algorithm as a function of $p$ {#sec-Run_time_p}
+
+We also evaluate the slope coefficient $\alpha$ of the run time curve of GeomFPOP with random sampling of the past and future candidates for all considered dimensions. In @fig-Figure8 we can see that already for $p\ge 7$ $\alpha$ is close to $2$.
+
+:::{#fig-Figure8}  
+
+![](images/Figure 8 estimation alpha p_2_10_100.png){width=80%}
+
+Run time dependence of $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) on dimension $p$.
+:::
+
+## Run time as a function of the number of segments {#sec-Run_time_segment_nb}
+
+For small dimensions ($2\le p \le 4$) we also generated time series with $10^6$ data points with increasing number of segments. We have considered the following number of segments: $(1,2,5) \times 10^i$( $i=0,\dots,3$) and $10^4$. The mean was equal to $1$ for even segments,  and $0$ for odd segments. In @fig-Figure9 we can see the run time dependence of the $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) and PELT on the number of segments for this type of time series. Interestingly, the run time of GeomFPOP $\mathtt{(random/random)}$ is comparable to PELT even when the number of segment is large. For smaller number of segments (as already observed) GeomFPOP $\mathtt{(random/random)}$ is an order of magnitude faster.
+
+:::{#fig-Figure9}  
+
+![](images/Figure 9 Time complexity Change dependence .pdf){width=90%}
+
+Run time dependence of $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) on the number of segments in time series with $10^6$ data points.
+:::
+
+# Acknowledgments {.unnumbered}
+
+We thank Paul Fearnhead for fruitful discussions.
 
 # References {.unnumbered}
 
 ::: {#refs}
 :::
 
-# Session information {.appendix .unnumbered}
+# Appendix A: Examples of Likelihood-Based Cost Functions {.appendix .unnumbered}
 
-```{r session-info}
-sessionInfo()
-```
+We define a cost function for segmentation as in @eq-Cy_it by the function $\Omega(\cdot,\cdot)$ (the opposite log-likelihood (times two)). Below is the expression of this function  linked to data point $y_i = (y_i^1,\dots, y_i^p)\in \mathbb R^p$ for three examples of Parametric Multivariate Models:
 
+$$		
+\Omega(\theta,y_i)=
+\left\{
+\begin{aligned}
+& \sum_{k=1}^p (y_i^k -\theta^k)^2\,, & \text{ if }y_i \sim \mathcal{N}_p(\theta, \sigma^2\mathbb{I}_p)\,,\\
+&2 \sum_{k=1}^p \left\{\log\left(\frac{(\theta^k)^{y^k_i}}{y^k_i!}\right)-  \theta^k\right\}\,, & \text{ if }y_i \sim \mathcal{P}(\theta)\,,\\ 
+&-2 \sum_{k=1}^p\log\left((\theta^k)^{y_i^k}(1-\theta^k)^\phi \begin{pmatrix}
+y_i^k+\phi-1 \\
+y_i^k 
+\end{pmatrix}\right)\,,& \text{ if }y_i \sim \mathcal{NB}(\theta,\phi)\,.\\ 
+\end{aligned} 
+\right.
+$${#eq-MLE}
+
+We suppose that the over-dispersion parameter $\phi$ of the Multivariate Negative Binomial distribution is known.
+
+# Appendix B: Arrangement of Two $p$-balls in $\mathbb R^p${.appendix .unnumbered}
+
+We define two $p$-balls, $S$ and $S'$ in $\mathbb R^p$ using their centers $c$, $c' \in \mathbb R^p$ and radius $R$, $R' \in \mathbb R^{+}$ as
+
+$$
+S = \{ x \in \mathbb R^p,\lvert\lvert x - c\rvert\rvert ^2 \le R^2\}\text{ and }S' = \{ x \in \mathbb R^p,\lvert\lvert x - c'\rvert\rvert ^2 \le R'^2\},
+$$
+
+where $\lvert\lvert x - c\rvert\rvert ^2 = \sum_{k=1}^p (x^k - c^k)^2$, with $x = (x^1,..., x^p) \in \mathbb R^p$, is the Euclidean norm. The distance between centers $c$ and $c'$ is defined as $d(c, c') = \sqrt{\lvert\lvert c - c' \rvert\rvert^2}$. We have the following simple results:
+
+$$
+S \cap S' = \emptyset \iff d(c,c') > R + R'\,,
+$$
+
+$$
+S \subset S' \hbox{ or } S' \subset S \iff d(c,c') \le |R-R'|\,.
+$$
+
+# Appendix C: Intersection and Inclusion Tests {.appendix .unnumbered}
+
+:::{.remark}
+For any $S^i_j \in \mathbf{S}$ its associated function $s$ can be redefine after normalization by constant $j-i+1$ as:
+
+$$
+s(\theta) = a(\theta) +  \langle b,\theta \rangle + c,
+$$ 
+
+with $a(\cdot)$ is some convex function depending on $\theta$, $b=\{b^k\}_{k =1,\dots, p} \in \mathbb{R}^p$ and $c \in \mathbb{R}$.
+
+For example, in the Gaussian case, the elements have the following form:
+
+$$	
+\begin{aligned}
+& a: \theta \mapsto \theta^2\,,& &b^k =  2\bar Y_{i:j}^k\,,&&c =\bar Y^2_{i:j} - \Delta_{ij}\,,
+\end{aligned} 
+$$
+
+where $\bar Y_{i:j}^k = \frac{1}{j-i+1}\sum_{u=i+1}^j y_u^k$ and $\bar Y^2_{i:j} = \frac{1}{j-i+1}\sum_{u=i+1}^j \sum_{k=1}^p (y_u^k)^2$.
+:::
+
+:::{#def-app:func_h}
+For all  $\theta \in \mathbb R^p$ and $S_1, S_2 \in \mathbf{S}$ with their associated functions, $s_1$ and $s_2$, we define a function $h_{12}$ and a hyperplane $H_{12}$ as:
+
+$$	
+\begin{aligned}
+&h_{12}(\theta):= s_2(\theta) - s_1(\theta)\,,& &H_{12} := \left \{\theta \in \mathbb{R}^p | h_{12}(\theta) = 0 \right \}\,.
+\end{aligned} 
+$$
+
+We denote by $H_{12}^+ := \{\theta \in \mathbb{R}^p |h_{12}(\theta)> 0\}$ and $H_{12}^- := \{\theta \in \mathbb{R}^p |h_{12}(\theta)< 0\}$ the positive and negative half-spaces of $H_{12}$, respectively. We call $\mathbf{H}$ the set of hyperplanes.
+:::
+
+For all $S \in \mathbf{S}$ and $H \in \mathbf{H}$ we introduce a $\mathtt{half-space}$ operator.
+
+:::{#def-halfspace}
+The operator $\mathtt{half-space}$ is such that:
+
+1. the left input is an S-type set $S$;
+2. the right input is a hyperplane $H$;
+3. the output is the half-spaces of $H$, such that $S$ lies in those half-spaces. 
+:::
+
+:::{#def-append:proposition} 
+We define the output of $\mathtt{half-space}(S,H)$ by the following rule:
+
+1. We find two points, $\theta_1, \theta_2 \in \mathbb R^p$, as:
+
+$$	
+\left\{
+\begin{aligned}
+\theta_1 &= &Arg\min_{\theta \in S} s(\theta),\\
+\theta_2& =& \left\{
+\begin{aligned}
+Arg\min_{\theta \in S} h(\theta),& &\text{if } \theta_1 \in H^+,\\
+Arg\max_{\theta \in S} h(\theta), & & \text{if } \theta_1 \in H^-.\\
+\end{aligned} 
+\right.
+\end{aligned} 
+\right.
+$$
+
+2. We have:
+
+$$	
+\mathtt{half-space}(S,H) = \left\{
+\begin{aligned}
+\{H^+\}, & &\text{if } \theta_1, \theta_2  \in H^+,\\
+\{H^-\}, & & \text{if } \theta_1, \theta_2  \in H^-,\\
+\{H^+, H^-\},& &  \text{otherwise}.\\
+\end{aligned} 
+\right.
+$$
+
+:::
+
+:::{#lem-petite_lemma}
+$S_1 \subset H_{12}^-\Leftrightarrow \partial S_1 \subset H_{12}^-$, where $\partial(\cdot)$ denote the frontier operator.
+:::
+
+The proof of @lem-petite_lemma follows from the convexity of $S_1$.
+
+:::{#lem-lemma:inclusion}
+$S_1 \subset S_2$ (resp.  $S_2 \subset S_1$)  $\Leftrightarrow$  $S_1, S_2 \subset H_{12}^-$ (resp. $S_1, S_2 \subset H_{12}^+$).
+:::
+
+:::{.proof}
+We have the hypothesis $\mathcal H_0:\{ S_1 \subset S_2\}$, then
+
+\begin{tabular}{lllll}
+ $\forall \theta \in  \partial S_1 $&$\left\{
+\begin{aligned}
+&s_1(\theta) = 0\,,\\
+&s_2(\theta) \le 0\,,\\
+\end{aligned} 
+\right.$&$
+\begin{aligned}
+& [\text{by definition of } S_1]\\
+& [\text{by } \mathcal{H}_0]
+\end{aligned} 
+$
+&$\Rightarrow \theta \in H_{12}^- $&$\Rightarrow \partial S_1 \subset H_{12}^-.$\\
+\end{tabular}
+
+Thus, according to @lem-petite_lemma, $S_1 \subset H_{12}^-$.
+
+We have now the hypothesis $\mathcal H_0: \{S_1, S_2 \subset H_{12}^-\}$, then
+
+\begin{tabular}{lllll}
+ $\forall \theta \in  S_1 $&$\left\{
+\begin{aligned}
+&  s_1(\theta) \le 0,\\
+& h_{12}(\theta) < 0,\\
+\end{aligned} 
+\right.$&$
+\begin{aligned}
+& [\text{by definition of } S_1]\\
+& [\text{by } \mathcal{H}_0, \text{ definition of } S_2]
+\end{aligned} 
+$
+&$\Rightarrow \theta \in S_2$ &$\Rightarrow S_1 \subset S_2$.\\
+\end{tabular}
+
+Similarly, it is easy to show that  $S_2 \subset S_1\Leftrightarrow S_1, S_2 \subset H_{12}^+$.
+:::
+
+:::{#lem-lemma:separation}
+$S_1\cap S_2 = \emptyset \Leftrightarrow H_{12}$ is a separating hyperplane of $S_1$ and $S_2$.
+
+:::{.proof}
+We have the hypothesis $\mathcal{H}_0:\{S_1~\subset~ H_{12}^+,\, S_2~\subset~ H_{12}^-\}$. Thus, $H_{12}$ is a separating hyperplane of $S_1$ and $S_2$ then, according to its definition, $S_1\cap S_2 = \emptyset$.
+
+We have now the hypothesis $\mathcal{H}_0:\{S_1\cap S_2 = \emptyset\}$ then
+
+\begin{tabular}{llll}
+ $\forall \theta \in S_1$ &$\left\{
+\begin{aligned}
+& s_1(\theta) \le 0\,,\\
+&s_2(\theta) > 0\,,\\
+\end{aligned} 
+\right.$&$
+\begin{aligned}
+& [\text{ by definition of } S_1]\\
+& [\text{by }\mathcal{H}_0, \text{ definition of } S_2]
+\end{aligned} 
+$
+&$\Rightarrow \theta \in H_{12}^+.$\\
+$\forall \theta \in S_2$ &$\left\{
+\begin{aligned}
+& s_1(\theta) > 0\,,\\
+&s_2(\theta) \le 0\,,\\
+\end{aligned} 
+\right.$&$
+\begin{aligned}
+& [\text{by }\mathcal{H}_0, \text{definition of }S_1]\\
+& [\text{by definition of } S_2]
+\end{aligned} 
+$ &$\Rightarrow \theta \in H_{12}^-.$\\
+\end{tabular}
+
+Consequently, $H_{12}$ is  a separating hyperplane of  $S_1$ and $S_2$.
+:::
+
+:::{#prp-propositionApp}
+To detect set inclusion $S_1 \subset S_2$ and emptiness of set intersection $S_1 \cap S_2$, it is necessary:
+
+1. build the hyperplane $H_{12}$;
+2. apply the $\mathtt{half-space}$ operator for couples $(S_1,H_{12})$ and $(S_2,H_{12})$ to know in which half-space(s) $S_1$ and $S_2$ are located;
+3. check the conditions in Lemmas [-@lem-lemma:inclusion] and [-@lem-lemma:separation].
+:::
+
+# Appendix D: Proof of @prp-prop_solution_rect {.appendix .unnumbered}
+For the proof of @prp-prop_solution_rect we need the following remark.
+
+:::{.remark}
+With set $S\in \mathbf{S}$ the maximum and minimum values for each coordinate in $S$ are obtained on the axis going through minimal point $\mathbf{c}$.
+:::
+
+:::{.proof}
+Let $\mathbf{c} = \{\mathbf{c}^k\}_{k=
+1,\dots,p}$ is the minimal point of $S$, defined as in @eq-c. In the intersection case, we consider solving the optimization problem (@eq-inclusionOptim) for the boundaries $\tilde{l}^k$ and $\tilde{r}^k$, removing constraint $l^k \le \theta^k \le r^k$. If $R$ intersects $S$, the optimal solution $\theta^k$ belongs to the boundary of $S$ due to our simple (axis-aligned rectangular) inequality constraints and we get 
+
+$$
+s^k(\theta^k) = -\sum_{ j\neq k}s^j(\theta^j)+ \Delta\,.
+$${#eq-KKT}
+
+We are looking for minimum and maximum values in $\theta^k$ for this equation with constraints $l^j\le \theta^j \le r^j$ ($j \ne k$). Using the convexity of $s^k$ and $s^j$, we need to maximize the quantity in the right-hand side. Thus, the solution $\tilde{\theta}^j$ for each $\theta^j$ is the minimal value of $\sum_{j\neq k} s^j(\theta^j)$ under constraint $l^j\le \theta^j \le r^j$ and the result can only be $l^j$, $r^j$ or $\mathbf{c}^j$.
+This decomposition in smaller problems is made possible thanks to our problem setting with independence. Looking at all coordinates at the same time, the values for $\tilde{\theta}\in \mathbb R^p$ corresponds to the closest point $\mathbf{m} =\{\mathbf{m}^k\}_{k=1,\dots,p}$. Having found $\theta^{k_1}$ and $\theta^{k_2}$ using $\tilde{\theta}$ the result in @eq-updateIntersection is obvious considering current boundaries $l^k$ and $r^k$.\\
+In exclusion case, we remove from $R$ the biggest possible rectangle included into $S \cap \{l^j\le \theta^j \le r^j\,,\, j \ne k\}$, which correspond to minimizing the right hand side of @eq-KKT, that is maximizing $\sum_{j\neq k} s^j(\theta^j)$ under constraint $l^j\le \theta^j \le r^j$ ($j \ne k$). In that case, the values for $\tilde{\theta}$ correspond to the greatest value returned by  $\sum_{j\neq k} s^j(\theta^j)$ on interval boundaries. With convex functions $s^j$, it corresponds to the farthest point $\mathbf{M} = \{\mathbf{M}^k\}_{k=1,\dots, p}$.
+:::
+
+# Appendix E: Optimization Strategies for GeomFPOP(R-type) {.appendix .unnumbered}
+
+In  GeomFPOP(R-type) at each iteration, we need to consider all past and future spheres of change $i$. As it was said in @sec-study, in practice it is often sufficient to consider just a few of them to get an empty set. Thus, we propose to limit the number of operations $\cap_R$ no more than two: 
+
+      - $\mathtt{last.}$   At time $t$ we update hyperrectangle by only one operation, this is an intersection with the last S-type set $S^i_t $ from $\mathcal{F}^i(t)$.
+      - $\mathtt{random.}$ At time $t$ we update the hyperrectangle by only two operations. First, this is an intersection with the last S-type set $S^i_t$ from $\mathcal{F}^i(t)$, and second, this is an intersection with other random  S-type set from $\mathcal{F}^i(t)$.
+
+The number of operations $\setminus_R$ we limit no more than one:
+
+      - $\mathtt{empty.}$ At time $t$ we do not perform $\setminusR$ operations.
+      - $\mathtt{random.}$ At time $t$ we update hyperrectangle by only one operation: exclusion with a random  S-type set from $\mathcal{P}^i$.
+ 
+  According to these notations, the approach presented in the original GeomFPOP (R-type) has the form $(\mathtt{all / all})$. We show the impact of introduced limits on the number of change point candidates retained over time and evaluate their run times. The results are presented in Figures [-@fig-StrategiesAll] and [-@fig-RplotTCoptStrAll].
+
+
+:::{#fig-StrategiesAll}  
+
+![](images/Figure 10 Optimization Number of candidates.pdf){width=90%}
+
+Ratio number of candidate change point over time by different optimization approaches of GeomFPOP (R-type) in dimension $p = 2,3$ and $4$. Averaged over $100$ data sets without changes with $10^4$ data points.
+:::
+
+:::{#fig-RplotTCoptStrAll}  
+
+![](images/Figure 11 Optimization Time complexity.png){width=90%}
+
+Run time of different optimization approaches of GeomFPOP (R-type) using multivariate time series without change points. The maximum run time of the algorithms is 3 minutes. Averaged over $100$ data sets.
+:::
+
+Even though the $\mathtt{(random/random)}$ approach reduces the quality of pruning in dimensions $p=2,3$ and $4$, it
+ gives a significant gain in the run time compared to the original GeomFPOP (R-type)  and is at least comparable to the $\mathtt{(last/random)}$ approach. 
