@@ -136,7 +136,7 @@ $$
 
 *Backtracking.* Knowing the values of $\hat{\tau}_t$ for all $t=1, \dots, n$, we can always restore the optimal segmentation at time $n$ for $y_{1:n}$. This procedure is called backtracking. The vector $cp(n)$ of ordered change points in the optimal segmentation of $y_{1:n}$ is determined recursively by the relation $cp(n) = (cp(\hat \tau_n), \hat \tau_n)$ with stopping rule $cp(0)=\emptyset$.	
 
-*Parameter space description.* Applying functional pruning requires a precise analysis of the recursion {eq-Q_tpl1} that depends on the property of the cost function~$\Omega$. In what follows we consider three choices based on a Gaussian, Poisson, and negative binomial distribution assumption on the data. The exact formulas of these cost functions are given in Appendix A.
+*Parameter space description.* Applying functional pruning requires a precise analysis of the recursion {eq-Q_tpl1} that depends on the property of the cost function~$\Omega$. In what follows we consider three choices based on a Gaussian, Poisson, and negative binomial distribution assumption on the data. The exact formulas of these cost functions are given in @sec-AppendixA.
 
 We denote the set of parameter values for which the function $q^i_t(\cdot)$ is optimal as:
 
@@ -251,7 +251,7 @@ Examples of building a set $Z^i_t$ with $\lvert\mathcal P^i\rvert = \lvert\mathc
 
 ## General Principle of GeomFPOP{#sec-principle}
 
-Rather than considering an exact representation of the $Z^i_t$, our idea is to consider a hopefully slightly larger set that is easier to update. To be specific for each $Z^i_t$ we introduce $\tilde{Z}^i_t$, called *testing set*, such that $Z^i_t\subset \tilde{Z}^i_t$. If at time $t$ $\tilde{Z}^i_t$ is empty thus is $Z^i_t$ and thus change $i-1$ can be pruned. From proposition \eqref{proposition_sets} we have that starting from $Z = \mathbb{R}^p$ the set $Z^i_t$ is obtained by successively applying two types of operations: intersection with an S-type set  $S$ $(Z\cap S)$ or subtraction of an S-type set $S$ $(Z\setminus S)$. Similarly, starting from $\tilde{Z} = \mathbb{R}^p$ we obtain $\tilde{Z}^i_t$ by successively applying approximation of these intersection and subtraction operations. Intuitively, the complexity of the resulting algorithm is a combination of the efficiency of the pruning and the easiness of updating the testing set. 
+Rather than considering an exact representation of the $Z^i_t$, our idea is to consider a hopefully slightly larger set that is easier to update. To be specific for each $Z^i_t$ we introduce $\tilde{Z}^i_t$, called *testing set*, such that $Z^i_t\subset \tilde{Z}^i_t$. If at time $t$ $\tilde{Z}^i_t$ is empty thus is $Z^i_t$ and thus change $i-1$ can be pruned. From @prp-proposition_sets we have that starting from $Z = \mathbb{R}^p$ the set $Z^i_t$ is obtained by successively applying two types of operations: intersection with an S-type set  $S$ $(Z\cap S)$ or subtraction of an S-type set $S$ $(Z\setminus S)$. Similarly, starting from $\tilde{Z} = \mathbb{R}^p$ we obtain $\tilde{Z}^i_t$ by successively applying approximation of these intersection and subtraction operations. Intuitively, the complexity of the resulting algorithm is a combination of the efficiency of the pruning and the easiness of updating the testing set. 
 
 *A Generic Formulation of GeomFPOP.* In what follows we will generically describe GeomFPOP, that is without specifying the precise structure of the testing set $\tilde{Z}^i_t$. We call $\widetilde{\mathbf{Z}}$ the set of all possible $\tilde{Z}^i_t$ and assume the existence of two operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$. We have the following assumptions for these operators.
 
@@ -398,7 +398,7 @@ $$
 
 As a consequence, we only need an easy way to detect any of these two geometric configurations: $\tilde{S}\cap S$ and $\tilde{S} \subset S$.
 
-In the Gaussian case, the S-type sets are $p$-balls and an easy solution exists based on comparing radii (see Appendix B for details). In the case of other models (as Poisson or negative binomial), intersection and inclusion tests are performed through an iterative algorithm solving convex problems (see Appendix C). This iterative approach is not constant in time, which is why we also considered another type of testing set.
+In the Gaussian case, the S-type sets are $p$-balls and an easy solution exists based on comparing radii (see @sec-AppendixB for details). In the case of other models (as Poisson or negative binomial), intersection and inclusion tests are performed through an iterative algorithm solving convex problems (see @sec-AppendixC). This iterative approach is not constant in time, which is why we also considered another type of testing set.
 
 ## R-type Approximation
 
@@ -503,7 +503,7 @@ $$
 If there is a dimension $k$ for which $\Big[\tilde{l}^k, \tilde{r}^k\Big]=\emptyset$, then the set $\tilde{R}$ is empty.
 :::
 
-The proof of @prp-prop_solution_rect is presented in Appendix D. 
+The proof of @prp-prop_solution_rect is presented in @sec-AppendixD. 
 
 # Simulation Study of GeomFPOP {#sec-study}
 
@@ -557,7 +557,7 @@ Thus, we consider the following geometric update rule:
 In this approach at time $t$ we do no more than three operations to update the testing set $\tilde{Z}^i_t$ for each $(i-1) \in \tau_t$. Even with large values of  $p$, the overall complexity of GeomFPOP should not be worse than that of PELT. We investigated other randomized strategies but this simple one was sufficient to significantly improve run times. The run time of our optimization approach and PELT in dimension ($p= 2, \dots, 10, 100$) are presented in  @fig-Figure7. 
 As in @sec-TCsmall, run times were limited to three minutes and were recorded for simulations of length ranging from $2^{10}$ to $2^{23}$ data points (without change, i.e i.i.d $\mathcal{N}_p(0, I_p)$).
 
-Although the $\mathtt{(random/random)}$ approach reduces the quality of pruning (see Appendix E), it gives a significant gain in run time compared to PELT in small dimensions. To be specific, with a run time of five minutes GeomFPOP, on average,   processes a time series with a length of about $8\times 10^6$, $10^6$  and $2,5\times 10^5$ data points in the dimensions $p=2,3$ and $4$, respectively. At the same time, PELT manages to process time series with a length of at most $6,5\times10^4$ data points in these dimensions. 
+Although the $\mathtt{(random/random)}$ approach reduces the quality of pruning (see @sec-AppendixE), it gives a significant gain in run time compared to PELT in small dimensions. To be specific, with a run time of five minutes GeomFPOP, on average,   processes a time series with a length of about $8\times 10^6$, $10^6$  and $2,5\times 10^5$ data points in the dimensions $p=2,3$ and $4$, respectively. At the same time, PELT manages to process time series with a length of at most $6,5\times10^4$ data points in these dimensions. 
 
 :::{#fig-Figure7} 
 
@@ -592,12 +592,9 @@ Run time dependence of $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) 
 
 We thank Paul Fearnhead for fruitful discussions.
 
-# References {.unnumbered}
+# Supplements
 
-::: {#refs}
-:::
-
-# Appendix A: Examples of Likelihood-Based Cost Functions {.appendix .unnumbered}
+## Examples of Likelihood-Based Cost Functions  {#sec-AppendixA}
 
 We define a cost function for segmentation as in @eq-Cy_it by the function $\Omega(\cdot,\cdot)$ (the opposite log-likelihood (times two)). Below is the expression of this function  linked to data point $y_i = (y_i^1,\dots, y_i^p)\in \mathbb R^p$ for three examples of Parametric Multivariate Models:
 
@@ -617,7 +614,7 @@ $${#eq-MLE}
 
 We suppose that the over-dispersion parameter $\phi$ of the Multivariate Negative Binomial distribution is known.
 
-# Appendix B: Arrangement of Two $p$-balls in $\mathbb R^p${.appendix .unnumbered}
+## Arrangement of Two $p$-balls in $\mathbb R^p$ {#sec-AppendixB}
 
 We define two $p$-balls, $S$ and $S'$ in $\mathbb R^p$ using their centers $c$, $c' \in \mathbb R^p$ and radius $R$, $R' \in \mathbb R^{+}$ as
 
@@ -635,7 +632,7 @@ $$
 S \subset S' \hbox{ or } S' \subset S \iff d(c,c') \le |R-R'|\,.
 $$
 
-# Appendix C: Intersection and Inclusion Tests {.appendix .unnumbered}
+## Intersection and Inclusion Tests {#sec-AppendixC}
 
 :::{.remark}
 For any $S^i_j \in \mathbf{S}$ its associated function $s$ can be redefine after normalization by constant $j-i+1$ as:
@@ -808,7 +805,7 @@ To detect set inclusion $S_1 \subset S_2$ and emptiness of set intersection $S_1
 3. check the conditions in Lemmas [-@lem-lemma:inclusion] and [-@lem-lemma:separation].
 :::
 
-# Appendix D: Proof of @prp-prop_solution_rect {.appendix .unnumbered}
+## Proof of @prp-prop_solution_rect {#sec-AppendixD}
 For the proof of @prp-prop_solution_rect we need the following remark.
 
 :::{.remark}
@@ -827,7 +824,7 @@ This decomposition in smaller problems is made possible thanks to our problem se
 In exclusion case, we remove from $R$ the biggest possible rectangle included into $S \cap \{l^j\le \theta^j \le r^j\,,\, j \ne k\}$, which correspond to minimizing the right hand side of @eq-KKT, that is maximizing $\sum_{j\neq k} s^j(\theta^j)$ under constraint $l^j\le \theta^j \le r^j$ ($j \ne k$). In that case, the values for $\tilde{\theta}$ correspond to the greatest value returned by  $\sum_{j\neq k} s^j(\theta^j)$ on interval boundaries. With convex functions $s^j$, it corresponds to the farthest point $\mathbf{M} = \{\mathbf{M}^k\}_{k=1,\dots, p}$.
 :::
 
-# Appendix E: Optimization Strategies for GeomFPOP (R-type) {.appendix .unnumbered}
+## Optimization Strategies for GeomFPOP (R-type) {#sec-AppendixE}
 
 In  GeomFPOP(R-type) at each iteration, we need to consider all past and future spheres of change $i$. As it was said in @sec-study, in practice it is often sufficient to consider just a few of them to get an empty set. Thus, we propose to limit the number of operations $\cap_R$ no more than two: 
 
@@ -856,4 +853,9 @@ Run time of different optimization approaches of GeomFPOP (R-type) using multiva
 :::
 
 Even though the $\mathtt{(random/random)}$ approach reduces the quality of pruning in dimensions $p=2,3$ and $4$, it
- gives a significant gain in the run time compared to the original GeomFPOP (R-type)  and is at least comparable to the $\mathtt{(last/random)}$ approach. 
+ gives a significant gain in the run time compared to the original GeomFPOP (R-type)  and is at least comparable to the $\mathtt{(last/random)}$ approach.
+ 
+# References {.unnumbered}
+
+::: {#refs}
+::: 
