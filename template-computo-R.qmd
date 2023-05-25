@@ -722,39 +722,34 @@ $S_1 \subset S_2$ (resp.  $S_2 \subset S_1$)  $\Leftrightarrow$  $S_1, S_2 \subs
 :::{.proof}
 We have the hypothesis $\mathcal H_0:\{ S_1 \subset S_2\}$, then
 
-\begin{tabular}{lllll}
- $\forall \theta \in  \partial S_1 $&$\left\{
+$$	
+\forall \theta \in  \partial S_1 \quad \left\{
 \begin{aligned}
-&s_1(\theta) = 0\,,\\
-&s_2(\theta) \le 0\,,\\
+s_1(\theta) = 0, & &[\text{by Definition 1.1} ] \\
+s_2(\theta) \le 0, & & [\text{by } \mathcal{H}_0] \\
 \end{aligned} 
-\right.$&$
-\begin{aligned}
-& [\text{by Definition 1.1} ]\\
-& [\text{by } \mathcal{H}_0]
-\end{aligned} 
-$
-&$\Rightarrow \theta \in H_{12}^- $&$\Rightarrow \partial S_1 \subset H_{12}^-.$\\
-\end{tabular}
+\right. 
+\quad \Rightarrow \theta \in H_{12}^- \quad \Rightarrow \partial S_1 \subset H_{12}^-.
+$$
+
+
+
+
 
 Thus, according to @lem-petite_lemma, $S_1 \subset H_{12}^-$.
 
 We have now the hypothesis $\mathcal H_0: \{S_1, S_2 \subset H_{12}^-\}$, then
 
-\begin{tabular}{lllll}
- $\forall \theta \in  S_1 $&$\left\{
+$$	
+\forall \theta \in S_1 \quad \left\{
 \begin{aligned}
-&  s_1(\theta) \le 0,\\
-& h_{12}(\theta) < 0,\\
+s_1(\theta) \le 0, & &[\text{by Definition 1.1} ] \\
+h_{12}(\theta) < 0, & & [\text{by } \mathcal{H}_0, \text{ Definition 1.1}] \\
 \end{aligned} 
-\right.$&$
-\begin{aligned}
-& [\text{by Definition 1.1}]\\
-& [\text{by } \mathcal{H}_0, \text{ Definition 1.1}]
-\end{aligned} 
-$
-&$\Rightarrow \theta \in S_2$ &$\Rightarrow S_1 \subset S_2$.\\
-\end{tabular}
+\right. 
+\quad \Rightarrow \theta \in  S_2 \quad \Rightarrow S_1 \subset S_2.
+$$
+
 
 Similarly, it is easy to show that  $S_2 \subset S_1\Leftrightarrow S_1, S_2 \subset H_{12}^+$.
 :::
@@ -768,31 +763,25 @@ We have the hypothesis $\mathcal{H}_0:\{S_1~\subset~ H_{12}^+,\, S_2~\subset~ H_
 
 We have now the hypothesis $\mathcal{H}_0:\{S_1\cap S_2 = \emptyset\}$ then
 
-\begin{tabular}{llll}
- $\forall \theta \in S_1$ &$\left\{
+$$	
+\forall \theta \in S_1 \quad \left\{
 \begin{aligned}
-& s_1(\theta) \le 0\,,\\
-&s_2(\theta) > 0\,,\\
+s_1(\theta) \le 0, & &[\text{by Definition 1.1}] \\
+s_2(\theta) > 0, & & [\text{by } \mathcal{H}_0, \text{ Definition 1.1}] \\
 \end{aligned} 
-\right.$&$
+\right. 
+\quad \Rightarrow \theta \in  H_{12}^+.
+$$
+
+$$	
+\forall \theta \in S_2 \quad \left\{
 \begin{aligned}
-& [\text{ by Definition 1.1} ]\\
-& [\text{by }\mathcal{H}_0, \text{ Definition 1.1}]
+s_1(\theta) > 0, & &[\text{by } \mathcal{H}_0, \text{ Definition 1.1}] \\
+s_2(\theta) \le 0, & & [\text{by Definition 1.1}] \\
 \end{aligned} 
-$
-&$\Rightarrow \theta \in H_{12}^+.$\\
-$\forall \theta \in S_2$ &$\left\{
-\begin{aligned}
-& s_1(\theta) > 0\,,\\
-&s_2(\theta) \le 0\,,\\
-\end{aligned} 
-\right.$&$
-\begin{aligned}
-& [\text{by }\mathcal{H}_0, \text{ Definition 1.1}]\\
-& [\text{by Definition 1.1}]
-\end{aligned} 
-$ &$\Rightarrow \theta \in H_{12}^-.$\\
-\end{tabular}
+\right. 
+\quad \Rightarrow \theta \in  H_{12}^-.
+$$
 
 Consequently, $H_{12}$ is  a separating hyperplane of  $S_1$ and $S_2$.
 :::
