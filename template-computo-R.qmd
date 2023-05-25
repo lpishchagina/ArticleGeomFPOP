@@ -526,7 +526,7 @@ Based on these results we expect that R-type pruning GeomFPOP will be more effic
 ## Empirical Time Complexity of GeomFPOP {#sec-TCsmall}
 
 We studied the run time of GeomFPOP (S and R-type) and compared it to PELT for small dimensions ($p=2, 3, 4$).
-Run times were limited to three minutes and were recorded for simulations (without change, i.e i.i.d $\mathcal{N}_p(0, I_p)$). The results are presented in Figure \ref{Figure6}. We observe that GeomFPOP is faster than PELT only for $p=2$. For $p=3$ run times are comparable and for $p=4$ GeomFPOP is slower. This lead us to consider a randomized version of GeomFPOP (see next subsection).
+Run times were limited to three minutes and were recorded for simulations (without change, i.e i.i.d $\mathcal{N}_p(0, I_p)$). The results are presented in @fig-Figure6. We observe that GeomFPOP is faster than PELT only for $p=2$. For $p=3$ run times are comparable and for $p=4$ GeomFPOP is slower. This lead us to consider a randomized version of GeomFPOP (see next subsection).
 
 :::{#fig-Figure6}  
 
@@ -759,6 +759,7 @@ Similarly, it is easy to show that  $S_2 \subset S_1\Leftrightarrow S_1, S_2 \su
 
 :::{#lem-lemma:separation}
 $S_1\cap S_2 = \emptyset \Leftrightarrow H_{12}$ is a separating hyperplane of $S_1$ and $S_2$.
+:::
 
 :::{.proof}
 We have the hypothesis $\mathcal{H}_0:\{S_1~\subset~ H_{12}^+,\, S_2~\subset~ H_{12}^-\}$. Thus, $H_{12}$ is a separating hyperplane of $S_1$ and $S_2$ then, according to its definition, $S_1\cap S_2 = \emptyset$.
