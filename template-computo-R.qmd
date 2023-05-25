@@ -281,25 +281,26 @@ and define $\tilde{Z}^i_{t+1} = B_{|\mathcal P^i|}.$ Using the fourth property o
 
 The pseudo-code of this procedure is described in Algorithm 1. The $\mathtt{select}(\mathcal{A})$ step in Algorithm 1, where $\mathcal{A} \subset  \mathbf S$, returns a subset of $\mathcal{A}$ in  $\mathbf S$. By default, $\mathtt{select}(\mathcal{A}) := \mathcal{A}$.
 
-```{.pseudocode}
-\begin{algorithm}[H]
+```pseudocode
+
+\begin{algorithm}
 \caption{Geometric update rule of $\tilde{Z}^i_t$}
-\begin{algorithmic}[1]
-\Procedure{$\mathtt{updateZone}$}{$\tilde{Z}_{t-1}^i,\mathcal{P}^i, \mathcal{F}^i(t),i,t$}
-\State $\tilde{Z}_t^i\gets \tilde{Z}_{t-1}^i$
-\For{$S\in \mathtt{select}(\mathcal{F}^i(t))$}
-    \State $ \tilde{Z}_t^i \gets \tilde{Z}_t^i\cap_{\tilde{Z}} S$
- \EndFor
-\For{$S \in \mathtt{select}(\mathcal{P}^i)$}
-    \State $ \tilde{Z}_t^i \gets \tilde{Z}_t^i \setminus_{\tilde{Z}} S$
-\EndFor
-\Return  $\tilde{Z}_t^i$
+\begin{algorithmic}
+\Procedure{updateZone}{$\tilde{Z}_{t-1}^i, \mathcal{P}^i, \mathcal{F}^i(t), i, t$}
+  \State $\tilde{Z}_t^i \gets \tilde{Z}_{t-1}^i$
+  \For{$S \in \mathtt{select} (\mathcal{F}^i(t))$}
+    \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i\cap_{\tilde{Z}} S$
+  \EndFor
+  \For{$S \in \mathtt{select} (\mathcal{P}^i)$}
+    \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i \setminus_{\tilde{Z}} S$
+  \EndFor
+  \Return $\tilde{Z}_t^i$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
 ```
 
-We denote the set of change points candidates at time $t$ as $\tau_t$. Note that for any $(i-1)\in \tau_t$  the sum of $|\mathcal P^i|$ and $|\mathcal F^i(t)|$ is $|\tau_t|$. With the default $\mathtt{select}()$ procedure we do $\mathcal{O}(p|\tau_t|)$ operations in Algorithm 1. By limiting the number of elements returned by $\mathtt{select}()$ we can reduce the complexity.
+We denote the set of candidate change points at time $t$ as $\tau_t$. Note that for any $(i-1)\in \tau_t$  the sum of $|\mathcal P^i|$ and $|\mathcal F^i(t)|$ is $|\tau_t|$. With the default $\mathtt{select}()$ procedure we do $\mathcal{O}(p|\tau_t|)$ operations in Algorithm 1. By limiting the number of elements returned by $\mathtt{select}()$ we can reduce the complexity.
 
 :::{.remark}
 For example, if the operator $\mathcal{A} \mapsto \mathtt{select}(\mathcal{A})$, regardless of $|\mathcal A|$, always returns a subset of constant size, then the overall complexity of GeomFPOP is at worst equal to that of PELT with $\sum_{t=1}^{n}\mathcal{O}(p|\tau_t|)$ time complexity.
@@ -320,28 +321,32 @@ To simplify the pseudo-code of GeomFPOP, we also define the following operators:
 
 The pseudo-code of GeomFPOP is presented in Algorithm 2.
 
-```{.pseudocode}
-\begin{algorithm}[!h]
+:::{#alg2}
+```pseudocode
+
+\begin{algorithm}
 \caption{GeomFPOP algorithm}
-\begin{algorithmic}[1]
-\Procedure{$\mathtt{GeomFPOP}$}{$(y, \Omega(\cdot, \cdot),  \beta)$}
-\State $m_0 \gets 0,\quad Q_0(\theta) \gets 0\,,\quad \tau_0 \gets \emptyset, \quad \{\tilde{Z}^{i}_{i-1}\}_{i\in \{1,\dots,n\}}\gets  \mathbb{R}^p$
-\For{$t = 1,\dots, n$}
+\begin{algorithmic}
+\Procedure{GeomFPOP}{$y, \Omega(\cdot, \cdot),\beta$}
+  \State $m_0 \gets 0,\quad Q_0(\theta) \gets 0\,,\quad \tau_0 \gets \emptyset, \quad \{\tilde{Z}^{i}_{i-1}\}_{i\in \{1,\dots,n\}}\gets  \mathbb{R}^p$
+  \For{$t = 1, \dots, n$}
     \State $Q_t(\theta) \gets \min \{ Q_{t-1}(\theta), m_{t-1} + \beta\} + \Omega(\theta, y_t)$
     \State $(m_t, \hat\tau_t) \gets \mathtt{bestCost\&Tau}(t)$
-    \For{$i-1\in \tau_t$}
-        \State $(\mathcal{P}^i, \mathcal{F}^i(t))\gets \mathtt{getPastFutureSets}(i,t)$
-        \State$\tilde{Z}_t^i \gets \mathtt{updateZone}(\tilde{Z}_{t-1}^i,\mathcal{P}^i, \mathcal{F}^i(t),i,t)$
-        \If{$\tilde{Z}_t^i = \emptyset$}{$\tau_t \gets \tau_t \backslash\{i-1\}$}
-        \EndIf
+    \For{$i-1 \in \tau_t$}
+      \State $(\mathcal{P}^i, \mathcal{F}^i(t)) \gets \mathtt{getPastFutureSets}(i,t)$
+      \State $\tilde{Z}_t^i \gets \mathtt{updateZone}(\tilde{Z}_{t-1}^i, \mathcal{P}^i, \mathcal{F}^i(t), i, t)$
+      \If{$\tilde{Z}_t^i = \emptyset$}
+        \State $\tau_t \gets \tau_t \backslash\{i-1\}$
+      \EndIf
     \EndFor
- \State $\tau_t \gets (\tau_{t-1}, t-1)$
-\EndFor
-\Return  $cp(n) \gets \mathtt{backtracking}(\hat\tau, n)$
+    \State $\tau_t \gets (\tau_{t-1}, t-1)$
+  \EndFor
+  \Return $cp(n) \gets \mathtt{backtracking}(\hat\tau, n)$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
 ```
+:::
 
 # Approximation Operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$ {#sec-approximation}
 
@@ -728,7 +733,7 @@ We have the hypothesis $\mathcal H_0:\{ S_1 \subset S_2\}$, then
 \end{aligned} 
 \right.$&$
 \begin{aligned}
-& [\text{by definition of } S_1]\\
+& [\text{by Definition 1.1} ]\\
 & [\text{by } \mathcal{H}_0]
 \end{aligned} 
 $
@@ -747,8 +752,8 @@ We have now the hypothesis $\mathcal H_0: \{S_1, S_2 \subset H_{12}^-\}$, then
 \end{aligned} 
 \right.$&$
 \begin{aligned}
-& [\text{by definition of } S_1]\\
-& [\text{by } \mathcal{H}_0, \text{ definition of } S_2]
+& [\text{by Definition 1.1}]\\
+& [\text{by } \mathcal{H}_0, \text{ Definition 1.1}]
 \end{aligned} 
 $
 &$\Rightarrow \theta \in S_2$ &$\Rightarrow S_1 \subset S_2$.\\
@@ -774,8 +779,8 @@ We have now the hypothesis $\mathcal{H}_0:\{S_1\cap S_2 = \emptyset\}$ then
 \end{aligned} 
 \right.$&$
 \begin{aligned}
-& [\text{ by definition of } S_1]\\
-& [\text{by }\mathcal{H}_0, \text{ definition of } S_2]
+& [\text{ by Definition 1.1} ]\\
+& [\text{by }\mathcal{H}_0, \text{ Definition 1.1}]
 \end{aligned} 
 $
 &$\Rightarrow \theta \in H_{12}^+.$\\
@@ -786,8 +791,8 @@ $\forall \theta \in S_2$ &$\left\{
 \end{aligned} 
 \right.$&$
 \begin{aligned}
-& [\text{by }\mathcal{H}_0, \text{definition of }S_1]\\
-& [\text{by definition of } S_2]
+& [\text{by }\mathcal{H}_0, \text{ Definition 1.1}]\\
+& [\text{by Definition 1.1}]
 \end{aligned} 
 $ &$\Rightarrow \theta \in H_{12}^-.$\\
 \end{tabular}
