@@ -242,7 +242,7 @@ The construction of set $Z^i_t$ using @prp-proposition_sets is illustrated in @f
 
 :::{#fig-Figure3} 
 
-![](images/Figure 3 Bilding Z with 3 past and 3 future disks set_seed_21.png){width=60%}
+![](images/Figure 3 Bilding Z with 3 past and 3 future disks set_seed_21.png){width=50%}
 
 Examples of building a set $Z^i_t$ with $\lvert\mathcal P^i\rvert = \lvert\mathcal F^i(t)\rvert = 3$ for the Gaussian case in 2-D ($\mu = 0,\sigma=1$). The green disks are S-type sets of the past set $\mathcal P^i$. The blue disks are  S-type sets of the future set $\mathcal{F}^i(t)$.
 :::
@@ -828,23 +828,22 @@ The number of operations $\setminus_R$ we limit no more than one:
  
 According to these notations, the approach presented in the original GeomFPOP (R-type) has the form $(\mathtt{all / all})$. We show the impact of introduced limits on the number of change point candidates retained over time and evaluate their run times. The results are presented in Figures [-@fig-StrategiesAll] and [-@fig-RplotTCoptStrAll].
 
+Even though the $\mathtt{(random/random)}$ approach reduces the quality of pruning in dimensions $p=2,3$ and $4$, it
+ gives a significant gain in the run time compared to the original GeomFPOP (R-type)  and is at least comparable to the $\mathtt{(last/random)}$ approach.
+
 :::{#fig-StrategiesAll}  
 
-![](images/Figure 10 Optimization Number of candidates.png){width=90%}
+![](images/Figure 10 Optimization Number of candidates.png){width=80%}
 
 Ratio number of candidate change point over time by different optimization approaches of GeomFPOP (R-type) in dimension $p = 2,3$ and $4$. Averaged over $100$ data sets without changes with $10^4$ data points.
 :::
 
 :::{#fig-RplotTCoptStrAll}  
 
-![](images/Figure 11 Optimization Time complexity.png){width=90%}
+![](images/Figure 11 Optimization Time complexity.png){width=80%}
 
 Run time of different optimization approaches of GeomFPOP (R-type) using multivariate time series without change points. The maximum run time of the algorithms is 3 minutes. Averaged over $100$ data sets.
 :::
-
-Even though the $\mathtt{(random/random)}$ approach reduces the quality of pruning in dimensions $p=2,3$ and $4$, it
- gives a significant gain in the run time compared to the original GeomFPOP (R-type)  and is at least comparable to the $\mathtt{(last/random)}$ approach.
- 
 # References {.unnumbered}
 
 ::: {#refs}
