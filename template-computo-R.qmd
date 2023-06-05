@@ -414,7 +414,7 @@ $$
 $$
 :::
 
-We now explain how we compute these two operators. First, we note that they can be recovered by solving a $2p$ one-dimensional optimization problem.
+We now explain how we compute these two operators. First, we note that they can be recovered by solving a $2p$ one-dimensional optimization problems.
 
 :::{#prp-proposition}
 The $k$-th minimum coordinates $\tilde{l}_k$ and maximum coordinates $\tilde{r}_k$ of   $\tilde{R} = R \cap_R S$ (resp. $\tilde{R} = R \setminus_R S$) is obtained as
@@ -518,7 +518,7 @@ We evaluate the functional pruning efficiency of the GeomFPOP method using simul
 
 We report in @fig-Figure5 the percentage of candidates that are kept by GeomFPOP as a function of $n$, $p$ and the type of pruning (R or S). Regardless of the type of approximation and contrary to PELT, we observe that there is some pruning. However when increasing the dimension $p$, the quality of the pruning decreases. 
 
-Comparing  @fig-Figure5 left and the right we see that for dimension $p=2$ to $p=5$ R-type prunes more than the S-type, while for larger dimensions the S-type  prunes more than the R-type. For example, for $p = 2$ at time $t=10^4$  by GeomFPOP (R-type) the number of candidates stored over $t$  does not exceed $1\%$ versus $3\%$ by GeomFPOP (S-type). This intuitively makes sense. One the one hand the R-type approximation of a sphere gets worst with the dimension. On the other hand with R-type approximation every new approximation is included in the previous one. For small dimensions this memory effect out weight the roughness of the approximation.
+Comparing  @fig-Figure5 left and the right we see that for dimensions $p=2$ to $p=5$ R-type prunes more than the S-type, while for larger dimensions the S-type  prunes more than the R-type. For example, for $p = 2$ at time $t=10^4$  by GeomFPOP (R-type) the number of candidates stored over $t$  does not exceed $1\%$ versus $3\%$ by GeomFPOP (S-type). This intuitively makes sense. One the one hand the R-type approximation of a sphere gets worst with the dimension. On the other hand with R-type approximation every new approximation is included in the previous one. For small dimensions this memory effect outweight the roughness of the approximation.
 
 :::{#fig-Figure5}  
 
@@ -543,7 +543,7 @@ Run time of GeomFROP (S and R types) and PELT using multivariate time series wit
 
 ## Empirical Time Complexity of a Randomized GeomFPOP {#sec-GeomFPOP_random}
 
-R-type GeomFPOP is designed in such a way that at each iteration we need to consider all past and future spheres of change $i$. In practice, it is often sufficient to consider just a few of them to get an empty set. Having this in mind, we propose a further approximation of the $Z^i_t$ where we apply our $\cap_{R}$ and $\setminus_R$ operators only for a randomly selected subset of the past and future sets. In detail, we propose to redefine the output of the $\mathtt{select}()$ function in Algorithm 1 on any sets $\mathcal{P}^i$ and $\mathcal{F}^i(t)$ as:
+R-type GeomFPOP is designed in such a way that at each iteration we need to consider all past and future spheres of change $i$. In practice, it is often sufficient to consider just a few of them to get an empty set. Having this in mind, we propose a further approximation of the $Z^i_t$ where we apply our $\cap_{R}$ and $\setminus_R$ operators only for a randomly selected subset of the past and future sets. In detail, we propose to redefine the output of the $\mathtt{select}()$ function in Algorithm 1 for any sets $\mathcal{P}^i$ and $\mathcal{F}^i(t)$ as:
 
 
 - $\mathtt{select}(\mathcal{P}^i)$ returns one random set from $\mathcal{P}^i$.
@@ -580,7 +580,7 @@ Run time dependence of $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) 
 
 ## Run Time as a Function of the Number of Segments {#sec-Run_time_segment_nb}
 
-For small dimensions ($2\le p \le 4$) we also generated time series with $10^6$ data points with increasing number of segments. We have considered the following number of segments: $(1,2,5) \times 10^i$( $i=0,\dots,3$) and $10^4$. The mean was equal to $1$ for even segments,  and $0$ for odd segments. In @fig-Figure9 we can see the run time dependence of the $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) and PELT on the number of segments for this type of time series. Interestingly, the run time of GeomFPOP $\mathtt{(random/random)}$ is comparable to PELT even when the number of segment is large. For smaller number of segments (as already observed) GeomFPOP $\mathtt{(random/random)}$ is an order of magnitude faster.
+For small dimensions ($2\le p \le 4$) we also generated time series with $10^6$ data points with increasing number of segments. We have considered the following number of segments: $(1,2,5) \times 10^i$( for $i=0,\dots,3$) and $10^4$. The mean was equal to $1$ for even segments,  and $0$ for odd segments. In @fig-Figure9 we can see the run time dependence of the $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) and PELT on the number of segments for this type of time series. Interestingly, the run time of GeomFPOP $\mathtt{(random/random)}$ is comparable to PELT even when the number of segment is large. For smaller number of segments (as already observed) GeomFPOP $\mathtt{(random/random)}$ is an order of magnitude faster.
 
 :::{#fig-Figure9}  
 
