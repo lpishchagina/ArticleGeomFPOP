@@ -685,7 +685,7 @@ We define the output of $\mathtt{half-space}(S,H)$ by the following rule:
 $$	
 \left\{
 \begin{aligned}
-\theta_1 &= &Arg\min_{\theta \in S} s(\theta),\\
+\theta_1 &= &Arg\min s(\theta),\\
 \theta_2& =& \left\{
 \begin{aligned}
 Arg\min_{\theta \in S} h(\theta),& &\text{if } \theta_1 \in H^+,\\
