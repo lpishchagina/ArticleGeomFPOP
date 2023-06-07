@@ -190,7 +190,7 @@ ISSN 2824-7795</p>
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">June 5, 2023</p>
+        <p class="date-modified">June 7, 2023</p>
       </div>
     </div>
       
@@ -439,7 +439,7 @@ Z_t^i = (\cap_{S\in \mathcal{F}^i(t)}S) \setminus (\cup_{S\in \mathcal{P}^i}S)\,
 </span></p>
 <p>and define <span class="math inline">\tilde{Z}^i_{t+1} = B_{|\mathcal P^i|}.</span> Using the fourth property of <a href="#def-assumption1">Definition&nbsp;2</a> and <a href="#prp-proposition_sets">Proposition&nbsp;1</a>, we get that at any time of the algorithm <span class="math inline">\tilde{Z}^i_t</span> contains <span class="math inline">{Z}^i_t.</span></p>
 <p>The pseudo-code of this procedure is described in Algorithm 1. The <span class="math inline">\mathtt{select}(\mathcal{A})</span> step in Algorithm 1, where <span class="math inline">\mathcal{A} \subset \mathbf S</span>, returns a subset of <span class="math inline">\mathcal{A}</span> in <span class="math inline">\mathbf S</span>. By default, <span class="math inline">\mathtt{select}(\mathcal{A}) := \mathcal{A}</span>.</p>
-<div class="pseudocode-container" data-pseudocode-index="1" data-alg-title="Algorithm">
+<div class="pseudocode-container" data-alg-title="Algorithm" data-pseudocode-index="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Geometric update rule of $\tilde{Z}^i_t$} \begin{algorithmic} \Procedure{updateZone}{$\tilde{Z}_{t-1}^i, \mathcal{P}^i, \mathcal{F}^i(t), i, t$} \State $\tilde{Z}_t^i \gets \tilde{Z}_{t-1}^i$ \For{$S \in \mathtt{select} (\mathcal{F}^i(t))$} \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i\cap_{\tilde{Z}} S$ \EndFor \For{$S \in \mathtt{select} (\mathcal{P}^i)$} \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i \setminus_{\tilde{Z}} S$ \EndFor \Return $\tilde{Z}_t^i$ \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -702,7 +702,7 @@ s^k(\theta^k)+\sum_{j\neq k} s^j(\tilde{\theta}^j) -\Delta= 0 \,.
 \left\{
 \begin{aligned}
 &amp; \sum_{k=1}^p (y_i^k -\theta^k)^2\,, &amp; \text{ if }y_i \sim \mathcal{N}_p(\theta, \sigma^2\mathbb{I}_p)\,,\\
-&amp;2 \sum_{k=1}^p \left\{\log\left(\frac{(\theta^k)^{y^k_i}}{y^k_i!}\right)-  \theta^k\right\}\,, &amp; \text{ if }y_i \sim \mathcal{P}(\theta)\,,\\
+&amp;2 \sum_{k=1}^p \left\{\theta^k-\log\left(\frac{(\theta^k)^{y^k_i}}{y^k_i!}\right)\right\}\,, &amp; \text{ if }y_i \sim \mathcal{P}(\theta)\,,\\
 &amp;-2 \sum_{k=1}^p\log\left((\theta^k)^{y_i^k}(1-\theta^k)^\phi \begin{pmatrix}
 y_i^k+\phi-1 \\
 y_i^k
@@ -1966,7 +1966,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-604"><a href="#cb2-604" aria-hidden="true" tabindex="-1"></a>\left<span class="sc">\{</span></span>
 <span id="cb2-605"><a href="#cb2-605" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-606"><a href="#cb2-606" aria-hidden="true" tabindex="-1"></a>&amp; \sum_{k=1}^p (y_i^k -\theta^k)^2\,, &amp; \text{ if }y_i \sim \mathcal{N}_p(\theta, \sigma^2\mathbb{I}_p)\,,<span class="sc">\\</span></span>
-<span id="cb2-607"><a href="#cb2-607" aria-hidden="true" tabindex="-1"></a>&amp;2 \sum_{k=1}^p \left<span class="sc">\{</span>\log\left(\frac{(\theta^k)^{y^k_i}}{y^k_i!}\right)-  \theta^k\right<span class="sc">\}</span>\,, &amp; \text{ if }y_i \sim \mathcal{P}(\theta)\,,<span class="sc">\\</span> </span>
+<span id="cb2-607"><a href="#cb2-607" aria-hidden="true" tabindex="-1"></a>&amp;2 \sum_{k=1}^p \left<span class="sc">\{</span>\theta^k-\log\left(\frac{(\theta^k)^{y^k_i}}{y^k_i!}\right)\right<span class="sc">\}</span>\,, &amp; \text{ if }y_i \sim \mathcal{P}(\theta)\,,<span class="sc">\\</span> </span>
 <span id="cb2-608"><a href="#cb2-608" aria-hidden="true" tabindex="-1"></a>&amp;-2 \sum_{k=1}^p\log\left((\theta^k)^{y_i^k}(1-\theta^k)^\phi \begin{pmatrix}</span>
 <span id="cb2-609"><a href="#cb2-609" aria-hidden="true" tabindex="-1"></a>y_i^k+\phi-1 <span class="sc">\\</span></span>
 <span id="cb2-610"><a href="#cb2-610" aria-hidden="true" tabindex="-1"></a>y_i^k </span>
