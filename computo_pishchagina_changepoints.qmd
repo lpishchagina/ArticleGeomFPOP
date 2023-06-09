@@ -8,9 +8,11 @@ author:
     affiliations:
       - name: Université Paris-Saclay, CNRS, Univ Evry, LaMME, France
   - name: Guillem Rigaill
+    email: guillem.rigaill@inrae.fr
     affiliations:
       - name: Université Paris-Saclay, CNRS, Univ Evry, LaMME, INRAE, IPS2, France
   - name: Vincent Runge
+    email: vincent.runge@univ-evry.fr
     url: https://johndoe.someplace.themoon.org
     affiliations:
       - name: Université Paris-Saclay, CNRS, Univ Evry, LaMME, France
