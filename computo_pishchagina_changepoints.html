@@ -190,7 +190,7 @@ ISSN 2824-7795</p>
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">June 9, 2023</p>
+        <p class="date-modified">June 21, 2023</p>
       </div>
     </div>
       
@@ -318,11 +318,11 @@ Q_{t+1}(\theta) = \min \{Q_t(\theta),m_t +\beta \} + \Omega(\theta, y_{t+1})\,,
 \tag{3}</span></span></p>
 <p>for all <span class="math inline">\theta \in \mathbb R^p</span>, with <span class="math inline">m_t = \min_\theta Q_t(\theta)</span> and the initialization <span class="math inline">Q_0(\theta) = 0</span>, so that <span class="math inline">Q_1(\theta) = \Omega(\theta,y_1)</span>. By looking closely at this relation, we see that each function <span class="math inline">Q_t</span> is a piece-wise continuous function consisting of at most <span class="math inline">t</span> different functions on <span class="math inline">\mathbb R^p</span>, denoted <span class="math inline">q^i_t</span>:</p>
 <p><span class="math display">
-Q_t(\theta) = \min_{i \in \{1,\dots,t \}} \left\{q_t^i(\theta)\right\}\,,   
+Q_t(\theta) = \min_{i \in \{1,\dots,t \}} \left\{q_t^i(\theta)\right\}\,,
 </span></p>
 <p>where the <span class="math inline">q_t^i</span> functions are given by explicit formulas:</p>
 <p><span class="math display">
-q_t^i(\theta) = m_{i-1} + \beta + \sum_{j = i}^{t} \Omega(\theta,y_j)\,,\quad\theta \in \mathbb R^p\,,\quad i = 1,\dots,t.  
+q_t^i(\theta) = m_{i-1} + \beta + \sum_{j = i}^{t} \Omega(\theta,y_j)\,,\quad\theta \in \mathbb R^p\,,\quad i = 1,\dots,t.
 </span></p>
 <p>and</p>
 <p><span id="eq-m_im1"><span class="math display">
@@ -434,12 +434,12 @@ Z_t^i = (\cap_{S\in \mathcal{F}^i(t)}S) \setminus (\cup_{S\in \mathcal{P}^i}S)\,
       \begin{aligned}
        A_{0} =\tilde{Z}^i_{t} \,, &amp; \quad A_j = A_{j-1}\,\cap_{\tilde{Z}}\, S_j^F\,, &amp; j = 1,\dots , |\mathcal{F}^i(t)|\,,\\
         B_{0} =A_{|\mathcal{F}^i(t)|}\,, &amp; \quad B_j = B_{j-1}\,\setminus_{\tilde{Z}} \, S_P^j\,, &amp; j = 1,\dots , |\mathcal{P}^i| \,,\\
-    \end{aligned}  
+    \end{aligned}
 \right.
 </span></p>
 <p>and define <span class="math inline">\tilde{Z}^i_{t+1} = B_{|\mathcal P^i|}.</span> Using the fourth property of <a href="#def-assumption1">Definition&nbsp;2</a> and <a href="#prp-proposition_sets">Proposition&nbsp;1</a>, we get that at any time of the algorithm <span class="math inline">\tilde{Z}^i_t</span> contains <span class="math inline">{Z}^i_t.</span></p>
 <p>The pseudo-code of this procedure is described in Algorithm 1. The <span class="math inline">\mathtt{select}(\mathcal{A})</span> step in Algorithm 1, where <span class="math inline">\mathcal{A} \subset \mathbf S</span>, returns a subset of <span class="math inline">\mathcal{A}</span> in <span class="math inline">\mathbf S</span>. By default, <span class="math inline">\mathtt{select}(\mathcal{A}) := \mathcal{A}</span>.</p>
-<div class="pseudocode-container" data-alg-title="Algorithm" data-pseudocode-index="1">
+<div class="pseudocode-container" data-pseudocode-index="1" data-alg-title="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{Geometric update rule of $\tilde{Z}^i_t$} \begin{algorithmic} \Procedure{updateZone}{$\tilde{Z}_{t-1}^i, \mathcal{P}^i, \mathcal{F}^i(t), i, t$} \State $\tilde{Z}_t^i \gets \tilde{Z}_{t-1}^i$ \For{$S \in \mathtt{select} (\mathcal{F}^i(t))$} \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i\cap_{\tilde{Z}} S$ \EndFor \For{$S \in \mathtt{select} (\mathcal{P}^i)$} \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i \setminus_{\tilde{Z}} S$ \EndFor \Return $\tilde{Z}_t^i$ \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -521,7 +521,7 @@ s(\theta) = \sum_{k=1}^p s^k(\theta^k)- \Delta\,,\quad\quad \tilde{s}(\theta) = 
         &amp; \tilde{S}\,, &amp; \hbox{otherwise}\,.\\
         \end{aligned}
         \right.
-    \end{aligned}    
+    \end{aligned}
 </span></p>
 </div>
 <p>As a consequence, we only need an easy way to detect any of these two geometric configurations: <span class="math inline">\tilde{S}\cap S</span> and <span class="math inline">\tilde{S} \subset S</span>.</p>
@@ -549,7 +549,7 @@ s(\theta) = \sum_{k=1}^p s^k(\theta^k)- \Delta\,,\quad\quad \tilde{s}(\theta) = 
         &amp; \hbox{subject to } \varepsilon s(\theta) \le 0 \,,\\
         &amp; \quad \quad \quad \quad \quad l_j \le \theta_j \le r_j\,,\quad j = 1,\dots,p \,,\\
     \end{aligned}
-\right.      
+\right.
 \tag{9}</span></span> with <span class="math inline">\varepsilon = 1</span> (resp. <span class="math inline">\varepsilon = -1</span>).</p>
 </div>
 <p>To solve the previous problems (<span class="math inline">\varepsilon = 1</span> or <span class="math inline">-1</span>), we define the following characteristic points.</p>
@@ -697,7 +697,7 @@ s^k(\theta^k)+\sum_{j\neq k} s^j(\tilde{\theta}^j) -\Delta= 0 \,.
 <section id="sec-AppendixA" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="sec-AppendixA"><span class="header-section-number">5.1</span> Examples of Likelihood-Based Cost Functions</h2>
 <p>We define a cost function for segmentation as in <a href="#eq-Cy_it">Equation&nbsp;1</a> by the function <span class="math inline">\Omega(\cdot,\cdot)</span> (the opposite log-likelihood (times two)). Below is the expression of this function linked to data point <span class="math inline">y_i = (y_i^1,\dots, y_i^p)\in \mathbb R^p</span> for three examples of Parametric Multivariate Models:</p>
-<p><span id="eq-MLE"><span class="math display">      
+<p><span id="eq-MLE"><span class="math display">
 \Omega(\theta,y_i)=
 \left\{
 \begin{aligned}
@@ -735,7 +735,7 @@ s(\theta) = a(\theta) +  \langle b,\theta \rangle + c,
 </span></p>
 <p>with <span class="math inline">a(\cdot)</span> is some convex function depending on <span class="math inline">\theta</span>, <span class="math inline">b=\{b^k\}_{k =1,\dots, p} \in \mathbb{R}^p</span> and <span class="math inline">c \in \mathbb{R}</span>.</p>
 <p>For example, in the Gaussian case, the elements have the following form:</p>
-<p><span class="math display">  
+<p><span class="math display">
 \begin{aligned}
 &amp; a: \theta \mapsto \theta^2\,,&amp; &amp;b^k =  2\bar Y_{i:j}^k\,,&amp;&amp;c =\bar Y^2_{i:j} - \Delta_{ij}\,,
 \end{aligned}
@@ -744,7 +744,7 @@ s(\theta) = a(\theta) +  \langle b,\theta \rangle + c,
 </div>
 <div id="def-app:func_h" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 7 </strong></span>For all <span class="math inline">\theta \in \mathbb R^p</span> and <span class="math inline">S_1, S_2 \in \mathbf{S}</span> with their associated functions, <span class="math inline">s_1</span> and <span class="math inline">s_2</span>, we define a function <span class="math inline">h_{12}</span> and a hyperplane <span class="math inline">H_{12}</span> as:</p>
-<p><span class="math display">  
+<p><span class="math display">
 \begin{aligned}
 &amp;h_{12}(\theta):= s_2(\theta) - s_1(\theta)\,,&amp; &amp;H_{12} := \left \{\theta \in \mathbb{R}^p | h_{12}(\theta) = 0 \right \}\,.
 \end{aligned}
@@ -765,7 +765,7 @@ s(\theta) = a(\theta) +  \langle b,\theta \rangle + c,
 <ol type="1">
 <li>We find two points, <span class="math inline">\theta_1, \theta_2 \in \mathbb R^p</span>, as:</li>
 </ol>
-<p><span class="math display">  
+<p><span class="math display">
 \left\{
 \begin{aligned}
 \theta_1 &amp;= &amp;Arg\min s(\theta),\\
@@ -781,7 +781,7 @@ Arg\max_{\theta \in S} h(\theta), &amp; &amp; \text{if } \theta_1 \in H^-.\\
 <ol start="2" type="1">
 <li>We have:</li>
 </ol>
-<p><span class="math display">  
+<p><span class="math display">
 \mathtt{half-space}(S,H) = \left\{
 \begin{aligned}
 \{H^+\}, &amp; &amp;\text{if } \theta_1, \theta_2  \in H^+,\\
@@ -800,7 +800,7 @@ Arg\max_{\theta \in S} h(\theta), &amp; &amp; \text{if } \theta_1 \in H^-.\\
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Proof</em>. </span>We have the hypothesis <span class="math inline">\mathcal H_0:\{ S_1 \subset S_2\}</span>, then</p>
-<p><span class="math display">  
+<p><span class="math display">
 \forall \theta \in  \partial S_1 \quad \left\{
 \begin{aligned}
 s_1(\theta) = 0, &amp; &amp;[\text{by Definition 1.1} ] \\
@@ -811,7 +811,7 @@ s_2(\theta) \le 0, &amp; &amp; [\text{by } \mathcal{H}_0] \\
 </span></p>
 <p>Thus, according to <a href="#lem-petite_lemma">Lemma&nbsp;1</a>, <span class="math inline">S_1 \subset H_{12}^-</span>.</p>
 <p>We have now the hypothesis <span class="math inline">\mathcal H_0: \{S_1, S_2 \subset H_{12}^-\}</span>, then</p>
-<p><span class="math display">  
+<p><span class="math display">
 \forall \theta \in S_1 \quad \left\{
 \begin{aligned}
 s_1(\theta) \le 0, &amp; &amp;[\text{by Definition 1.1} ] \\
@@ -828,7 +828,7 @@ h_{12}(\theta) &lt; 0, &amp; &amp; [\text{by } \mathcal{H}_0, \text{ Definition 
 <div class="proof">
 <p><span class="proof-title"><em>Proof</em>. </span>We have the hypothesis <span class="math inline">\mathcal{H}_0:\{S_1~\subset~ H_{12}^+,\, S_2~\subset~ H_{12}^-\}</span>. Thus, <span class="math inline">H_{12}</span> is a separating hyperplane of <span class="math inline">S_1</span> and <span class="math inline">S_2</span> then, according to its definition, <span class="math inline">S_1\cap S_2 = \emptyset</span>.</p>
 <p>We have now the hypothesis <span class="math inline">\mathcal{H}_0:\{S_1\cap S_2 = \emptyset\}</span> then</p>
-<p><span class="math display">  
+<p><span class="math display">
 \forall \theta \in S_1 \quad \left\{
 \begin{aligned}
 s_1(\theta) \le 0, &amp; &amp;[\text{by Definition 1.1}] \\
@@ -837,7 +837,7 @@ s_2(\theta) &gt; 0, &amp; &amp; [\text{by } \mathcal{H}_0, \text{ Definition 1.1
 \right.
 \quad \Rightarrow \theta \in  H_{12}^+.
 </span></p>
-<p><span class="math display">  
+<p><span class="math display">
 \forall \theta \in S_2 \quad \left\{
 \begin{aligned}
 s_1(\theta) &gt; 0, &amp; &amp;[\text{by } \mathcal{H}_0, \text{ Definition 1.1}] \\
@@ -1422,14 +1422,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>In this work, we present a new algorithm, called Geometric Functional Pruning Optimal Partitioning (GeomFPOP). The idea of our method consists in approximating the sets that are updated at each iteration of FPOP using simpler geometric shapes. Their simplicity of description and simple updating allow for a quick emptiness test.</span>
 <span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>The paper has the following structure. In @sec-changesMulti we introduce the penalized optimization problem for segmented multivariate time series. We then review the existing pruned dynamic programming methods for solving this problem. We define the geometric problem that occurs when using functional pruning. The new method, called GeomFPOP, is described in @sec-GeomFPOP and based on approximating intersection and exclusion set operators. In @sec-approximation we introduce two approximation types (sphere-like and rectangle-like) and define the approximation operators for each of them. We then compare in @sec-study the empirical efficiency of GeomFPOP with PELT on simulated data. </span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>The paper has the following structure. In @sec-changesMulti we introduce the penalized optimization problem for segmented multivariate time series. We then review the existing pruned dynamic programming methods for solving this problem. We define the geometric problem that occurs when using functional pruning. The new method, called GeomFPOP, is described in @sec-GeomFPOP and based on approximating intersection and exclusion set operators. In @sec-approximation we introduce two approximation types (sphere-like and rectangle-like) and define the approximation operators for each of them. We then compare in @sec-study the empirical efficiency of GeomFPOP with PELT on simulated data.</span>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="fu"># Functional Pruning for Multiple Time Series{#sec-changesMulti}</span></span>
 <span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model and Cost{#sec-model}</span></span>
 <span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>We consider the problem of change point detection in multiple time series of length $n$ and dimension $p$. Our aim is to partition time into segments, such that in each segment the parameter associated to each time series is constant. For a time series $y$ we write $y = y_{1:n} = (y_1,\dots, y_n) \in(\mathbb R^p)^n$ with $y_i^k$ the $k$-th component of the $p$-dimensional point $y_i\in\mathbb R^p$ in position $i$ in vector $y_{1:n}$. We also use the notation $y _{i:j} = (y_i,\dots, y_j)$ to denote points from index $i$ to $j$. If we assume that there are $M$ change points in a time series, this corresponds to time series splits into $M+1$ distinct segments. Each segment $m \in \{1,\dots, M+1\}$ is generated by independent random variables from a multivariate distribution with  the segment-specific parameter $\theta_m = (\theta_m^1,\dots, \theta_m^p)  \in \mathbb R^p$. A segmentation with $M$ change points is defined by the vector of integers $\tau =(\tau_0 = 0, \tau_1,\dots,\tau_M,\tau_{M+1}=n)$. Segments are given by the sets of indices $\{\tau_i+1,\dots, \tau_{i+1}<span class="sc">\}</span>$ with $i$ in $<span class="sc">\{</span>0,1,\ldots,M<span class="sc">\}</span>$. </span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>We consider the problem of change point detection in multiple time series of length $n$ and dimension $p$. Our aim is to partition time into segments, such that in each segment the parameter associated to each time series is constant. For a time series $y$ we write $y = y_{1:n} = (y_1,\dots, y_n) \in(\mathbb R^p)^n$ with $y_i^k$ the $k$-th component of the $p$-dimensional point $y_i\in\mathbb R^p$ in position $i$ in vector $y_{1:n}$. We also use the notation $y _{i:j} = (y_i,\dots, y_j)$ to denote points from index $i$ to $j$. If we assume that there are $M$ change points in a time series, this corresponds to time series splits into $M+1$ distinct segments. Each segment $m \in \{1,\dots, M+1\}$ is generated by independent random variables from a multivariate distribution with  the segment-specific parameter $\theta_m = (\theta_m^1,\dots, \theta_m^p)  \in \mathbb R^p$. A segmentation with $M$ change points is defined by the vector of integers $\tau =(\tau_0 = 0, \tau_1,\dots,\tau_M,\tau_{M+1}=n)$. Segments are given by the sets of indices $\{\tau_i+1,\dots, \tau_{i+1}<span class="sc">\}</span>$ with $i$ in $<span class="sc">\{</span>0,1,\ldots,M<span class="sc">\}</span>$.</span>
 <span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>We define the set $S_t$ of all possible change point locations related to the segmentation of data points between positions $1$ to $t$ as</span>
 <span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a></span>
@@ -1441,7 +1441,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>\mathcal C(y_{i:t}) = \min_{\theta \in \mathbb{R}^p} \sum_{j=i}^{t}\Omega(\theta, y_j) = \min_{\theta \in \mathbb{R}^p} \sum_{j=i}^{t} \left(\sum_{k=1}^{p} \omega(\theta^k, y_j^k)\right)\,,</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>$$ {#eq-Cy_it}  </span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>$$ {#eq-Cy_it}</span>
 <span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>with $\omega$ the atomic likelihood function associated with $\Omega$ for each univariate time series. This decomposition is made possible by the independence hypothesis between dimensions. Notice that function $\omega$ could have been dimension-dependent with a mixture of different distributions (Gauss, Poisson, negative binomial, etc.). In our study, we use the same data model for all dimensions.</span>
 <span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a></span>
@@ -1455,11 +1455,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Functional Pruning Dynamic Programming Algorithm {#sec-UpdateRule}</span></span>
 <span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>The idea of the Optimal Partitioning (OP) method <span class="co">[</span><span class="ot">@jackson2005algorithm</span><span class="co">]</span> is to search for the last change point defining the last segment in data $y_{1:t}$ at each iteration (with $Q_0 = 0$), which leads to the recursion: </span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>The idea of the Optimal Partitioning (OP) method <span class="co">[</span><span class="ot">@jackson2005algorithm</span><span class="co">]</span> is to search for the last change point defining the last segment in data $y_{1:t}$ at each iteration (with $Q_0 = 0$), which leads to the recursion:</span>
 <span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>Q_{t} = \min_{i\in<span class="sc">\{</span>0,\dots,t-1<span class="sc">\}</span>}\Big(Q_i + \mathcal C(y_{({i+1}:t}) + \beta \Big)\,.</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>$$ </span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>*Functional description.* In the FPOP method we introduce a last segment parameter $\theta = (\theta^1,\dots, \theta^p)$ in $\mathbb R^p$ and define a functional cost $\theta \mapsto Q_t(\theta)$ depending on $\theta$, that takes the following form:</span>
 <span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a></span>
@@ -1470,19 +1470,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>As explained in @Maidstone, we can compute the function $Q_{t+1}(\cdot)$ based only on the knowledge of $Q_{t}(\cdot)$ as for each integer $t$ from $0$ to $n-1$. We have:</span>
 <span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>Q_{t+1}(\theta) = \min <span class="sc">\{</span>Q_t(\theta),m_t +\beta <span class="sc">\}</span> + \Omega(\theta, y_{t+1})\,, </span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>Q_{t+1}(\theta) = \min <span class="sc">\{</span>Q_t(\theta),m_t +\beta <span class="sc">\}</span> + \Omega(\theta, y_{t+1})\,,</span>
 <span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>$$ {#eq-Q_tpl1}</span>
 <span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>for all $\theta \in \mathbb R^p$, with $m_t = \min_\theta Q_t(\theta)$ and the initialization $Q_0(\theta) = 0$, so that $Q_1(\theta) = \Omega(\theta,y_1)$. By looking closely at this relation, we see that each function $Q_t$ is a piece-wise continuous function consisting of at most $t$ different functions on $\mathbb R^p$, denoted  $q^i_t$:</span>
 <span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>Q_t(\theta) = \min_{i \in <span class="sc">\{</span>1,\dots,t <span class="sc">\}</span>} \left<span class="sc">\{</span>q_t^i(\theta)\right<span class="sc">\}</span>\,,   </span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>Q_t(\theta) = \min_{i \in <span class="sc">\{</span>1,\dots,t <span class="sc">\}</span>} \left<span class="sc">\{</span>q_t^i(\theta)\right<span class="sc">\}</span>\,,</span>
 <span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>where the $q_t^i$ functions are given by explicit formulas: </span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>where the $q_t^i$ functions are given by explicit formulas:</span>
 <span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>q_t^i(\theta) = m_{i-1} + \beta + \sum_{j = i}^{t} \Omega(\theta,y_j)\,,\quad\theta \in \mathbb R^p\,,\quad i = 1,\dots,t.  </span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>q_t^i(\theta) = m_{i-1} + \beta + \sum_{j = i}^{t} \Omega(\theta,y_j)\,,\quad\theta \in \mathbb R^p\,,\quad i = 1,\dots,t.</span>
 <span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>and</span>
@@ -1498,7 +1498,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>*Backtracking.* Knowing the values of $\hat{\tau}_t$ for all $t=1, \dots, n$, we can always restore the optimal segmentation at time $n$ for $y_{1:n}$. This procedure is called backtracking. The vector $cp(n)$ of ordered change points in the optimal segmentation of $y_{1:n}$ is determined recursively by the relation $cp(n) = (cp(\hat \tau_n), \hat \tau_n)$ with stopping rule $cp(0)=\emptyset$.    </span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>*Backtracking.* Knowing the values of $\hat{\tau}_t$ for all $t=1, \dots, n$, we can always restore the optimal segmentation at time $n$ for $y_{1:n}$. This procedure is called backtracking. The vector $cp(n)$ of ordered change points in the optimal segmentation of $y_{1:n}$ is determined recursively by the relation $cp(n) = (cp(\hat \tau_n), \hat \tau_n)$ with stopping rule $cp(0)=\emptyset$.</span>
 <span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>*Parameter space description.* Applying functional pruning requires a precise analysis of the recursion (<span class="co">[</span><span class="ot">-@eq-Q_tpl1</span><span class="co">]</span>) that depends on the property of the cost function $\Omega$. In what follows we consider three choices based on a Gaussian, Poisson, and negative binomial distribution for data generation. The exact formulas of these cost functions are given in @sec-AppendixA.</span>
 <span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a></span>
@@ -1509,12 +1509,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>The key idea behind functional pruning is that the $Z_t^i$ are nested ($Z_{t+1}^i \subset Z_t^i$) thus as soon as we can prove the emptiness of one set $Z_t^i$, we delete its associated $q_t^i$ function and do not have to consider its minimum anymore at any further iteration (proof in @sec-geometry). In dimension $p = 1$ this is reasonably easy. In this case, the sets $Z^i_t$ ($i=1,\dots, t$) are unions of intervals and an efficient functional pruning rule is possible by updating a list of these intervals for $Q_t$. This approach is implemented in FPOP <span class="co">[</span><span class="ot">@Maidstone</span><span class="co">]</span>.</span>
-<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>In dimension $p \ge 2$ it is not so easy anymore to keep track of the emptiness of the sets $Z^i_t$. We illustrate the dynamics of the $Z^i_t$ sets in @fig-Figure1 in the bi-variate Gaussian case. Each color is associated with a set $Z_t^i$ (corresponding to a possible change at $i-1$) for $t$ equal $1$ to $5$. This plot shows in particular that sets $Z_t^i$ can be non-convex.</span>
 <span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>::: {#fig-Figure1} </span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>::: {#fig-Figure1}</span>
 <span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 1 Z sets over time set_seed_617.png)</span> </span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 1 Z sets over time set_seed_617.png)</span></span>
 <span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>The sets $Z^i_t$ over time for the bi-variate independent Gaussian model on time series without change $y = \left( (0.29, 1.93), (1.86, -0.02), (0.9, 2.51), (-1.26, 0.91), (1.22, 1.11)   \right)$. From left to right we represent at time $t=1, 2, 3, 4,$ and $5$ the parameter space $(\theta^1, \theta^2).$ Each $Z^i_t$ is represented by a color. The change $1$ associated with  quadratics $2$ is pruned at $t = 3$. Notice that each time sequence of $Z^i_t$ with $i$ fixed is a nested sequence of sets.</span>
 <span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>:::</span>
@@ -1525,7 +1525,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>::: {#def-defS}</span>
 <span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>We define *$S$-type set* $S^i_j$ using the function $\Omega$ as </span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>We define *$S$-type set* $S^i_j$ using the function $\Omega$ as</span>
 <span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>S_j^i = \left<span class="sc">\{</span> \theta \in \mathbb R^p \,|\, \sum_{u=i+1}^j \Omega(\theta, y_u) \le m_{j}-m_{i}\right<span class="sc">\}</span>\,,\hbox{ when } i &lt; j</span>
@@ -1550,7 +1550,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a>    \right.</span>
 <span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a>$$ {#eq-setSfunc}</span>
 <span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>where $m_{i}$ and $m_j$ are defined as in @eq-m_im1. The sets $S_j^i$ for $i &lt; j$ are also described by relation </span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>where $m_{i}$ and $m_j$ are defined as in @eq-m_im1. The sets $S_j^i$ for $i &lt; j$ are also described by relation</span>
 <span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>S_j^i = s_{ij}^{-1} (-\infty,0]\,.</span>
@@ -1566,13 +1566,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a>At time $t = 1,\dots, n$ we define the following sets associated to the last change point index $i-1$:</span>
-<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a>-$\mathtt{past}\,\mathtt{set} \,\mathcal P^i$</span>
 <span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>\mathcal P^i =<span class="sc">\{</span>S_{i}^u,\, u = 1,\dots,i-1<span class="sc">\}</span>\,.</span>
-<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>$$ </span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>-$\mathtt{future}\, \mathtt{set} \,\mathcal F^i(t)$ </span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>-$\mathtt{future}\, \mathtt{set} \,\mathcal F^i(t)$</span>
 <span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>\mathcal F^i(t) =<span class="sc">\{</span>S_{v}^i, \, v = i,\dots,t<span class="sc">\}</span>\,.</span>
 <span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a>$$</span>
@@ -1580,7 +1580,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a>We denote the cardinal of a set $\mathcal{A}$ as $|\mathcal{A}|$. Using these two sets of sets, the $Z^i_t$ have the following description.</span>
 <span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a>:::{#prp-proposition_sets}</span>
-<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>At iteration $t$, the functional cost  $Q_t(\cdot)$ defines the subsets  $Z_t^i$ ($i=1,\dots, t$), each of them being the intersection of  the sets in $\mathcal{F}^i(t)$ minus the union of the sets in $\mathcal P^i$. </span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>At iteration $t$, the functional cost  $Q_t(\cdot)$ defines the subsets  $Z_t^i$ ($i=1,\dots, t$), each of them being the intersection of  the sets in $\mathcal{F}^i(t)$ minus the union of the sets in $\mathcal P^i$.</span>
 <span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a>Z_t^i = (\cap_{S\in \mathcal{F}^i(t)}S) \setminus (\cup_{S\in \mathcal{P}^i}S)\,,\quad i = 1,\dots,t.</span>
@@ -1589,7 +1589,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a>::: {.proof}</span>
-<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a>Based on the definition of the set $Z_t^i$, the proof is straightforward. Parameter value $\theta$ is in  $Z_t^i$ if and only if $q_t^i(\theta) \le q_t^u(\theta)$ for all $u \ne i$; these inequalities define the past set (when $u &lt; i$) and the future set (when $u&gt;i$). By convention  we assume that, in case $i = t$, $\cap_{S\in \mathcal F^i(t)}S = \mathbb R^p$. </span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a>Based on the definition of the set $Z_t^i$, the proof is straightforward. Parameter value $\theta$ is in  $Z_t^i$ if and only if $q_t^i(\theta) \le q_t^u(\theta)$ for all $u \ne i$; these inequalities define the past set (when $u &lt; i$) and the future set (when $u&gt;i$). By convention  we assume that, in case $i = t$, $\cap_{S\in \mathcal F^i(t)}S = \mathbb R^p$.</span>
 <span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a>:::{#cor-col1}</span>
@@ -1601,10 +1601,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a>*Functional pruning geometry.* The position $i-1$ is pruned at step $t+1$, in $Q_{t+1}(\cdot),$ if the intersection set of $\cap_{S\in \mathcal F^i(t)}S$ is covered by the union set $\cup_{S\in \mathcal P^i}S$.</span>
 <span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a>*Inequality-based pruning geometry.* The inequality-based pruning of PELT is equivalent to the geometric rule: position $i-1$ is pruned at step $t+1$ if the set $S_t^i$ is empty. In that case, the intersection  set $\cap_{S\in \mathcal F^i(t)}S$ is empty, and therefore $Z_t^i$ is also empty using @eq-setsZ. This shows that if a change is pruned using inequality-based pruning it is also pruned using functional pruning. For the dimension $p =1$ this claim was theoretically proved in @Maidstone.</span>
-<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a>The construction of set $Z^i_t$ using @prp-proposition_sets is illustrated in @fig-Figure3 for a bi-variate independent Gaussian case: we have the intersection of three S-type sets and the subtraction of three S-type sets.</span>
 <span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure3} </span>
+<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure3}</span>
 <span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 3 Bilding Z with 3 past and 3 future disks set_seed_21.png)</span>{width=50%}</span>
 <span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a></span>
@@ -1615,7 +1615,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## General Principle of GeomFPOP{#sec-principle}</span></span>
 <span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a>Rather than considering an exact representation of the $Z^i_t$, our idea is to consider a hopefully slightly larger set that is easier to update. To be specific, for each $Z^i_t$ we introduce $\tilde{Z}^i_t$, called *testing set*, such that $Z^i_t\subset \tilde{Z}^i_t$. If at time $t$ $\tilde{Z}^i_t$ is empty thus is $Z^i_t$ and thus change $i-1$ can be pruned. From @prp-proposition_sets we have that starting from $Z = \mathbb{R}^p$ the set $Z^i_t$ is obtained by successively applying two types of operations: intersection with an S-type set  $S$ $(Z\cap S)$ or subtraction of an S-type set $S$ $(Z\setminus S)$. Similarly, starting from $\tilde{Z} = \mathbb{R}^p$ we obtain $\tilde{Z}^i_t$ by successively applying approximation of these intersection and subtraction operations. Intuitively, the complexity of the resulting algorithm is a combination of the efficiency of the pruning and the easiness of updating the testing set. </span>
+<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a>Rather than considering an exact representation of the $Z^i_t$, our idea is to consider a hopefully slightly larger set that is easier to update. To be specific, for each $Z^i_t$ we introduce $\tilde{Z}^i_t$, called *testing set*, such that $Z^i_t\subset \tilde{Z}^i_t$. If at time $t$ $\tilde{Z}^i_t$ is empty thus is $Z^i_t$ and thus change $i-1$ can be pruned. From @prp-proposition_sets we have that starting from $Z = \mathbb{R}^p$ the set $Z^i_t$ is obtained by successively applying two types of operations: intersection with an S-type set  $S$ $(Z\cap S)$ or subtraction of an S-type set $S$ $(Z\setminus S)$. Similarly, starting from $\tilde{Z} = \mathbb{R}^p$ we obtain $\tilde{Z}^i_t$ by successively applying approximation of these intersection and subtraction operations. Intuitively, the complexity of the resulting algorithm is a combination of the efficiency of the pruning and the easiness of updating the testing set.</span>
 <span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a>*A Generic Formulation of GeomFPOP.* In what follows we will generically describe GeomFPOP, that is, without specifying the precise structure of the testing set $\tilde{Z}^i_t$. We call $\widetilde{\mathbf{Z}}$ the set of all possible $\tilde{Z}^i_t$ and assume the existence of two operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$. We have the following assumptions for these operators.</span>
 <span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a></span>
@@ -1637,7 +1637,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-275"><a href="#cb2-275" aria-hidden="true" tabindex="-1"></a>      \begin{aligned}</span>
 <span id="cb2-276"><a href="#cb2-276" aria-hidden="true" tabindex="-1"></a>       A_{0} =\tilde{Z}^i_{t} \,, &amp; \quad A_j = A_{j-1}\,\cap_{\tilde{Z}}\, S_j^F\,, &amp; j = 1,\dots , |\mathcal{F}^i(t)|\,,<span class="sc">\\</span></span>
 <span id="cb2-277"><a href="#cb2-277" aria-hidden="true" tabindex="-1"></a>        B_{0} =A_{|\mathcal{F}^i(t)|}\,, &amp; \quad B_j = B_{j-1}\,\setminus_{\tilde{Z}} \, S_P^j\,, &amp; j = 1,\dots , |\mathcal{P}^i| \,,<span class="sc">\\</span></span>
-<span id="cb2-278"><a href="#cb2-278" aria-hidden="true" tabindex="-1"></a>    \end{aligned}  </span>
+<span id="cb2-278"><a href="#cb2-278" aria-hidden="true" tabindex="-1"></a>    \end{aligned}</span>
 <span id="cb2-279"><a href="#cb2-279" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-280"><a href="#cb2-280" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-281"><a href="#cb2-281" aria-hidden="true" tabindex="-1"></a></span>
@@ -1645,72 +1645,72 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-283"><a href="#cb2-283" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-284"><a href="#cb2-284" aria-hidden="true" tabindex="-1"></a>The pseudo-code of this procedure is described in Algorithm 1. The $\mathtt{select}(\mathcal{A})$ step in Algorithm 1, where $\mathcal{A} \subset  \mathbf S$, returns a subset of $\mathcal{A}$ in  $\mathbf S$. By default, $\mathtt{select}(\mathcal{A}) := \mathcal{A}$.</span>
 <span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a><span class="in">```pseudocode</span></span>
-<span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{algorithm}</span></span>
-<span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a><span class="in">\caption{Geometric update rule of $\tilde{Z}^i_t$}</span></span>
-<span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{algorithmic}</span></span>
-<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a><span class="in">\Procedure{updateZone}{$\tilde{Z}_{t-1}^i, \mathcal{P}^i, \mathcal{F}^i(t), i, t$}</span></span>
-<span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a><span class="in">  \State $\tilde{Z}_t^i \gets \tilde{Z}_{t-1}^i$</span></span>
-<span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a><span class="in">  \For{$S \in \mathtt{select} (\mathcal{F}^i(t))$}</span></span>
-<span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i\cap_{\tilde{Z}} S$</span></span>
-<span id="cb2-295"><a href="#cb2-295" aria-hidden="true" tabindex="-1"></a><span class="in">  \EndFor</span></span>
-<span id="cb2-296"><a href="#cb2-296" aria-hidden="true" tabindex="-1"></a><span class="in">  \For{$S \in \mathtt{select} (\mathcal{P}^i)$}</span></span>
-<span id="cb2-297"><a href="#cb2-297" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i \setminus_{\tilde{Z}} S$</span></span>
-<span id="cb2-298"><a href="#cb2-298" aria-hidden="true" tabindex="-1"></a><span class="in">  \EndFor</span></span>
-<span id="cb2-299"><a href="#cb2-299" aria-hidden="true" tabindex="-1"></a><span class="in">  \Return $\tilde{Z}_t^i$</span></span>
-<span id="cb2-300"><a href="#cb2-300" aria-hidden="true" tabindex="-1"></a><span class="in">\EndProcedure</span></span>
-<span id="cb2-301"><a href="#cb2-301" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithmic}</span></span>
-<span id="cb2-302"><a href="#cb2-302" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithm}</span></span>
-<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-304"><a href="#cb2-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-305"><a href="#cb2-305" aria-hidden="true" tabindex="-1"></a>We denote the set of candidate change points at time $t$ as $\tau_t$. Note that for any $(i-1)\in \tau_t$  the sum of $|\mathcal P^i|$ and $|\mathcal F^i(t)|$ is $|\tau_t|$. With the default $\mathtt{select}()$ procedure we do $\mathcal{O}(p|\tau_t|)$ operations in Algorithm 1. By limiting the number of elements returned by $\mathtt{select}()$ we can reduce the complexity.</span>
-<span id="cb2-306"><a href="#cb2-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-307"><a href="#cb2-307" aria-hidden="true" tabindex="-1"></a>:::{.remark}</span>
-<span id="cb2-308"><a href="#cb2-308" aria-hidden="true" tabindex="-1"></a>For example, if the operator $\mathcal{A} \mapsto \mathtt{select}(\mathcal{A})$, regardless of $|\mathcal A|$, always returns a subset of constant size, then the overall complexity of GeomFPOP is at worst equal to that of PELT with $\sum_{t=1}^{n}\mathcal{O}(p|\tau_t|)$ time complexity.</span>
-<span id="cb2-309"><a href="#cb2-309" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{.pseudocode}</span></span>
+<span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{algorithm}</span></span>
+<span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a><span class="in">\caption{Geometric update rule of $\tilde{Z}^i_t$}</span></span>
+<span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{algorithmic}</span></span>
+<span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a><span class="in">\Procedure{updateZone}{$\tilde{Z}_{t-1}^i, \mathcal{P}^i, \mathcal{F}^i(t), i, t$}</span></span>
+<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a><span class="in">  \State $\tilde{Z}_t^i \gets \tilde{Z}_{t-1}^i$</span></span>
+<span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a><span class="in">  \For{$S \in \mathtt{select} (\mathcal{F}^i(t))$}</span></span>
+<span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i\cap_{\tilde{Z}} S$</span></span>
+<span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a><span class="in">  \EndFor</span></span>
+<span id="cb2-295"><a href="#cb2-295" aria-hidden="true" tabindex="-1"></a><span class="in">  \For{$S \in \mathtt{select} (\mathcal{P}^i)$}</span></span>
+<span id="cb2-296"><a href="#cb2-296" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $\tilde{Z}_t^i \gets \tilde{Z}_t^i \setminus_{\tilde{Z}} S$</span></span>
+<span id="cb2-297"><a href="#cb2-297" aria-hidden="true" tabindex="-1"></a><span class="in">  \EndFor</span></span>
+<span id="cb2-298"><a href="#cb2-298" aria-hidden="true" tabindex="-1"></a><span class="in">  \Return $\tilde{Z}_t^i$</span></span>
+<span id="cb2-299"><a href="#cb2-299" aria-hidden="true" tabindex="-1"></a><span class="in">\EndProcedure</span></span>
+<span id="cb2-300"><a href="#cb2-300" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithmic}</span></span>
+<span id="cb2-301"><a href="#cb2-301" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithm}</span></span>
+<span id="cb2-302"><a href="#cb2-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-304"><a href="#cb2-304" aria-hidden="true" tabindex="-1"></a>We denote the set of candidate change points at time $t$ as $\tau_t$. Note that for any $(i-1)\in \tau_t$  the sum of $|\mathcal P^i|$ and $|\mathcal F^i(t)|$ is $|\tau_t|$. With the default $\mathtt{select}()$ procedure we do $\mathcal{O}(p|\tau_t|)$ operations in Algorithm 1. By limiting the number of elements returned by $\mathtt{select}()$ we can reduce the complexity.</span>
+<span id="cb2-305"><a href="#cb2-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-306"><a href="#cb2-306" aria-hidden="true" tabindex="-1"></a>:::{.remark}</span>
+<span id="cb2-307"><a href="#cb2-307" aria-hidden="true" tabindex="-1"></a>For example, if the operator $\mathcal{A} \mapsto \mathtt{select}(\mathcal{A})$, regardless of $|\mathcal A|$, always returns a subset of constant size, then the overall complexity of GeomFPOP is at worst equal to that of PELT with $\sum_{t=1}^{n}\mathcal{O}(p|\tau_t|)$ time complexity.</span>
+<span id="cb2-308"><a href="#cb2-308" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-309"><a href="#cb2-309" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-310"><a href="#cb2-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-311"><a href="#cb2-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-312"><a href="#cb2-312" aria-hidden="true" tabindex="-1"></a>Using this $\mathtt{updateZone}()$ procedure we can now informally describe the GeomFPOP algorithm. At each iteration the algorithm will:</span>
-<span id="cb2-313"><a href="#cb2-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-314"><a href="#cb2-314" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>find the minimum value for $Q_t$, $m_t$ and the best position for last change point $\hat \tau_t$ (note that this step is standard: as in the PELT algorithm we need to minimize the cost of the last segment defined in @eq-Cy_it);</span>
-<span id="cb2-315"><a href="#cb2-315" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>compute all sets $\tilde{Z}_{t}^{i}$ using $\tilde{Z}_{t-1}^{i}$, $\mathcal{P}^i$, and $\mathcal{F}^i(t)$ with the $\mathtt{updateZone}()$ procedure;</span>
-<span id="cb2-316"><a href="#cb2-316" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>remove changes such that $\tilde{Z}_{t}^{i}$ is empty.</span>
-<span id="cb2-317"><a href="#cb2-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-318"><a href="#cb2-318" aria-hidden="true" tabindex="-1"></a>To simplify the pseudo-code of GeomFPOP, we also define the following operators:</span>
-<span id="cb2-319"><a href="#cb2-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-320"><a href="#cb2-320" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>$\mathtt{bestCost<span class="sc">\&amp;</span>Tau}(t)$ operator returns two values: the minimum value of $Q_t$, $m_t$, and the best position for last change point $\hat \tau_t$ at time $t$ (see @sec-UpdateRule); </span>
-<span id="cb2-321"><a href="#cb2-321" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>$\mathtt{getPastFutureSets}(i,t)$ operator returns a pair of sets ($\mathcal F^i(t)$, $\mathcal P^i$) for change point candidate $i-1$ at time $t\,$;</span>
-<span id="cb2-322"><a href="#cb2-322" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>$\mathtt{backtracking}(\hat\tau, n)$ operator returns the optimal segmentation for $y_{1:n}$. </span>
-<span id="cb2-323"><a href="#cb2-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-324"><a href="#cb2-324" aria-hidden="true" tabindex="-1"></a>The pseudo-code of GeomFPOP is presented in Algorithm 2.</span>
-<span id="cb2-325"><a href="#cb2-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-326"><a href="#cb2-326" aria-hidden="true" tabindex="-1"></a>:::{#alg2}</span>
-<span id="cb2-327"><a href="#cb2-327" aria-hidden="true" tabindex="-1"></a><span class="in">```pseudocode</span></span>
-<span id="cb2-328"><a href="#cb2-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-329"><a href="#cb2-329" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{algorithm}</span></span>
-<span id="cb2-330"><a href="#cb2-330" aria-hidden="true" tabindex="-1"></a><span class="in">\caption{GeomFPOP algorithm}</span></span>
-<span id="cb2-331"><a href="#cb2-331" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{algorithmic}</span></span>
-<span id="cb2-332"><a href="#cb2-332" aria-hidden="true" tabindex="-1"></a><span class="in">\Procedure{GeomFPOP}{$y, \Omega(\cdot, \cdot),\beta$}</span></span>
-<span id="cb2-333"><a href="#cb2-333" aria-hidden="true" tabindex="-1"></a><span class="in">  \State $m_0 \gets 0,\quad Q_0(\theta) \gets 0\,,\quad \tau_0 \gets \emptyset, \quad \{\tilde{Z}^{i}_{i-1}\}_{i\in \{1,\dots,n\}}\gets  \mathbb{R}^p$</span></span>
-<span id="cb2-334"><a href="#cb2-334" aria-hidden="true" tabindex="-1"></a><span class="in">  \For{$t = 1, \dots, n$}</span></span>
-<span id="cb2-335"><a href="#cb2-335" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $Q_t(\theta) \gets \min \{ Q_{t-1}(\theta), m_{t-1} + \beta\} + \Omega(\theta, y_t)$</span></span>
-<span id="cb2-336"><a href="#cb2-336" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $(m_t, \hat\tau_t) \gets \mathtt{bestCost\&amp;Tau}(t)$</span></span>
-<span id="cb2-337"><a href="#cb2-337" aria-hidden="true" tabindex="-1"></a><span class="in">    \For{$i-1 \in \tau_t$}</span></span>
-<span id="cb2-338"><a href="#cb2-338" aria-hidden="true" tabindex="-1"></a><span class="in">      \State $(\mathcal{P}^i, \mathcal{F}^i(t)) \gets \mathtt{getPastFutureSets}(i,t)$</span></span>
-<span id="cb2-339"><a href="#cb2-339" aria-hidden="true" tabindex="-1"></a><span class="in">      \State $\tilde{Z}_t^i \gets \mathtt{updateZone}(\tilde{Z}_{t-1}^i, \mathcal{P}^i, \mathcal{F}^i(t), i, t)$</span></span>
-<span id="cb2-340"><a href="#cb2-340" aria-hidden="true" tabindex="-1"></a><span class="in">      \If{$\tilde{Z}_t^i = \emptyset$}</span></span>
-<span id="cb2-341"><a href="#cb2-341" aria-hidden="true" tabindex="-1"></a><span class="in">        \State $\tau_t \gets \tau_t \backslash\{i-1\}$</span></span>
-<span id="cb2-342"><a href="#cb2-342" aria-hidden="true" tabindex="-1"></a><span class="in">      \EndIf</span></span>
-<span id="cb2-343"><a href="#cb2-343" aria-hidden="true" tabindex="-1"></a><span class="in">    \EndFor</span></span>
-<span id="cb2-344"><a href="#cb2-344" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $\tau_t \gets (\tau_{t-1}, t-1)$</span></span>
-<span id="cb2-345"><a href="#cb2-345" aria-hidden="true" tabindex="-1"></a><span class="in">  \EndFor</span></span>
-<span id="cb2-346"><a href="#cb2-346" aria-hidden="true" tabindex="-1"></a><span class="in">  \Return $cp(n) \gets \mathtt{backtracking}(\hat\tau, n)$</span></span>
-<span id="cb2-347"><a href="#cb2-347" aria-hidden="true" tabindex="-1"></a><span class="in">\EndProcedure</span></span>
-<span id="cb2-348"><a href="#cb2-348" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithmic}</span></span>
-<span id="cb2-349"><a href="#cb2-349" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithm}</span></span>
-<span id="cb2-350"><a href="#cb2-350" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-351"><a href="#cb2-351" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-311"><a href="#cb2-311" aria-hidden="true" tabindex="-1"></a>Using this $\mathtt{updateZone}()$ procedure we can now informally describe the GeomFPOP algorithm. At each iteration the algorithm will:</span>
+<span id="cb2-312"><a href="#cb2-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-313"><a href="#cb2-313" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>find the minimum value for $Q_t$, $m_t$ and the best position for last change point $\hat \tau_t$ (note that this step is standard: as in the PELT algorithm we need to minimize the cost of the last segment defined in @eq-Cy_it);</span>
+<span id="cb2-314"><a href="#cb2-314" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>compute all sets $\tilde{Z}_{t}^{i}$ using $\tilde{Z}_{t-1}^{i}$, $\mathcal{P}^i$, and $\mathcal{F}^i(t)$ with the $\mathtt{updateZone}()$ procedure;</span>
+<span id="cb2-315"><a href="#cb2-315" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>remove changes such that $\tilde{Z}_{t}^{i}$ is empty.</span>
+<span id="cb2-316"><a href="#cb2-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-317"><a href="#cb2-317" aria-hidden="true" tabindex="-1"></a>To simplify the pseudo-code of GeomFPOP, we also define the following operators:</span>
+<span id="cb2-318"><a href="#cb2-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-319"><a href="#cb2-319" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>$\mathtt{bestCost<span class="sc">\&amp;</span>Tau}(t)$ operator returns two values: the minimum value of $Q_t$, $m_t$, and the best position for last change point $\hat \tau_t$ at time $t$ (see @sec-UpdateRule);</span>
+<span id="cb2-320"><a href="#cb2-320" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>$\mathtt{getPastFutureSets}(i,t)$ operator returns a pair of sets ($\mathcal F^i(t)$, $\mathcal P^i$) for change point candidate $i-1$ at time $t\,$;</span>
+<span id="cb2-321"><a href="#cb2-321" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>$\mathtt{backtracking}(\hat\tau, n)$ operator returns the optimal segmentation for $y_{1:n}$.</span>
+<span id="cb2-322"><a href="#cb2-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-323"><a href="#cb2-323" aria-hidden="true" tabindex="-1"></a>The pseudo-code of GeomFPOP is presented in Algorithm 2.</span>
+<span id="cb2-324"><a href="#cb2-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-325"><a href="#cb2-325" aria-hidden="true" tabindex="-1"></a>:::{#alg2}</span>
+<span id="cb2-326"><a href="#cb2-326" aria-hidden="true" tabindex="-1"></a><span class="in">```{.pseudocode}</span></span>
+<span id="cb2-327"><a href="#cb2-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-328"><a href="#cb2-328" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{algorithm}</span></span>
+<span id="cb2-329"><a href="#cb2-329" aria-hidden="true" tabindex="-1"></a><span class="in">\caption{GeomFPOP algorithm}</span></span>
+<span id="cb2-330"><a href="#cb2-330" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{algorithmic}</span></span>
+<span id="cb2-331"><a href="#cb2-331" aria-hidden="true" tabindex="-1"></a><span class="in">\Procedure{GeomFPOP}{$y, \Omega(\cdot, \cdot),\beta$}</span></span>
+<span id="cb2-332"><a href="#cb2-332" aria-hidden="true" tabindex="-1"></a><span class="in">  \State $m_0 \gets 0,\quad Q_0(\theta) \gets 0\,,\quad \tau_0 \gets \emptyset, \quad \{\tilde{Z}^{i}_{i-1}\}_{i\in \{1,\dots,n\}}\gets  \mathbb{R}^p$</span></span>
+<span id="cb2-333"><a href="#cb2-333" aria-hidden="true" tabindex="-1"></a><span class="in">  \For{$t = 1, \dots, n$}</span></span>
+<span id="cb2-334"><a href="#cb2-334" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $Q_t(\theta) \gets \min \{ Q_{t-1}(\theta), m_{t-1} + \beta\} + \Omega(\theta, y_t)$</span></span>
+<span id="cb2-335"><a href="#cb2-335" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $(m_t, \hat\tau_t) \gets \mathtt{bestCost\&amp;Tau}(t)$</span></span>
+<span id="cb2-336"><a href="#cb2-336" aria-hidden="true" tabindex="-1"></a><span class="in">    \For{$i-1 \in \tau_t$}</span></span>
+<span id="cb2-337"><a href="#cb2-337" aria-hidden="true" tabindex="-1"></a><span class="in">      \State $(\mathcal{P}^i, \mathcal{F}^i(t)) \gets \mathtt{getPastFutureSets}(i,t)$</span></span>
+<span id="cb2-338"><a href="#cb2-338" aria-hidden="true" tabindex="-1"></a><span class="in">      \State $\tilde{Z}_t^i \gets \mathtt{updateZone}(\tilde{Z}_{t-1}^i, \mathcal{P}^i, \mathcal{F}^i(t), i, t)$</span></span>
+<span id="cb2-339"><a href="#cb2-339" aria-hidden="true" tabindex="-1"></a><span class="in">      \If{$\tilde{Z}_t^i = \emptyset$}</span></span>
+<span id="cb2-340"><a href="#cb2-340" aria-hidden="true" tabindex="-1"></a><span class="in">        \State $\tau_t \gets \tau_t \backslash\{i-1\}$</span></span>
+<span id="cb2-341"><a href="#cb2-341" aria-hidden="true" tabindex="-1"></a><span class="in">      \EndIf</span></span>
+<span id="cb2-342"><a href="#cb2-342" aria-hidden="true" tabindex="-1"></a><span class="in">    \EndFor</span></span>
+<span id="cb2-343"><a href="#cb2-343" aria-hidden="true" tabindex="-1"></a><span class="in">    \State $\tau_t \gets (\tau_{t-1}, t-1)$</span></span>
+<span id="cb2-344"><a href="#cb2-344" aria-hidden="true" tabindex="-1"></a><span class="in">  \EndFor</span></span>
+<span id="cb2-345"><a href="#cb2-345" aria-hidden="true" tabindex="-1"></a><span class="in">  \Return $cp(n) \gets \mathtt{backtracking}(\hat\tau, n)$</span></span>
+<span id="cb2-346"><a href="#cb2-346" aria-hidden="true" tabindex="-1"></a><span class="in">\EndProcedure</span></span>
+<span id="cb2-347"><a href="#cb2-347" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithmic}</span></span>
+<span id="cb2-348"><a href="#cb2-348" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithm}</span></span>
+<span id="cb2-349"><a href="#cb2-349" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-350"><a href="#cb2-350" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-351"><a href="#cb2-351" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-352"><a href="#cb2-352" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-353"><a href="#cb2-353" aria-hidden="true" tabindex="-1"></a><span class="fu"># Approximation Operators $\cap_{\tilde{Z}}$ and $\setminus_{\tilde{Z}}$ {#sec-approximation}</span></span>
 <span id="cb2-354"><a href="#cb2-354" aria-hidden="true" tabindex="-1"></a></span>
@@ -1735,9 +1735,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-373"><a href="#cb2-373" aria-hidden="true" tabindex="-1"></a>We consider two generic S-type sets, $S$ and $\tilde{S}$  from $\mathbf{S}$, described as in @def-defS by the functions $s$ and  $\tilde{s}$:</span>
 <span id="cb2-374"><a href="#cb2-374" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-375"><a href="#cb2-375" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb2-376"><a href="#cb2-376" aria-hidden="true" tabindex="-1"></a>s(\theta) = \sum_{k=1}^p s^k(\theta^k)- \Delta\,,\quad\quad \tilde{s}(\theta) = \sum_{k=1}^p {\tilde{s}}^{k}(\theta^k)- \tilde{\Delta}\,. </span>
+<span id="cb2-376"><a href="#cb2-376" aria-hidden="true" tabindex="-1"></a>s(\theta) = \sum_{k=1}^p s^k(\theta^k)- \Delta\,,\quad\quad \tilde{s}(\theta) = \sum_{k=1}^p {\tilde{s}}^{k}(\theta^k)- \tilde{\Delta}\,.</span>
 <span id="cb2-377"><a href="#cb2-377" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb2-378"><a href="#cb2-378" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-378"><a href="#cb2-378" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-379"><a href="#cb2-379" aria-hidden="true" tabindex="-1"></a>:::{#def-def_oper_S}</span>
 <span id="cb2-380"><a href="#cb2-380" aria-hidden="true" tabindex="-1"></a>For all  $S$ and $\tilde{S}$ in $\mathbf{S}$ we define the operators $\cap_{S}$ and $\setminus_{S}$ as:</span>
 <span id="cb2-381"><a href="#cb2-381" aria-hidden="true" tabindex="-1"></a></span>
@@ -1747,15 +1747,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-385"><a href="#cb2-385" aria-hidden="true" tabindex="-1"></a>        \begin{aligned}</span>
 <span id="cb2-386"><a href="#cb2-386" aria-hidden="true" tabindex="-1"></a>            &amp; \emptyset \,,  &amp; \hbox{ if }  \tilde{S}\cap S = \emptyset \,,<span class="sc">\\</span></span>
 <span id="cb2-387"><a href="#cb2-387" aria-hidden="true" tabindex="-1"></a>            &amp; \tilde{S}\,, &amp; \hbox{otherwise}\,.<span class="sc">\\</span></span>
-<span id="cb2-388"><a href="#cb2-388" aria-hidden="true" tabindex="-1"></a>        \end{aligned} </span>
+<span id="cb2-388"><a href="#cb2-388" aria-hidden="true" tabindex="-1"></a>        \end{aligned}</span>
 <span id="cb2-389"><a href="#cb2-389" aria-hidden="true" tabindex="-1"></a>        \right.<span class="sc">\\</span></span>
 <span id="cb2-390"><a href="#cb2-390" aria-hidden="true" tabindex="-1"></a>         &amp;\tilde{S} \,\setminus_{S}\, S   &amp; = \left<span class="sc">\{</span></span>
 <span id="cb2-391"><a href="#cb2-391" aria-hidden="true" tabindex="-1"></a>        \begin{aligned}</span>
 <span id="cb2-392"><a href="#cb2-392" aria-hidden="true" tabindex="-1"></a>        &amp; \emptyset \,,  &amp; \hbox{ if }  \tilde{S} \subset S\,,<span class="sc">\\</span></span>
 <span id="cb2-393"><a href="#cb2-393" aria-hidden="true" tabindex="-1"></a>        &amp; \tilde{S}\,, &amp; \hbox{otherwise}\,.<span class="sc">\\</span></span>
-<span id="cb2-394"><a href="#cb2-394" aria-hidden="true" tabindex="-1"></a>        \end{aligned} </span>
+<span id="cb2-394"><a href="#cb2-394" aria-hidden="true" tabindex="-1"></a>        \end{aligned}</span>
 <span id="cb2-395"><a href="#cb2-395" aria-hidden="true" tabindex="-1"></a>        \right.</span>
-<span id="cb2-396"><a href="#cb2-396" aria-hidden="true" tabindex="-1"></a>    \end{aligned}    </span>
+<span id="cb2-396"><a href="#cb2-396" aria-hidden="true" tabindex="-1"></a>    \end{aligned}</span>
 <span id="cb2-397"><a href="#cb2-397" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-398"><a href="#cb2-398" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-399"><a href="#cb2-399" aria-hidden="true" tabindex="-1"></a>:::</span>
@@ -1784,14 +1784,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-422"><a href="#cb2-422" aria-hidden="true" tabindex="-1"></a>The $k$-th minimum coordinates $\tilde{l}_k$ and maximum coordinates $\tilde{r}_k$ of   $\tilde{R} = R \cap_R S$ (resp. $\tilde{R} = R \setminus_R S$) is obtained as</span>
 <span id="cb2-423"><a href="#cb2-423" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-424"><a href="#cb2-424" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb2-425"><a href="#cb2-425" aria-hidden="true" tabindex="-1"></a>\tilde{l}_k \hbox{ or } \tilde{r}_k = </span>
+<span id="cb2-425"><a href="#cb2-425" aria-hidden="true" tabindex="-1"></a>\tilde{l}_k \hbox{ or } \tilde{r}_k =</span>
 <span id="cb2-426"><a href="#cb2-426" aria-hidden="true" tabindex="-1"></a>\left<span class="sc">\{</span></span>
 <span id="cb2-427"><a href="#cb2-427" aria-hidden="true" tabindex="-1"></a>    \begin{aligned}</span>
 <span id="cb2-428"><a href="#cb2-428" aria-hidden="true" tabindex="-1"></a>        &amp;\min_{\theta_k \in \mathbb{R}} \hbox{ or } \max_{\theta_k \in \mathbb R}  \theta_k\,,<span class="sc">\\</span></span>
 <span id="cb2-429"><a href="#cb2-429" aria-hidden="true" tabindex="-1"></a>        &amp; \hbox{subject to } \varepsilon s(\theta) \le 0 \,,<span class="sc">\\</span></span>
 <span id="cb2-430"><a href="#cb2-430" aria-hidden="true" tabindex="-1"></a>        &amp; \quad \quad \quad \quad \quad l_j \le \theta_j \le r_j\,,\quad j = 1,\dots,p \,,<span class="sc">\\</span></span>
 <span id="cb2-431"><a href="#cb2-431" aria-hidden="true" tabindex="-1"></a>    \end{aligned}</span>
-<span id="cb2-432"><a href="#cb2-432" aria-hidden="true" tabindex="-1"></a>\right.      </span>
+<span id="cb2-432"><a href="#cb2-432" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-433"><a href="#cb2-433" aria-hidden="true" tabindex="-1"></a>$${#eq-inclusionOptim}</span>
 <span id="cb2-434"><a href="#cb2-434" aria-hidden="true" tabindex="-1"></a>with $\varepsilon = 1$ (resp. $\varepsilon = -1$).</span>
 <span id="cb2-435"><a href="#cb2-435" aria-hidden="true" tabindex="-1"></a></span>
@@ -1806,13 +1806,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-444"><a href="#cb2-444" aria-hidden="true" tabindex="-1"></a>\mathbf{c} = \left<span class="sc">\{</span>\mathbf{c}^k\right<span class="sc">\}</span>_{k=1,\dots,p}, \quad \text { with }\quad \mathbf{c}^k =\underset{\theta^k \in \mathbb R} {Arg\min} <span class="sc">\{</span> s^k(\theta^k) <span class="sc">\}</span>\,.</span>
 <span id="cb2-445"><a href="#cb2-445" aria-hidden="true" tabindex="-1"></a>$$ {#eq-c}</span>
 <span id="cb2-446"><a href="#cb2-446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-447"><a href="#cb2-447" aria-hidden="true" tabindex="-1"></a>Moreover, with $R \in \mathbf R$ defined through vectors $l,r \in \mathbb R^p$, we define two points of $R$, the *closest point* $\mathbf{m} \in \mathbb R^p$ and the *farthest point* $\mathbf M \in \mathbb R^p$ relative to $S$ as </span>
+<span id="cb2-447"><a href="#cb2-447" aria-hidden="true" tabindex="-1"></a>Moreover, with $R \in \mathbf R$ defined through vectors $l,r \in \mathbb R^p$, we define two points of $R$, the *closest point* $\mathbf{m} \in \mathbb R^p$ and the *farthest point* $\mathbf M \in \mathbb R^p$ relative to $S$ as</span>
 <span id="cb2-448"><a href="#cb2-448" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-449"><a href="#cb2-449" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-450"><a href="#cb2-450" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb2-451"><a href="#cb2-451" aria-hidden="true" tabindex="-1"></a>    \mathbf{m} =\left<span class="sc">\{</span>\mathbf{m}^k\right<span class="sc">\}</span>_{k=1,\dots,p},\quad \text { with }\quad </span>
+<span id="cb2-451"><a href="#cb2-451" aria-hidden="true" tabindex="-1"></a>    \mathbf{m} =\left<span class="sc">\{</span>\mathbf{m}^k\right<span class="sc">\}</span>_{k=1,\dots,p},\quad \text { with }\quad</span>
 <span id="cb2-452"><a href="#cb2-452" aria-hidden="true" tabindex="-1"></a>    \mathbf{m}^k = \underset{l^k \le \theta^k \le r^k}{Arg\min}  \left<span class="sc">\{</span> s^k(\theta^k)\right<span class="sc">\}</span>,<span class="sc">\\</span></span>
-<span id="cb2-453"><a href="#cb2-453" aria-hidden="true" tabindex="-1"></a>    \mathbf{M} =\left<span class="sc">\{</span>\mathbf{M}^k\right<span class="sc">\}</span>_{k=1,\dots,p},\quad \text { with }\quad </span>
+<span id="cb2-453"><a href="#cb2-453" aria-hidden="true" tabindex="-1"></a>    \mathbf{M} =\left<span class="sc">\{</span>\mathbf{M}^k\right<span class="sc">\}</span>_{k=1,\dots,p},\quad \text { with }\quad</span>
 <span id="cb2-454"><a href="#cb2-454" aria-hidden="true" tabindex="-1"></a>    \mathbf{M}^k = \underset{l^k \le \theta^k \le r^k}{Arg\max}  \left<span class="sc">\{</span>s^k(\theta^k)\right<span class="sc">\}</span>\,.</span>
 <span id="cb2-455"><a href="#cb2-455" aria-hidden="true" tabindex="-1"></a>    \end{aligned}</span>
 <span id="cb2-456"><a href="#cb2-456" aria-hidden="true" tabindex="-1"></a>$$</span>
@@ -1820,14 +1820,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-458"><a href="#cb2-458" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-459"><a href="#cb2-459" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-460"><a href="#cb2-460" aria-hidden="true" tabindex="-1"></a>:::{.remark}</span>
-<span id="cb2-461"><a href="#cb2-461" aria-hidden="true" tabindex="-1"></a>In the Gaussian case, $S$ is a ball in $\mathbb R^p$ and </span>
+<span id="cb2-461"><a href="#cb2-461" aria-hidden="true" tabindex="-1"></a>In the Gaussian case, $S$ is a ball in $\mathbb R^p$ and</span>
 <span id="cb2-462"><a href="#cb2-462" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-463"><a href="#cb2-463" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\mathbf{c}$ is the center of the ball;</span>
 <span id="cb2-464"><a href="#cb2-464" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\mathbf{m}$ is the closest point to $\mathbf{c}$ inside $R$;</span>
 <span id="cb2-465"><a href="#cb2-465" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\mathbf{M}$ is the farthest point to $\mathbf{c}$ in $R$.</span>
 <span id="cb2-466"><a href="#cb2-466" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-467"><a href="#cb2-467" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-468"><a href="#cb2-468" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure4}  </span>
+<span id="cb2-468"><a href="#cb2-468" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure4}</span>
 <span id="cb2-469"><a href="#cb2-469" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-470"><a href="#cb2-470" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 4 Minimal closest and farthest points.png)</span>{width=90%}</span>
 <span id="cb2-471"><a href="#cb2-471" aria-hidden="true" tabindex="-1"></a></span>
@@ -1837,7 +1837,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-475"><a href="#cb2-475" aria-hidden="true" tabindex="-1"></a>:::{#prp-prop_solution_rect}</span>
 <span id="cb2-476"><a href="#cb2-476" aria-hidden="true" tabindex="-1"></a>Let  $\tilde{R} = R \cap_{R} S$ (resp. $R\setminus_{R} S$), with $R \in \mathbf{R}$ and $S \in \mathbf{S}$. We compute the boundaries $(\tilde{l}, \tilde{r})$ of $\tilde{R}$ using the following rule:</span>
 <span id="cb2-477"><a href="#cb2-477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-478"><a href="#cb2-478" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>We define the point $\tilde{\theta}\in \mathbb{R}^p$ as the closest point $\mathbf{m}$ (resp. farthest $\mathbf{M}$). For all $k = 1,\dots p$ we find the roots $\theta^{k_1}$ and $\theta^{k_2}$ of the one-variable $(\theta^k)$ equation </span>
+<span id="cb2-478"><a href="#cb2-478" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>We define the point $\tilde{\theta}\in \mathbb{R}^p$ as the closest point $\mathbf{m}$ (resp. farthest $\mathbf{M}$). For all $k = 1,\dots p$ we find the roots $\theta^{k_1}$ and $\theta^{k_2}$ of the one-variable $(\theta^k)$ equation</span>
 <span id="cb2-479"><a href="#cb2-479" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-480"><a href="#cb2-480" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-481"><a href="#cb2-481" aria-hidden="true" tabindex="-1"></a>s^k(\theta^k)+\sum_{j\neq k} s^j(\tilde{\theta}^j) -\Delta= 0 \,.</span>
@@ -1845,7 +1845,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-483"><a href="#cb2-483" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-484"><a href="#cb2-484" aria-hidden="true" tabindex="-1"></a>If the roots are real-valued we consider that $\theta^{k_1} \le \theta^{k_2}$, otherwise we write $\Big<span class="co">[</span><span class="ot">\theta^{k_1},\theta^{k_2}\Big</span><span class="co">]</span> = \emptyset$.</span>
 <span id="cb2-485"><a href="#cb2-485" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-486"><a href="#cb2-486" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>We compute the boundary values $\tilde{l}^k$ and $\tilde{r}^k$ of </span>
+<span id="cb2-486"><a href="#cb2-486" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>We compute the boundary values $\tilde{l}^k$ and $\tilde{r}^k$ of</span>
 <span id="cb2-487"><a href="#cb2-487" aria-hidden="true" tabindex="-1"></a>$\tilde{R}$ as:</span>
 <span id="cb2-488"><a href="#cb2-488" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-489"><a href="#cb2-489" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For $R\cap_{R} S$ $(k = 1,\dots,p)$:</span>
@@ -1861,14 +1861,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-499"><a href="#cb2-499" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-500"><a href="#cb2-500" aria-hidden="true" tabindex="-1"></a>&amp; \Big<span class="co">[</span><span class="ot">l^k, r^k\Big</span><span class="co">]</span>  \setminus \Big<span class="co">[</span><span class="ot">\theta^{k_1},\theta^{k_2}\Big</span><span class="co">]</span> \,,  &amp; \hbox{if} \quad \Big<span class="co">[</span><span class="ot">\theta^{k_1},\theta^{k_2}\Big</span><span class="co">]</span> \not\subset \Big<span class="co">[</span><span class="ot">l^k, r^k\Big</span><span class="co">]</span>\,,<span class="sc">\\</span></span>
 <span id="cb2-501"><a href="#cb2-501" aria-hidden="true" tabindex="-1"></a>&amp; \Big<span class="co">[</span><span class="ot">l^k, r^k\Big</span><span class="co">]</span>\,, &amp; \hbox{otherwise}\,.<span class="sc">\\</span></span>
-<span id="cb2-502"><a href="#cb2-502" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
+<span id="cb2-502"><a href="#cb2-502" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb2-503"><a href="#cb2-503" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-504"><a href="#cb2-504" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-505"><a href="#cb2-505" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-506"><a href="#cb2-506" aria-hidden="true" tabindex="-1"></a>If there is a dimension $k$ for which $\Big<span class="co">[</span><span class="ot">\tilde{l}^k, \tilde{r}^k\Big</span><span class="co">]</span>=\emptyset$, then the set $\tilde{R}$ is empty.</span>
 <span id="cb2-507"><a href="#cb2-507" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-508"><a href="#cb2-508" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-509"><a href="#cb2-509" aria-hidden="true" tabindex="-1"></a>The proof of @prp-prop_solution_rect is presented in @sec-AppendixD. </span>
+<span id="cb2-509"><a href="#cb2-509" aria-hidden="true" tabindex="-1"></a>The proof of @prp-prop_solution_rect is presented in @sec-AppendixD.</span>
 <span id="cb2-510"><a href="#cb2-510" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-511"><a href="#cb2-511" aria-hidden="true" tabindex="-1"></a><span class="fu"># Simulation Study of GeomFPOP {#sec-study}</span></span>
 <span id="cb2-512"><a href="#cb2-512" aria-hidden="true" tabindex="-1"></a></span>
@@ -1880,11 +1880,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-518"><a href="#cb2-518" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-519"><a href="#cb2-519" aria-hidden="true" tabindex="-1"></a>We evaluate the functional pruning efficiency of the GeomFPOP method using simulations with $10^4$ data points (without change, i.e. i.i.d $\mathcal{N}_p(0, I_p)$). For such signals, PELT typically does not pruned (e.g. for $t=10^4$, $p=2$ it stores almost always $t$ candidates).</span>
 <span id="cb2-520"><a href="#cb2-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-521"><a href="#cb2-521" aria-hidden="true" tabindex="-1"></a>We report in @fig-Figure5 the percentage of candidates that are kept by GeomFPOP as a function of $n$, $p$ and the type of pruning (R or S). Regardless of the type of approximation and contrary to PELT, we observe that there is some pruning. However when increasing the dimension $p$, the quality of the pruning decreases. </span>
+<span id="cb2-521"><a href="#cb2-521" aria-hidden="true" tabindex="-1"></a>We report in @fig-Figure5 the percentage of candidates that are kept by GeomFPOP as a function of $n$, $p$ and the type of pruning (R or S). Regardless of the type of approximation and contrary to PELT, we observe that there is some pruning. However when increasing the dimension $p$, the quality of the pruning decreases.</span>
 <span id="cb2-522"><a href="#cb2-522" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-523"><a href="#cb2-523" aria-hidden="true" tabindex="-1"></a>Comparing  @fig-Figure5 left and the right we see that for dimensions $p=2$ to $p=5$ R-type prunes more than the S-type, while for larger dimensions the S-type  prunes more than the R-type. For example, for $p = 2$ at time $t=10^4$  by GeomFPOP (R-type) the number of candidates stored over $t$  does not exceed $1\%$ versus $3\%$ by GeomFPOP (S-type). This intuitively makes sense. One the one hand the R-type approximation of a sphere gets worst with the dimension. On the other hand with R-type approximation every new approximation is included in the previous one. For small dimensions this memory effect outweight the roughness of the approximation.</span>
 <span id="cb2-524"><a href="#cb2-524" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-525"><a href="#cb2-525" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure5}  </span>
+<span id="cb2-525"><a href="#cb2-525" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure5}</span>
 <span id="cb2-526"><a href="#cb2-526" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-527"><a href="#cb2-527" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 5 Number of candidates.png)</span>{width=80%}</span>
 <span id="cb2-528"><a href="#cb2-528" aria-hidden="true" tabindex="-1"></a></span>
@@ -1898,7 +1898,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-536"><a href="#cb2-536" aria-hidden="true" tabindex="-1"></a>We studied the run time of GeomFPOP (S and R-type) and compared it to PELT for small dimensions ($p=2, 3, 4$).</span>
 <span id="cb2-537"><a href="#cb2-537" aria-hidden="true" tabindex="-1"></a>Run times were limited to three minutes and were recorded for simulations (without change, i.e i.i.d $\mathcal{N}_p(0, I_p)$). The results are presented in @fig-Figure6. We observe that GeomFPOP is faster than PELT only for $p=2$. For $p=3$ run times are comparable and for $p=4$ GeomFPOP is slower. This lead us to consider a randomized version of GeomFPOP (see next subsection).</span>
 <span id="cb2-538"><a href="#cb2-538" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-539"><a href="#cb2-539" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure6}  </span>
+<span id="cb2-539"><a href="#cb2-539" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure6}</span>
 <span id="cb2-540"><a href="#cb2-540" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-541"><a href="#cb2-541" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 6 Time complexity PELT GeomFPOP small p.png)</span>{width=90%}</span>
 <span id="cb2-542"><a href="#cb2-542" aria-hidden="true" tabindex="-1"></a></span>
@@ -1919,12 +1919,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-557"><a href="#cb2-557" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>by only two intersection operations: one with the last S-type set $S^i_t$ from $\mathcal{F}^i(t)$, and one with a random  S-type set from $\mathcal{F}^i(t)$;</span>
 <span id="cb2-558"><a href="#cb2-558" aria-hidden="true" tabindex="-1"></a><span class="ss">  2. </span>by only one exclusion operation with a random  S-type set from $\mathcal{P}^i$.</span>
 <span id="cb2-559"><a href="#cb2-559" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-560"><a href="#cb2-560" aria-hidden="true" tabindex="-1"></a>In this approach at time $t$ we do no more than three operations to update the testing set $\tilde{Z}^i_t$ for each $(i-1) \in \tau_t$. Even with large values of  $p$, the overall complexity of GeomFPOP should not be worse than that of PELT. We investigated other randomized strategies but this simple one was sufficient to significantly improve run times. The run time of our optimization approach and PELT in dimension ($p= 2, \dots, 10, 100$) are presented in  @fig-Figure7. </span>
+<span id="cb2-560"><a href="#cb2-560" aria-hidden="true" tabindex="-1"></a>In this approach at time $t$ we do no more than three operations to update the testing set $\tilde{Z}^i_t$ for each $(i-1) \in \tau_t$. Even with large values of  $p$, the overall complexity of GeomFPOP should not be worse than that of PELT. We investigated other randomized strategies but this simple one was sufficient to significantly improve run times. The run time of our optimization approach and PELT in dimension ($p= 2, \dots, 10, 100$) are presented in  @fig-Figure7.</span>
 <span id="cb2-561"><a href="#cb2-561" aria-hidden="true" tabindex="-1"></a>As in @sec-TCsmall, run times were limited to three minutes and were recorded for simulations of length ranging from $2^{10}$ to $2^{23}$ data points (without change, i.e i.i.d $\mathcal{N}_p(0, I_p)$).</span>
 <span id="cb2-562"><a href="#cb2-562" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-563"><a href="#cb2-563" aria-hidden="true" tabindex="-1"></a>Although the $\mathtt{(random/random)}$ approach reduces the quality of pruning (see @sec-AppendixE), it gives a significant gain in run time compared to PELT in small dimensions. To be specific, with a run time of five minutes GeomFPOP, on average,   processes a time series with a length of about $8\times 10^6$, $10^6$  and $2,5\times 10^5$ data points in the dimensions $p=2,3$ and $4$, respectively. At the same time, PELT manages to process time series with a length of at most $6,5\times10^4$ data points in these dimensions. </span>
+<span id="cb2-563"><a href="#cb2-563" aria-hidden="true" tabindex="-1"></a>Although the $\mathtt{(random/random)}$ approach reduces the quality of pruning (see @sec-AppendixE), it gives a significant gain in run time compared to PELT in small dimensions. To be specific, with a run time of five minutes GeomFPOP, on average,   processes a time series with a length of about $8\times 10^6$, $10^6$  and $2,5\times 10^5$ data points in the dimensions $p=2,3$ and $4$, respectively. At the same time, PELT manages to process time series with a length of at most $6,5\times10^4$ data points in these dimensions.</span>
 <span id="cb2-564"><a href="#cb2-564" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-565"><a href="#cb2-565" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure7} </span>
+<span id="cb2-565"><a href="#cb2-565" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure7}</span>
 <span id="cb2-566"><a href="#cb2-566" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-567"><a href="#cb2-567" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 7 Time complexity PELT GeomFPOP p_2_10_100.png)</span>{width=90%}</span>
 <span id="cb2-568"><a href="#cb2-568" aria-hidden="true" tabindex="-1"></a></span>
@@ -1935,7 +1935,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-573"><a href="#cb2-573" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-574"><a href="#cb2-574" aria-hidden="true" tabindex="-1"></a>We also evaluate the slope coefficient $\alpha$ of the run time curve of GeomFPOP with random sampling of the past and future candidates for all considered dimensions. In @fig-Figure8 we can see that already for $p\ge 7$ $\alpha$ is close to $2$.</span>
 <span id="cb2-575"><a href="#cb2-575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-576"><a href="#cb2-576" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure8}  </span>
+<span id="cb2-576"><a href="#cb2-576" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure8}</span>
 <span id="cb2-577"><a href="#cb2-577" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-578"><a href="#cb2-578" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 8 estimation alpha p_2_10_100.png)</span>{width=80%}</span>
 <span id="cb2-579"><a href="#cb2-579" aria-hidden="true" tabindex="-1"></a></span>
@@ -1946,7 +1946,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-584"><a href="#cb2-584" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-585"><a href="#cb2-585" aria-hidden="true" tabindex="-1"></a>For small dimensions ($2\le p \le 4$) we also generated time series with $10^6$ data points with increasing number of segments. We have considered the following number of segments: $(1,2,5) \times 10^i$( for $i=0,\dots,3$) and $10^4$. The mean was equal to $1$ for even segments,  and $0$ for odd segments. In @fig-Figure9 we can see the run time dependence of the $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) and PELT on the number of segments for this type of time series. Interestingly, the run time of GeomFPOP $\mathtt{(random/random)}$ is comparable to PELT even when the number of segment is large. For smaller number of segments (as already observed) GeomFPOP $\mathtt{(random/random)}$ is an order of magnitude faster.</span>
 <span id="cb2-586"><a href="#cb2-586" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-587"><a href="#cb2-587" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure9}  </span>
+<span id="cb2-587"><a href="#cb2-587" aria-hidden="true" tabindex="-1"></a>:::{#fig-Figure9}</span>
 <span id="cb2-588"><a href="#cb2-588" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-589"><a href="#cb2-589" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 9 Time complexity Change dependence .png)</span>{width=90%}</span>
 <span id="cb2-590"><a href="#cb2-590" aria-hidden="true" tabindex="-1"></a></span>
@@ -1963,17 +1963,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-601"><a href="#cb2-601" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-602"><a href="#cb2-602" aria-hidden="true" tabindex="-1"></a>We define a cost function for segmentation as in @eq-Cy_it by the function $\Omega(\cdot,\cdot)$ (the opposite log-likelihood (times two)). Below is the expression of this function  linked to data point $y_i = (y_i^1,\dots, y_i^p)\in \mathbb R^p$ for three examples of Parametric Multivariate Models:</span>
 <span id="cb2-603"><a href="#cb2-603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-604"><a href="#cb2-604" aria-hidden="true" tabindex="-1"></a>$$      </span>
+<span id="cb2-604"><a href="#cb2-604" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-605"><a href="#cb2-605" aria-hidden="true" tabindex="-1"></a>\Omega(\theta,y_i)=</span>
 <span id="cb2-606"><a href="#cb2-606" aria-hidden="true" tabindex="-1"></a>\left<span class="sc">\{</span></span>
 <span id="cb2-607"><a href="#cb2-607" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-608"><a href="#cb2-608" aria-hidden="true" tabindex="-1"></a>&amp; \sum_{k=1}^p (y_i^k -\theta^k)^2\,, &amp; \text{ if }y_i \sim \mathcal{N}_p(\theta, \sigma^2\mathbb{I}_p)\,,<span class="sc">\\</span></span>
-<span id="cb2-609"><a href="#cb2-609" aria-hidden="true" tabindex="-1"></a>&amp;2 \sum_{k=1}^p \left<span class="sc">\{</span>\theta^k-\log\left(\frac{(\theta^k)^{y^k_i}}{y^k_i!}\right)\right<span class="sc">\}</span>\,, &amp; \text{ if }y_i \sim \mathcal{P}(\theta)\,,<span class="sc">\\</span> </span>
+<span id="cb2-609"><a href="#cb2-609" aria-hidden="true" tabindex="-1"></a>&amp;2 \sum_{k=1}^p \left<span class="sc">\{</span>\theta^k-\log\left(\frac{(\theta^k)^{y^k_i}}{y^k_i!}\right)\right<span class="sc">\}</span>\,, &amp; \text{ if }y_i \sim \mathcal{P}(\theta)\,,<span class="sc">\\</span></span>
 <span id="cb2-610"><a href="#cb2-610" aria-hidden="true" tabindex="-1"></a>&amp;-2 \sum_{k=1}^p\log\left((\theta^k)^{y_i^k}(1-\theta^k)^\phi \begin{pmatrix}</span>
 <span id="cb2-611"><a href="#cb2-611" aria-hidden="true" tabindex="-1"></a>y_i^k+\phi-1 <span class="sc">\\</span></span>
-<span id="cb2-612"><a href="#cb2-612" aria-hidden="true" tabindex="-1"></a>y_i^k </span>
-<span id="cb2-613"><a href="#cb2-613" aria-hidden="true" tabindex="-1"></a>\end{pmatrix}\right)\,,&amp; \text{ if }y_i \sim \mathcal{NB}(\theta,\phi)\,.<span class="sc">\\</span> </span>
-<span id="cb2-614"><a href="#cb2-614" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
+<span id="cb2-612"><a href="#cb2-612" aria-hidden="true" tabindex="-1"></a>y_i^k</span>
+<span id="cb2-613"><a href="#cb2-613" aria-hidden="true" tabindex="-1"></a>\end{pmatrix}\right)\,,&amp; \text{ if }y_i \sim \mathcal{NB}(\theta,\phi)\,.<span class="sc">\\</span></span>
+<span id="cb2-614"><a href="#cb2-614" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb2-615"><a href="#cb2-615" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-616"><a href="#cb2-616" aria-hidden="true" tabindex="-1"></a>$${#eq-MLE}</span>
 <span id="cb2-617"><a href="#cb2-617" aria-hidden="true" tabindex="-1"></a></span>
@@ -2004,16 +2004,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-642"><a href="#cb2-642" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-643"><a href="#cb2-643" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-644"><a href="#cb2-644" aria-hidden="true" tabindex="-1"></a>s(\theta) = a(\theta) +  \langle b,\theta \rangle + c,</span>
-<span id="cb2-645"><a href="#cb2-645" aria-hidden="true" tabindex="-1"></a>$$ </span>
+<span id="cb2-645"><a href="#cb2-645" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-646"><a href="#cb2-646" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-647"><a href="#cb2-647" aria-hidden="true" tabindex="-1"></a>with $a(\cdot)$ is some convex function depending on $\theta$, $b=<span class="sc">\{</span>b^k<span class="sc">\}</span>_{k =1,\dots, p} \in \mathbb{R}^p$ and $c \in \mathbb{R}$.</span>
 <span id="cb2-648"><a href="#cb2-648" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-649"><a href="#cb2-649" aria-hidden="true" tabindex="-1"></a>For example, in the Gaussian case, the elements have the following form:</span>
 <span id="cb2-650"><a href="#cb2-650" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-651"><a href="#cb2-651" aria-hidden="true" tabindex="-1"></a>$$  </span>
+<span id="cb2-651"><a href="#cb2-651" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-652"><a href="#cb2-652" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-653"><a href="#cb2-653" aria-hidden="true" tabindex="-1"></a>&amp; a: \theta \mapsto \theta^2\,,&amp; &amp;b^k =  2\bar Y_{i:j}^k\,,&amp;&amp;c =\bar Y^2_{i:j} - \Delta_{ij}\,,</span>
-<span id="cb2-654"><a href="#cb2-654" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
+<span id="cb2-654"><a href="#cb2-654" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb2-655"><a href="#cb2-655" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-656"><a href="#cb2-656" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-657"><a href="#cb2-657" aria-hidden="true" tabindex="-1"></a>where $\bar Y_{i:j}^k = \frac{1}{j-i+1}\sum_{u=i+1}^j y_u^k$ and $\bar Y^2_{i:j} = \frac{1}{j-i+1}\sum_{u=i+1}^j \sum_{k=1}^p (y_u^k)^2$.</span>
@@ -2022,10 +2022,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-660"><a href="#cb2-660" aria-hidden="true" tabindex="-1"></a>:::{#def-app:func_h}</span>
 <span id="cb2-661"><a href="#cb2-661" aria-hidden="true" tabindex="-1"></a>For all  $\theta \in \mathbb R^p$ and $S_1, S_2 \in \mathbf{S}$ with their associated functions, $s_1$ and $s_2$, we define a function $h_{12}$ and a hyperplane $H_{12}$ as:</span>
 <span id="cb2-662"><a href="#cb2-662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-663"><a href="#cb2-663" aria-hidden="true" tabindex="-1"></a>$$  </span>
+<span id="cb2-663"><a href="#cb2-663" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-664"><a href="#cb2-664" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-665"><a href="#cb2-665" aria-hidden="true" tabindex="-1"></a>&amp;h_{12}(\theta):= s_2(\theta) - s_1(\theta)\,,&amp; &amp;H_{12} := \left <span class="sc">\{</span>\theta \in \mathbb{R}^p | h_{12}(\theta) = 0 \right <span class="sc">\}</span>\,.</span>
-<span id="cb2-666"><a href="#cb2-666" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
+<span id="cb2-666"><a href="#cb2-666" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb2-667"><a href="#cb2-667" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-668"><a href="#cb2-668" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-669"><a href="#cb2-669" aria-hidden="true" tabindex="-1"></a>We denote by $H_{12}^+ := <span class="sc">\{</span>\theta \in \mathbb{R}^p |h_{12}(\theta)&gt; 0<span class="sc">\}</span>$ and $H_{12}^- := <span class="sc">\{</span>\theta \in \mathbb{R}^p |h_{12}(\theta)&lt; 0<span class="sc">\}</span>$ the positive and negative half-spaces of $H_{12}$, respectively. We call $\mathbf{H}$ the set of hyperplanes.</span>
@@ -2038,15 +2038,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-676"><a href="#cb2-676" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-677"><a href="#cb2-677" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>the left input is an S-type set $S$;</span>
 <span id="cb2-678"><a href="#cb2-678" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>the right input is a hyperplane $H$;</span>
-<span id="cb2-679"><a href="#cb2-679" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>the output is the half-spaces of $H$, such that $S$ lies in those half-spaces. </span>
+<span id="cb2-679"><a href="#cb2-679" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>the output is the half-spaces of $H$, such that $S$ lies in those half-spaces.</span>
 <span id="cb2-680"><a href="#cb2-680" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-681"><a href="#cb2-681" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-682"><a href="#cb2-682" aria-hidden="true" tabindex="-1"></a>:::{#def-append:proposition} </span>
+<span id="cb2-682"><a href="#cb2-682" aria-hidden="true" tabindex="-1"></a>:::{#def-append:proposition}</span>
 <span id="cb2-683"><a href="#cb2-683" aria-hidden="true" tabindex="-1"></a>We define the output of $\mathtt{half-space}(S,H)$ by the following rule:</span>
 <span id="cb2-684"><a href="#cb2-684" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-685"><a href="#cb2-685" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>We find two points, $\theta_1, \theta_2 \in \mathbb R^p$, as:</span>
 <span id="cb2-686"><a href="#cb2-686" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-687"><a href="#cb2-687" aria-hidden="true" tabindex="-1"></a>$$  </span>
+<span id="cb2-687"><a href="#cb2-687" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-688"><a href="#cb2-688" aria-hidden="true" tabindex="-1"></a>\left<span class="sc">\{</span></span>
 <span id="cb2-689"><a href="#cb2-689" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-690"><a href="#cb2-690" aria-hidden="true" tabindex="-1"></a>\theta_1 &amp;= &amp;Arg\min s(\theta),<span class="sc">\\</span></span>
@@ -2054,21 +2054,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-692"><a href="#cb2-692" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-693"><a href="#cb2-693" aria-hidden="true" tabindex="-1"></a>Arg\min_{\theta \in S} h(\theta),&amp; &amp;\text{if } \theta_1 \in H^+,<span class="sc">\\</span></span>
 <span id="cb2-694"><a href="#cb2-694" aria-hidden="true" tabindex="-1"></a>Arg\max_{\theta \in S} h(\theta), &amp; &amp; \text{if } \theta_1 \in H^-.<span class="sc">\\</span></span>
-<span id="cb2-695"><a href="#cb2-695" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
+<span id="cb2-695"><a href="#cb2-695" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb2-696"><a href="#cb2-696" aria-hidden="true" tabindex="-1"></a>\right.</span>
-<span id="cb2-697"><a href="#cb2-697" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
+<span id="cb2-697"><a href="#cb2-697" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb2-698"><a href="#cb2-698" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-699"><a href="#cb2-699" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-700"><a href="#cb2-700" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-701"><a href="#cb2-701" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>We have:</span>
 <span id="cb2-702"><a href="#cb2-702" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-703"><a href="#cb2-703" aria-hidden="true" tabindex="-1"></a>$$  </span>
+<span id="cb2-703"><a href="#cb2-703" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-704"><a href="#cb2-704" aria-hidden="true" tabindex="-1"></a>\mathtt{half-space}(S,H) = \left<span class="sc">\{</span></span>
 <span id="cb2-705"><a href="#cb2-705" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-706"><a href="#cb2-706" aria-hidden="true" tabindex="-1"></a><span class="sc">\{</span>H^+<span class="sc">\}</span>, &amp; &amp;\text{if } \theta_1, \theta_2  \in H^+,<span class="sc">\\</span></span>
 <span id="cb2-707"><a href="#cb2-707" aria-hidden="true" tabindex="-1"></a><span class="sc">\{</span>H^-<span class="sc">\}</span>, &amp; &amp; \text{if } \theta_1, \theta_2  \in H^-,<span class="sc">\\</span></span>
 <span id="cb2-708"><a href="#cb2-708" aria-hidden="true" tabindex="-1"></a><span class="sc">\{</span>H^+, H^-<span class="sc">\}</span>,&amp; &amp;  \text{otherwise}.<span class="sc">\\</span></span>
-<span id="cb2-709"><a href="#cb2-709" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
+<span id="cb2-709"><a href="#cb2-709" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb2-710"><a href="#cb2-710" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-711"><a href="#cb2-711" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-712"><a href="#cb2-712" aria-hidden="true" tabindex="-1"></a></span>
@@ -2087,13 +2087,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-725"><a href="#cb2-725" aria-hidden="true" tabindex="-1"></a>:::{.proof}</span>
 <span id="cb2-726"><a href="#cb2-726" aria-hidden="true" tabindex="-1"></a>We have the hypothesis $\mathcal H_0:<span class="sc">\{</span> S_1 \subset S_2<span class="sc">\}</span>$, then</span>
 <span id="cb2-727"><a href="#cb2-727" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-728"><a href="#cb2-728" aria-hidden="true" tabindex="-1"></a>$$  </span>
+<span id="cb2-728"><a href="#cb2-728" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-729"><a href="#cb2-729" aria-hidden="true" tabindex="-1"></a>\forall \theta \in  \partial S_1 \quad \left<span class="sc">\{</span></span>
 <span id="cb2-730"><a href="#cb2-730" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-731"><a href="#cb2-731" aria-hidden="true" tabindex="-1"></a>s_1(\theta) = 0, &amp; &amp;<span class="co">[</span><span class="ot">\text{by Definition 1.1} </span><span class="co">]</span> <span class="sc">\\</span></span>
 <span id="cb2-732"><a href="#cb2-732" aria-hidden="true" tabindex="-1"></a>s_2(\theta) \le 0, &amp; &amp; <span class="co">[</span><span class="ot">\text{by } \mathcal{H}_0</span><span class="co">]</span> <span class="sc">\\</span></span>
-<span id="cb2-733"><a href="#cb2-733" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
-<span id="cb2-734"><a href="#cb2-734" aria-hidden="true" tabindex="-1"></a>\right. </span>
+<span id="cb2-733"><a href="#cb2-733" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb2-734"><a href="#cb2-734" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-735"><a href="#cb2-735" aria-hidden="true" tabindex="-1"></a>\quad \Rightarrow \theta \in H_{12}^- \quad \Rightarrow \partial S_1 \subset H_{12}^-.</span>
 <span id="cb2-736"><a href="#cb2-736" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-737"><a href="#cb2-737" aria-hidden="true" tabindex="-1"></a></span>
@@ -2105,13 +2105,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-743"><a href="#cb2-743" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-744"><a href="#cb2-744" aria-hidden="true" tabindex="-1"></a>We have now the hypothesis $\mathcal H_0: <span class="sc">\{</span>S_1, S_2 \subset H_{12}^-<span class="sc">\}</span>$, then</span>
 <span id="cb2-745"><a href="#cb2-745" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-746"><a href="#cb2-746" aria-hidden="true" tabindex="-1"></a>$$  </span>
+<span id="cb2-746"><a href="#cb2-746" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-747"><a href="#cb2-747" aria-hidden="true" tabindex="-1"></a>\forall \theta \in S_1 \quad \left<span class="sc">\{</span></span>
 <span id="cb2-748"><a href="#cb2-748" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-749"><a href="#cb2-749" aria-hidden="true" tabindex="-1"></a>s_1(\theta) \le 0, &amp; &amp;<span class="co">[</span><span class="ot">\text{by Definition 1.1} </span><span class="co">]</span> <span class="sc">\\</span></span>
 <span id="cb2-750"><a href="#cb2-750" aria-hidden="true" tabindex="-1"></a>h_{12}(\theta) &lt; 0, &amp; &amp; <span class="co">[</span><span class="ot">\text{by } \mathcal{H}_0, \text{ Definition 1.1}</span><span class="co">]</span> <span class="sc">\\</span></span>
-<span id="cb2-751"><a href="#cb2-751" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
-<span id="cb2-752"><a href="#cb2-752" aria-hidden="true" tabindex="-1"></a>\right. </span>
+<span id="cb2-751"><a href="#cb2-751" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb2-752"><a href="#cb2-752" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-753"><a href="#cb2-753" aria-hidden="true" tabindex="-1"></a>\quad \Rightarrow \theta \in  S_2 \quad \Rightarrow S_1 \subset S_2.</span>
 <span id="cb2-754"><a href="#cb2-754" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-755"><a href="#cb2-755" aria-hidden="true" tabindex="-1"></a></span>
@@ -2128,23 +2128,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-766"><a href="#cb2-766" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-767"><a href="#cb2-767" aria-hidden="true" tabindex="-1"></a>We have now the hypothesis $\mathcal{H}_0:<span class="sc">\{</span>S_1\cap S_2 = \emptyset<span class="sc">\}</span>$ then</span>
 <span id="cb2-768"><a href="#cb2-768" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-769"><a href="#cb2-769" aria-hidden="true" tabindex="-1"></a>$$  </span>
+<span id="cb2-769"><a href="#cb2-769" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-770"><a href="#cb2-770" aria-hidden="true" tabindex="-1"></a>\forall \theta \in S_1 \quad \left<span class="sc">\{</span></span>
 <span id="cb2-771"><a href="#cb2-771" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-772"><a href="#cb2-772" aria-hidden="true" tabindex="-1"></a>s_1(\theta) \le 0, &amp; &amp;<span class="co">[</span><span class="ot">\text{by Definition 1.1}</span><span class="co">]</span> <span class="sc">\\</span></span>
 <span id="cb2-773"><a href="#cb2-773" aria-hidden="true" tabindex="-1"></a>s_2(\theta) &gt; 0, &amp; &amp; <span class="co">[</span><span class="ot">\text{by } \mathcal{H}_0, \text{ Definition 1.1}</span><span class="co">]</span> <span class="sc">\\</span></span>
-<span id="cb2-774"><a href="#cb2-774" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
-<span id="cb2-775"><a href="#cb2-775" aria-hidden="true" tabindex="-1"></a>\right. </span>
+<span id="cb2-774"><a href="#cb2-774" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb2-775"><a href="#cb2-775" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-776"><a href="#cb2-776" aria-hidden="true" tabindex="-1"></a>\quad \Rightarrow \theta \in  H_{12}^+.</span>
 <span id="cb2-777"><a href="#cb2-777" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-778"><a href="#cb2-778" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-779"><a href="#cb2-779" aria-hidden="true" tabindex="-1"></a>$$  </span>
+<span id="cb2-779"><a href="#cb2-779" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-780"><a href="#cb2-780" aria-hidden="true" tabindex="-1"></a>\forall \theta \in S_2 \quad \left<span class="sc">\{</span></span>
 <span id="cb2-781"><a href="#cb2-781" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
 <span id="cb2-782"><a href="#cb2-782" aria-hidden="true" tabindex="-1"></a>s_1(\theta) &gt; 0, &amp; &amp;<span class="co">[</span><span class="ot">\text{by } \mathcal{H}_0, \text{ Definition 1.1}</span><span class="co">]</span> <span class="sc">\\</span></span>
 <span id="cb2-783"><a href="#cb2-783" aria-hidden="true" tabindex="-1"></a>s_2(\theta) \le 0, &amp; &amp; <span class="co">[</span><span class="ot">\text{by Definition 1.1}</span><span class="co">]</span> <span class="sc">\\</span></span>
-<span id="cb2-784"><a href="#cb2-784" aria-hidden="true" tabindex="-1"></a>\end{aligned} </span>
-<span id="cb2-785"><a href="#cb2-785" aria-hidden="true" tabindex="-1"></a>\right. </span>
+<span id="cb2-784"><a href="#cb2-784" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb2-785"><a href="#cb2-785" aria-hidden="true" tabindex="-1"></a>\right.</span>
 <span id="cb2-786"><a href="#cb2-786" aria-hidden="true" tabindex="-1"></a>\quad \Rightarrow \theta \in  H_{12}^-.</span>
 <span id="cb2-787"><a href="#cb2-787" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-788"><a href="#cb2-788" aria-hidden="true" tabindex="-1"></a></span>
@@ -2167,7 +2167,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-805"><a href="#cb2-805" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-806"><a href="#cb2-806" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-807"><a href="#cb2-807" aria-hidden="true" tabindex="-1"></a>:::{.proof}</span>
-<span id="cb2-808"><a href="#cb2-808" aria-hidden="true" tabindex="-1"></a>Let $\mathbf{c} = <span class="sc">\{</span>\mathbf{c}^k<span class="sc">\}</span>_{k=1,\dots,p}$ is the minimal point of $S$, defined as in @eq-c. In the intersection case, we consider solving the optimization problem (@eq-inclusionOptim) for the boundaries $\tilde{l}^k$ and $\tilde{r}^k$, removing constraint $l^k \le \theta^k \le r^k$. If $R$ intersects $S$, the optimal solution $\theta^k$ belongs to the boundary of $S$ due to our simple (axis-aligned rectangular) inequality constraints and we get </span>
+<span id="cb2-808"><a href="#cb2-808" aria-hidden="true" tabindex="-1"></a>Let $\mathbf{c} = <span class="sc">\{</span>\mathbf{c}^k<span class="sc">\}</span>_{k=1,\dots,p}$ is the minimal point of $S$, defined as in @eq-c. In the intersection case, we consider solving the optimization problem (@eq-inclusionOptim) for the boundaries $\tilde{l}^k$ and $\tilde{r}^k$, removing constraint $l^k \le \theta^k \le r^k$. If $R$ intersects $S$, the optimal solution $\theta^k$ belongs to the boundary of $S$ due to our simple (axis-aligned rectangular) inequality constraints and we get</span>
 <span id="cb2-809"><a href="#cb2-809" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-810"><a href="#cb2-810" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb2-811"><a href="#cb2-811" aria-hidden="true" tabindex="-1"></a>s^k(\theta^k) = -\sum_{ j\neq k}s^j(\theta^j)+ \Delta\,.</span>
@@ -2180,7 +2180,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-818"><a href="#cb2-818" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-819"><a href="#cb2-819" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optimization Strategies for GeomFPOP (R-type) {#sec-AppendixE}</span></span>
 <span id="cb2-820"><a href="#cb2-820" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-821"><a href="#cb2-821" aria-hidden="true" tabindex="-1"></a>In  GeomFPOP(R-type) at each iteration, we need to consider all past and future spheres of change $i$. As it was said in @sec-study, in practice it is often sufficient to consider just a few of them to get an empty set. Thus, we propose to limit the number of operations $\cap_R$ no more than two: </span>
+<span id="cb2-821"><a href="#cb2-821" aria-hidden="true" tabindex="-1"></a>In  GeomFPOP(R-type) at each iteration, we need to consider all past and future spheres of change $i$. As it was said in @sec-study, in practice it is often sufficient to consider just a few of them to get an empty set. Thus, we propose to limit the number of operations $\cap_R$ no more than two:</span>
 <span id="cb2-822"><a href="#cb2-822" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-823"><a href="#cb2-823" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\mathtt{last.}$   At time $t$ we update hyperrectangle by only one operation, this is an intersection with the last S-type set $S^i_t$ from $\mathcal{F}^i(t)$.</span>
 <span id="cb2-824"><a href="#cb2-824" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\mathtt{random.}$ At time $t$ we update the hyperrectangle by only two operations. First, this is an intersection with the last S-type set $S^i_t$ from $\mathcal{F}^i(t)$, and second, this is an intersection with other random  S-type set from $\mathcal{F}^i(t)$.</span>
@@ -2189,20 +2189,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-827"><a href="#cb2-827" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-828"><a href="#cb2-828" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\mathtt{empty.}$ At time $t$ we do not perform $\setminus_R$ operations.</span>
 <span id="cb2-829"><a href="#cb2-829" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\mathtt{random.}$ At time $t$ we update hyperrectangle by only one operation: exclusion with a random  S-type set from $\mathcal{P}^i$.</span>
-<span id="cb2-830"><a href="#cb2-830" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-830"><a href="#cb2-830" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-831"><a href="#cb2-831" aria-hidden="true" tabindex="-1"></a>According to these notations, the approach presented in the original GeomFPOP (R-type) has the form $(\mathtt{all / all})$. We show the impact of introduced limits on the number of change point candidates retained over time and evaluate their run times. The results are presented in Figures <span class="co">[</span><span class="ot">-@fig-StrategiesAll</span><span class="co">]</span> and <span class="co">[</span><span class="ot">-@fig-RplotTCoptStrAll</span><span class="co">]</span>.</span>
 <span id="cb2-832"><a href="#cb2-832" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-833"><a href="#cb2-833" aria-hidden="true" tabindex="-1"></a>Even though the $\mathtt{(random/random)}$ approach reduces the quality of pruning in dimensions $p=2,3$ and $4$, it</span>
 <span id="cb2-834"><a href="#cb2-834" aria-hidden="true" tabindex="-1"></a> gives a significant gain in the run time compared to the original GeomFPOP (R-type)  and is at least comparable to the $\mathtt{(last/random)}$ approach.</span>
 <span id="cb2-835"><a href="#cb2-835" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-836"><a href="#cb2-836" aria-hidden="true" tabindex="-1"></a>:::{#fig-StrategiesAll}  </span>
+<span id="cb2-836"><a href="#cb2-836" aria-hidden="true" tabindex="-1"></a>:::{#fig-StrategiesAll}</span>
 <span id="cb2-837"><a href="#cb2-837" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-838"><a href="#cb2-838" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 10 Optimization Number of candidates.png)</span>{width=80%}</span>
 <span id="cb2-839"><a href="#cb2-839" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-840"><a href="#cb2-840" aria-hidden="true" tabindex="-1"></a>Ratio number of candidate change point over time by different optimization approaches of GeomFPOP (R-type) in dimension $p = 2,3$ and $4$. Averaged over $100$ data sets without changes with $10^4$ data points.</span>
 <span id="cb2-841"><a href="#cb2-841" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-842"><a href="#cb2-842" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-843"><a href="#cb2-843" aria-hidden="true" tabindex="-1"></a>:::{#fig-RplotTCoptStrAll}  </span>
+<span id="cb2-843"><a href="#cb2-843" aria-hidden="true" tabindex="-1"></a>:::{#fig-RplotTCoptStrAll}</span>
 <span id="cb2-844"><a href="#cb2-844" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-845"><a href="#cb2-845" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure 11 Optimization Time complexity.png)</span>{width=80%}</span>
 <span id="cb2-846"><a href="#cb2-846" aria-hidden="true" tabindex="-1"></a></span>
@@ -2211,7 +2211,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-849"><a href="#cb2-849" aria-hidden="true" tabindex="-1"></a><span class="fu"># References {.unnumbered}</span></span>
 <span id="cb2-850"><a href="#cb2-850" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-851"><a href="#cb2-851" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb2-852"><a href="#cb2-852" aria-hidden="true" tabindex="-1"></a>::: </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-852"><a href="#cb2-852" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <script>
