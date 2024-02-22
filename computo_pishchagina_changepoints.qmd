@@ -103,7 +103,9 @@ In summary, the methodology we propose relies on the assumption that:
 
 1. the cost is point additive (see first equality in equation ([-@eq-Cy_it]));
 2. the per-point cost $\Omega$ has a simple decomposition : $\Omega(\theta) = \sum_p \omega(\theta^p)$; 
-3. the $\omega$ is convex. From this we  get that for any $\boldsymbol{\tau}\in \mathcal S^{\infty}_n$ its segmentation cost is the sum of segment cost functions:
+3. the $\omega$ is convex. 
+
+We  get that for any $\boldsymbol{\tau}\in \mathcal S^{\infty}_n$ its segmentation cost is the sum of segment cost functions:
 
 $$
 \sum_{i=0}^{|\boldsymbol{\tau}|} \mathcal C(y_{(\tau_i+1):\tau_{i+1}})\,.
@@ -376,7 +378,7 @@ The pseudo-code of GeomFPOP is presented in Algorithm 2.
         \State $\tau_{t-1} \gets \tau_{t-1} \backslash\{i-1\}$
       \EndIf
     \EndFor
-    \State $\tau_{t-1} \gets (\tau_{t-1}, t-1)$
+    \State $\tau_{t} \gets (\tau_{t-1}, t-1)$
   \EndFor
   \Return $cp(n) \gets \mathtt{backtracking}(\hat\tau = (\hat\tau_1,\dots, \hat\tau_n), n)$
 \EndProcedure
@@ -642,7 +644,7 @@ We thank Paul Fearnhead for fruitful discussions.
 
 ## Examples of Likelihood-Based Cost Functions  {#sec-AppendixA}
 
-We define a cost function for segmentation as in @eq-Cy_it by the function $\Omega(\cdot,\cdot)$ (the negative log-likelihood (times two)). Below is the expression of this function  linked to data point $y_i = (y_i^1,\dots, y_i^p)$ in $\mathbb R^p$ for three examples of parametric multi-variate models:
+We define a cost function for segmentation as in @eq-Cy_it by the function $\Omega(\cdot,\cdot)$ (the opposite log-likelihood (times two)). Below is the expression of this function  linked to data point $y_i = (y_i^1,\dots, y_i^p)$ in $\mathbb R^p$ for three examples of parametric multi-variate models:
 
 $$
 \Omega(\theta,y_i)=
@@ -902,7 +904,7 @@ We expect GeomFPOP $\mathtt{(random/random)}$ to be slightly less effective (but
 
 :::{#fig-Figure12}
 
-![](images/Figure12_new_appendix_robustness.png){width=80%}
+![](images/Figure12_new_appendix_robustness.pdf){width=80%}
 
 Dependence of the run time of the $\mathtt{(random/random)}$ approach of GeomFPOP (R-type)  on the number of segments in a $p$-variable time series with $10^6$ data points where all changes in the last $k$ dimensions have been removed.
 :::
