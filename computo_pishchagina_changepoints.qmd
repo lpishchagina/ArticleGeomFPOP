@@ -24,8 +24,8 @@ date: 2023-06-05
 date-modified: 2024-02-19
 
 abstract: >+
- We address the challenge of identifying multiple change points in a group of independent time series, assuming these change points occur simultaneously in all series and their number is unknown. The search for the best segmentation can be expressed as a minimization problem over a given cost function. We focus on dynamic programming algorithms that solve this problem exactly. When the number of changes is proportional to data length, an inequality-based pruning rule encoded in the PELT algorithm leads to a linear time complexity. Another type of pruning, called functional pruning, gives a close-to-linear time complexity whatever the number of changes, but only for the analysis of uni-variate time series. We propose a few extensions of functional pruning for multiple independent time series based on the use of simple geometric shapes (balls and hyperrectangles). We focus on the Gaussian case, but some of our rules can be easily extended to the exponential family. In a simulation study we compare the computational efficiency of different geometric-based pruning rules. We show that for a small number of time series some of them ran significantly faster than inequality-based approaches in particular when the underlying number of changes is small compared to the data length.
-keywords: [multi-variate time series, multiple change point detection, dynamic programming, functional pruning, computational geometry]
+ We address the challenge of identifying multiple change points in a group of independent time series, assuming these change points occur simultaneously in all series and their number is unknown. The search for the best segmentation can be expressed as a minimization problem over a given cost function. We focus on dynamic programming algorithms that solve this problem exactly. When the number of changes is proportional to data length, an inequality-based pruning rule encoded in the PELT algorithm leads to a linear time complexity. Another type of pruning, called functional pruning, gives a close-to-linear time complexity whatever the number of changes, but only for the analysis of univariate time series. We propose a few extensions of functional pruning for multiple independent time series based on the use of simple geometric shapes (balls and hyperrectangles). We focus on the Gaussian case, but some of our rules can be easily extended to the exponential family. In a simulation study we compare the computational efficiency of different geometric-based pruning rules. We show that for a small number of time series some of them ran significantly faster than inequality-based approaches in particular when the underlying number of changes is small compared to the data length.
+keywords: [multivariate time series, multiple change point detection, dynamic programming, functional pruning, computational geometry]
 citation:
   type: article-journal
   container-title: "Computo"
@@ -52,7 +52,7 @@ A National Research Council report [@NRCreport2013] has identified change point 
 - if the number of change points is proportional to $n$ both PELT [@Killick] (a version of OP which uses inequality-based pruning) and FPOP [@Maidstone] (a version of OP which uses functional pruning as in [@Rigaill2010]) are on average linear [@Killick; @Maidstone];
 - if the number of change points is fixed, FPOP is quasi-linear (on simulations) while PELT is quadratic [@Maidstone].
 
-*Multivariate extensions.* This paper focuses on identifying multiple change points in a multi-variate independent time series. We assume that changes occur simultaneously in all dimensions, their number is unknown, and the cost function or log-likelihood of a segment (denoted as $\mathcal C$) can be expressed as a sum across all dimensions $p$. Informally, that is, 
+*Multivariate extensions.* This paper focuses on identifying multiple change points in a multivariate independent time series. We assume that changes occur simultaneously in all dimensions, their number is unknown, and the cost function or log-likelihood of a segment (denoted as $\mathcal C$) can be expressed as a sum across all dimensions $p$. Informally, that is, 
 
 $$
 \mathcal C(segment) = \sum_{k = 1}^p \mathcal C(segment, \hbox{ time series } k)\,.
@@ -60,13 +60,13 @@ $$
 
 
 
-In this context, the PELT algorithm can easily be extended for multiple time series. However, as for the uni-variate case, it will be algorithmically efficient only if the number of non-negligible change points is comparable to $n$. In this paper, we study the extension of functional pruning techniques (and more specifically FPOP) to the multi-variate case.
+In this context, the PELT algorithm can easily be extended for multiple time series. However, as for the univariate case, it will be algorithmically efficient only if the number of non-negligible change points is comparable to $n$. In this paper, we study the extension of functional pruning techniques (and more specifically FPOP) to the multivariate case.
 
-At each iteration, FPOP updates the set of parameter values for which a change position $\tau$ is optimal. As soon as this set is empty the change is pruned. For univariate time series, this set is a union of intervals in $\mathbb R$. For parametric multi-variate models, this set is equal to the intersection and difference of convex sets in $\mathbb{R}^p$ [@runge2020finite]. It is typically non-convex, hard to update, and deciding whether it is empty or not is not straightforward.
+At each iteration, FPOP updates the set of parameter values for which a change position $\tau$ is optimal. As soon as this set is empty the change is pruned. For univariate time series, this set is a union of intervals in $\mathbb R$. For parametric multivariate models, this set is equal to the intersection and difference of convex sets in $\mathbb{R}^p$ [@runge2020finite]. It is typically non-convex, hard to update, and deciding whether it is empty or not is not straightforward.
 
 In this work, we present a new algorithm, called Geometric Functional Pruning Optimal Partitioning (GeomFPOP). The idea of our method consists in approximating the sets that are updated at each iteration of FPOP using simpler geometric shapes. Their simplicity of description and simple updating allow for a quick emptiness test.
 
-The paper has the following structure. In @sec-changesMulti we introduce the penalized optimization problem for segmented multi-variate time series in case where the number of changes is unknown. We then review the existing pruned dynamic programming methods for solving this problem. We define the geometric problem that occurs when using functional pruning. The new method, called GeomFPOP, is described in @sec-GeomFPOP and based on approximating intersection and exclusion set operators. In @sec-approximation we introduce two approximation types (sphere-like and rectangle-like) and define the approximation operators for each of them. We then compare in @sec-study the empirical efficiency of GeomFPOP with PELT on simulated data.
+The paper has the following structure. In @sec-changesMulti we introduce the penalized optimization problem for segmented multivariate time series in case where the number of changes is unknown. We then review the existing pruned dynamic programming methods for solving this problem. We define the geometric problem that occurs when using functional pruning. The new method, called GeomFPOP, is described in @sec-GeomFPOP and based on approximating intersection and exclusion set operators. In @sec-approximation we introduce two approximation types (sphere-like and rectangle-like) and define the approximation operators for each of them. We then compare in @sec-study the empirical efficiency of GeomFPOP with PELT on simulated data.
 
 
 # Functional Pruning for Multiple Time Series{#sec-changesMulti}
@@ -74,7 +74,7 @@ The paper has the following structure. In @sec-changesMulti we introduce the pen
 ## Model and Cost{#sec-model}
 
 
-We consider the problem of change point detection in multiple independent time series of length $n$ and dimension $p$, while assuming simultaneous changes in all uni-variate time series and an unknown number of changes. Our aim is to partition data into segments, such that in each segment the parameter associated to each time series is constant. For a time series $y$ we write $y = y_{1:n}=(y_1,\dots, y_n) \in(\mathbb{R}^p)^n$ with $y_i^k$ the $k$-th component of the $p$-dimensional point $y_i\in\mathbb{R}^p$ in position $i$ in vector $y_{1:n}$. We also use the notation $y _{i:j} = (y_i,\dots, y_j)$ to denote points from index $i$ to $j$. If we assume that there are $M$ change points in a time series, this corresponds to time series splits into $M+1$ distinct segments. The data points of each segment $m \in \{1,\dots, M+1\}$ are generated by independent random variables from a multi-variate distribution with the segment-specific parameter $\theta_m = (\theta_m^1,\dots, \theta_m^p)  \in \mathbb{R}^p$. A segmentation with $M$ change points is defined by the vector of integers $\boldsymbol{\tau} =(\tau_0 = 0, \tau_1,\dots,\tau_M,\tau_{M+1}=n)$. Segments are given by the sets of indices $\{\tau_i+1,\dots, \tau_{i+1}\}$ with $i$ in $\{0,1,\ldots,M\}$. 
+We consider the problem of change point detection in multiple independent time series of length $n$ and dimension $p$, while assuming simultaneous changes in all univariate time series and an unknown number of changes. Our aim is to partition data into segments, such that in each segment the parameter associated to each time series is constant. For a time series $y$ we write $y = y_{1:n}=(y_1,\dots, y_n) \in(\mathbb{R}^p)^n$ with $y_i^k$ the $k$-th component of the $p$-dimensional point $y_i\in\mathbb{R}^p$ in position $i$ in vector $y_{1:n}$. We also use the notation $y _{i:j} = (y_i,\dots, y_j)$ to denote points from index $i$ to $j$. If we assume that there are $M$ change points in a time series, this corresponds to time series splits into $M+1$ distinct segments. The data points of each segment $m \in \{1,\dots, M+1\}$ are generated by independent random variables from a multivariate distribution with the segment-specific parameter $\theta_m = (\theta_m^1,\dots, \theta_m^p)  \in \mathbb{R}^p$. A segmentation with $M$ change points is defined by the vector of integers $\boldsymbol{\tau} =(\tau_0 = 0, \tau_1,\dots,\tau_M,\tau_{M+1}=n)$. Segments are given by the sets of indices $\{\tau_i+1,\dots, \tau_{i+1}\}$ with $i$ in $\{0,1,\ldots,M\}$. 
 
 We define the set $S_n^M$ of all possible change point locations related to the segmentation of data points between positions $1$ to $n$ in $M+1$ segments as
 
@@ -96,7 +96,7 @@ $$
 \mathcal C(y_{i:t}) = \min_{\theta \in \mathbb{R}^p} \sum_{j=i}^{t}\Omega(\theta, y_j) = \min_{\theta \in \mathbb{R}^p} \sum_{j=i}^{t} \left(\sum_{k=1}^{p} \omega(\theta^k, y_j^k)\right)\,,
 $$ {#eq-Cy_it}
 
-with $\omega$ the atomic likelihood function associated with $\Omega$ for each uni-variate time series. This decomposition is made possible by the independence hypothesis between uni-variate time series}. Notice that it
+with $\omega$ the atomic likelihood function associated with $\Omega$ for each univariate time series. This decomposition is made possible by the independence hypothesis between univariate time series}. Notice that it
 could have been dimension-dependent with a mixture of different distributions (Gauss, Poisson, negative binomial, etc.). In our study, we use the same data model for all dimensions.
 
 In summary, the methodology we propose relies on the assumption that:
@@ -181,13 +181,13 @@ $$
 
 also called the \textit{living zone}. The key idea behind functional pruning is that the $Z_t^i$ are nested ($Z_{t+1}^i \subset Z_t^i$) thus as soon as we can prove the emptiness of one set $Z_t^i$, we delete its associated $q_t^i$ function and do not have to consider its minimum anymore at any further iteration (proof in @sec-geometry). In dimension $p = 1$ this is reasonably easy. In this case, the sets $Z^i_t$ ($i=1,\dots, t$) are unions of intervals and an efficient functional pruning rule is possible by updating a list of these intervals for $Q_t$. This approach is implemented in FPOP [@Maidstone].
 
-In dimension $p \ge 2$ it is not so easy anymore to keep track of the emptiness of the sets $Z^i_t$. We illustrate the dynamics of the $Z^i_t$ sets in @fig-Figure1 in the bi-variate Gaussian case. Each color is associated with a set $Z_t^i$ (corresponding to a possible change at $i-1$) for $t$ equal $1$ to $5$. This plot shows in particular that sets $Z_t^i$ can be non-convex.
+In dimension $p \ge 2$ it is not so easy anymore to keep track of the emptiness of the sets $Z^i_t$. We illustrate the dynamics of the $Z^i_t$ sets in @fig-Figure1 in the bivariate Gaussian case. Each color is associated with a set $Z_t^i$ (corresponding to a possible change at $i-1$) for $t$ equal $1$ to $5$. This plot shows in particular that sets $Z_t^i$ can be non-convex.
 
 ::: {#fig-Figure1}
 
 ![](images/Figure 1 Z sets over time set_seed_617.png)
 
-The sets $Z^i_t$ over time for the bi-variate independent Gaussian model on time series without change $y = \left( (0.29, 1.93), (1.86, -0.02), (0.9, 2.51), (-1.26, 0.91), (1.22, 1.11)   \right)$. From left to right we represent at time $t=1, 2, 3, 4,$ and $5$ the parameter space $(\theta^1, \theta^2).$ Each $Z^i_t$ is represented by a color. The change $1$ associated with  quadratics $2$ is pruned at $t = 3$. Notice that each time sequence of $Z^i_t$ with $i$ fixed is a nested sequence of sets.
+The sets $Z^i_t$ over time for the bivariate independent Gaussian model on time series without change $y = \left( (0.29, 1.93), (1.86, -0.02), (0.9, 2.51), (-1.26, 0.91), (1.22, 1.11)   \right)$. From left to right we represent at time $t=1, 2, 3, 4,$ and $5$ the parameter space $(\theta^1, \theta^2).$ Each $Z^i_t$ is represented by a color. The change $1$ associated with  quadratics $2$ is pruned at $t = 3$. Notice that each time sequence of $Z^i_t$ with $i$ fixed is a nested sequence of sets.
 :::
 
 ## Geometric Formulation of Functional Pruning {#sec-geometry}
@@ -234,7 +234,7 @@ In @fig-Figure2 we present the level curves for three different parametric model
 
 ![](images/Figure2_update_axes.png){width=90%}
 
-Three examples of the level curves of a function $s_{ij}$ for bi-variate time series $\{y^1,y^2\}$. We use the following simulations for univariate time series : (a) $y^1\sim \mathcal{N}(0,1)$, $y^2\sim \mathcal{N}(0,1)$, (b) $y^1 \sim \mathcal{P}(1)$, $y^2 \sim \mathcal{P}(3)$, (c) $y^1\sim \mathcal{NB}(0.5,1)$, $y^2\sim \mathcal{NB}(0.8, 1)$.
+Three examples of the level curves of a function $s_{ij}$ for bivariate time series $\{y^1,y^2\}$. We use the following simulations for univariate time series : (a) $y^1\sim \mathcal{N}(0,1)$, $y^2\sim \mathcal{N}(0,1)$, (b) $y^1 \sim \mathcal{P}(1)$, $y^2 \sim \mathcal{P}(3)$, (c) $y^1\sim \mathcal{NB}(0.5,1)$, $y^2\sim \mathcal{NB}(0.8, 1)$.
 :::
 
 At time $t = 1,\dots, n$ we define the following sets associated to the last change point index $i-1$:
@@ -274,11 +274,11 @@ The sequence $\zeta^i = (Z_t^i)_{t\ge i}$ is a nested sequence of sets.
 Indeed, $Z_{t+1}^i$ is equal to $Z_t^i$ with an additional intersection in the future set. Based on @cor-col1, as soon as we prove that the set $Z_t^i$, is empty, we delete its associated $q_t^i$ function and, consequently, we can prune the change point $i-1$. In this context, functional and inequality-based pruning have a simple geometric interpretation.
 
 
-*Functional pruning geometry.* The position $i-1$ is pruned at step $t+1$, in $Q_{t+1}(\cdot),$ if the intersection set of $\bigcap_{S\in \mathcal F^i(t)}S$ is covered by the union set $\cup_{S\in \mathcal P^i}S$.
+*Functional pruning geometry.* The position $i-1$ is pruned at step $t$, in $Q_{t}(\cdot),$ if the intersection set of $\bigcap_{S\in \mathcal F^i(t)}S$ is covered by the union set $\cup_{S\in \mathcal P^i}S$.
 
-*Inequality-based pruning geometry.* The inequality-based pruning of PELT is equivalent to the geometric rule: position $i-1$ is pruned at step $t+1$ if the set $S_t^i$ is empty. In that case, the intersection  set $\bigcap_{S\in \mathcal F^i(t)}S$ is empty, and therefore $Z_t^i$ is also empty using ([-@eq-setsZ]). This shows that if a change is pruned using inequality-based pruning it is also pruned using functional pruning. For the dimension $p =1$ this claim was theoretically proved in [@Maidstone].
+*Inequality-based pruning geometry.* The inequality-based pruning of PELT is equivalent to the geometric rule: position $i-1$ is pruned at step $t$ if the set $S_t^i$ is empty. In that case, the intersection  set $\bigcap_{S\in \mathcal F^i(t)}S$ is empty, and therefore $Z_t^i$ is also empty using ([-@eq-setsZ]). This shows that if a change is pruned using inequality-based pruning it is also pruned using functional pruning. For the dimension $p =1$ this claim was theoretically proved in [@Maidstone].
 
-According to @prp-proposition_sets, beginning with $Z^i_{i} = \mathbb{R}^p$, the set $Z^i_t$ is derived by iteratively applying two types of operations: intersection with an S-type set $S$ from $\mathcal{F}^i(t)$ or subtraction of an S-type set $S$ from $\mathcal{P}^i$. The construction of set $Z^i_t$ using @prp-proposition_sets is illustrated in @fig-Figure3 for a bi-variate independent Gaussian case: we have the intersection of three S-type sets and the subtraction of three S-type sets. This simple example highlights that the set $Z^i_t$ is typically non-convex, posing challenge in studying its emptiness.
+According to @prp-proposition_sets, beginning with $Z^i_{i} = \mathbb{R}^p$, the set $Z^i_t$ is derived by iteratively applying two types of operations: intersection with an S-type set $S$ from $\mathcal{F}^i(t)$ or subtraction of an S-type set $S$ from $\mathcal{P}^i$. The construction of set $Z^i_t$ using @prp-proposition_sets is illustrated in @fig-Figure3 for a bivariate independent Gaussian case: we have the intersection of three S-type sets and the subtraction of three S-type sets. This simple example highlights that the set $Z^i_t$ is typically non-convex, posing challenge in studying its emptiness.
 
 :::{#fig-Figure3}
 
@@ -513,7 +513,7 @@ In the Gaussian case, $S$ is a ball in $\mathbb R^p$ and
 
 ![](images/Figure4_update_axes.png){width=100%}
 
-Three examples  of minimal point $\mathbf{c}$, closest point $\mathbf{m}$ and farthest point $\mathbf{M}$ for bi-variate Gaussian case: (a) $R \subset S$; (b) $R \bigcap S \neq \emptyset$; (c) $R \bigcap S = \emptyset$.
+Three examples  of minimal point $\mathbf{c}$, closest point $\mathbf{m}$ and farthest point $\mathbf{M}$ for bivariate Gaussian case: (a) $R \subset S$; (b) $R \bigcap S \neq \emptyset$; (c) $R \bigcap S = \emptyset$.
 :::
 
 :::{#prp-prop_solution_rect}
@@ -558,7 +558,7 @@ As a partial conclusion to this theoretical study, those ideas could be extended
 
 In this section, we study  the efficiency of GeomFPOP using simulations of multivariate independent time series. For this, we implemented GeomFPOP (with S and R types) and PELT for the Multivariate Independent Gaussian Model in the R-package 'GeomFPOP'  [https://github.com/lpishchagina/GeomFPOP](https://github.com/lpishchagina/GeomFPOP)   written in R/C++. By default, the value of penalty $\beta$ for each simulation was defined by the Schwarz Information Criterion proposed in [@Yao]  as $\beta = 2p\sigma^2 \log{n}$ with $\sigma = 1$ known. As long as the per-dimension variance is known (or appropriately estimated) we can make this assumption ($\sigma = 1$ known) without loss of generality by rescaling the data by the standard deviation. 
 
-*Overview of our simulations.* First, for $2\le p \le 10$ we generated $p$-variate independent time series (multi-variate independent Gaussian model with fixed variance) with $n=10^4$ data points and number of segments: $1, 5, 10, 50$ and $100$. The segment-specific parameter (mean) was set to $1$ for even segments, and $0$ for odd segments. As a quality control measure, we verified that PELT and GeomFPOP produced identical outputs on these simulated profiles. Second, we studied cases where the PELT approach is not efficient, that is when the data has no or few changes relative to $n$. Indeed, it was shown in [@Killick] and [@Maidstone] that the run time of PELT is close to $\mathcal{O}(n^2)$ in such cases. So we considered simulations of multivariate time series without change (only one segment). By these simulations we evaluated the pruning efficiency of GeomFPOP (using S and R types) for  dimension $2\le p\le 10$ (see @fig-Figure5 in @sec-NC). For small dimensions  we also evaluated  the run time of GeomFPOP and  PELT and compare them (see @fig-Figure6 in  @sec-TCsmall). In addition, we considered  another approximation of the $Z^i_t$ where we applied our $\bigcap_{R}$ and $\setminus_R$ operators only for a randomly selected subset of the past and future balls. In practice, this strategy turned out to be faster computationally than the full/original GeomFPOP and PELT (see @fig-Figure7 in @sec-GeomFPOP_random). For this strategy we also generated time series of a fixed size ($10^6$ data points) and varying number of segments and evaluated how the run time vary with the number of segments for small dimensions ($2 \le p \le 4$). Our empirical results confirmed that the GeomFPOP (R-type: $\mathtt{random/random}$) approach is computationally comparable to PELT when the number of changes is large (see @fig-Figure9 in @sec-Run_time_segment_nb).
+*Overview of our simulations.* First, for $2\le p \le 10$ we generated $p$-variate independent time series (multivariate independent Gaussian model with fixed variance) with $n=10^4$ data points and number of segments: $1, 5, 10, 50$ and $100$. The segment-specific parameter (mean) was set to $1$ for even segments, and $0$ for odd segments. As a quality control measure, we verified that PELT and GeomFPOP produced identical outputs on these simulated profiles. Second, we studied cases where the PELT approach is not efficient, that is when the data has no or few changes relative to $n$. Indeed, it was shown in [@Killick] and [@Maidstone] that the run time of PELT is close to $\mathcal{O}(n^2)$ in such cases. So we considered simulations of multivariate time series without change (only one segment). By these simulations we evaluated the pruning efficiency of GeomFPOP (using S and R types) for  dimension $2\le p\le 10$ (see @fig-Figure5 in @sec-NC). For small dimensions  we also evaluated  the run time of GeomFPOP and  PELT and compare them (see @fig-Figure6 in  @sec-TCsmall). In addition, we considered  another approximation of the $Z^i_t$ where we applied our $\bigcap_{R}$ and $\setminus_R$ operators only for a randomly selected subset of the past and future balls. In practice, this strategy turned out to be faster computationally than the full/original GeomFPOP and PELT (see @fig-Figure7 in @sec-GeomFPOP_random). For this strategy we also generated time series of a fixed size ($10^6$ data points) and varying number of segments and evaluated how the run time vary with the number of segments for small dimensions ($2 \le p \le 4$). Our empirical results confirmed that the GeomFPOP (R-type: $\mathtt{random/random}$) approach is computationally comparable to PELT when the number of changes is large (see @fig-Figure9 in @sec-Run_time_segment_nb).
 
 ## The Number of Change Point Candidates stored over Time {#sec-NC}
 
@@ -585,7 +585,7 @@ We studied the run time of GeomFPOP (S and R-type) and compared it to PELT for s
 
 ![](images/Figure 6 Time complexity PELT GeomFPOP small p.png){width=90%}
 
-Run time of GeomFPOP (S and R types) and PELT using multi-variate time series without change points. The maximum run time of the algorithms is 3 minutes. Averaged over $100$ data sets.
+Run time of GeomFPOP (S and R types) and PELT using multivariate time series without change points. The maximum run time of the algorithms is 3 minutes. Averaged over $100$ data sets.
 :::
 
 ## Empirical Time Complexity of a Randomized GeomFPOP {#sec-GeomFPOP_random}
@@ -627,7 +627,7 @@ Run time dependence of $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) 
 
 ## Run Time as a Function of the Number of Segments {#sec-Run_time_segment_nb}
 
-For small dimensions we also generated time series with \textcolor{blue}{$n=10^6$} data points with increasing number of segments. We have considered the following number of segments: $(1,2,5) \times 10^i$ (for $i=0,\dots,3$) and $10^4$. The mean was equal to $1$ for even segments, and $0$ for odd segments. In @fig-Figure9 we can see the run time dependence of the $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) and PELT on the number of segments for this type of time series. For smaller number of segments (the threshold between small and large numbers of segments is around $5\times 10^3$ for all considered dimensions $p$) GeomFPOP $\mathtt{(random/random)}$ is an order of magnitude faster. But for large number of segments, it can be seen that the run times (both PELT and GeomFPOP) are larger. This might be a bit counter-intuitive. However, it is essential to recall that a similar trend of increased run time for a large number of segments was already noted in the uni-dimensional case, as demonstrated in [@Maidstone]. This observation is explained as follows. When the number of segments becomes excessively large, the algorithm (both PELT and GeomFPOP) tends to interpret this abundance as an indication of no change, resulting in reduced pruning. As a conclusion of this simulation study, in @sec-Robustness we make a similar analysis, but using time series in which changes are present only in a subset of dimensions. We observe that in this case GeomFPOP $\mathtt{(random/random)}$ will be slightly less effective but no worse than no change (see @fig-Figure12).
+For small dimensions we also generated time series with \textcolor{blue}{$n=10^6$} data points with increasing number of segments. We have considered the following number of segments: $(1,2,5) \times 10^i$ (for $i=0,\dots,3$) and $10^4$. The mean was equal to $1$ for even segments, and $0$ for odd segments. In @fig-Figure9 we can see the run time dependence of the $\mathtt{(random/random)}$ approach of GeomFPOP (R-type) and PELT on the number of segments for this type of time series. For smaller number of segments (the threshold between small and large numbers of segments is around $5\times 10^3$ for all considered dimensions $p$) GeomFPOP $\mathtt{(random/random)}$ is an order of magnitude faster. But for large number of segments, it can be seen that the run times (both PELT and GeomFPOP) are larger. This might be a bit counter-intuitive. However, it is essential to recall that a similar trend of increased run time for a large number of segments was already noted in the one-dimensional case, as demonstrated in [@Maidstone]. This observation is explained as follows. When the number of segments becomes excessively large, the algorithm (both PELT and GeomFPOP) tends to interpret this abundance as an indication of no change, resulting in reduced pruning. As a conclusion of this simulation study, in @sec-Robustness we make a similar analysis, but using time series in which changes are present only in a subset of dimensions. We observe that in this case GeomFPOP $\mathtt{(random/random)}$ will be slightly less effective but no worse than no change (see @fig-Figure12).
 
 :::{#fig-Figure9}
 
@@ -644,7 +644,7 @@ We thank Paul Fearnhead for fruitful discussions.
 
 ## Examples of Likelihood-Based Cost Functions  {#sec-AppendixA}
 
-We define a cost function for segmentation as in @eq-Cy_it by the function $\Omega(\cdot,\cdot)$ (the opposite log-likelihood (times two)). Below is the expression of this function  linked to data point $y_i = (y_i^1,\dots, y_i^p)$ in $\mathbb R^p$ for three examples of parametric multi-variate models:
+We define a cost function for segmentation as in @eq-Cy_it by the function $\Omega(\cdot,\cdot)$ (the opposite log-likelihood (times two)). Below is the expression of this function  linked to data point $y_i = (y_i^1,\dots, y_i^p)$ in $\mathbb R^p$ for three examples of parametric multivariate models:
 
 $$
 \Omega(\theta,y_i)=
@@ -660,7 +660,7 @@ y_i^k
 \right.
 $${#eq-MLE}
 
-We suppose that the over-dispersion parameter $\phi$ of the multi-variate negative binomial distribution is known.
+We suppose that the over-dispersion parameter $\phi$ of the multivariate negative binomial distribution is known.
 
 ## Intersection and Inclusion of Two p-balls {#sec-AppendixB}
 
@@ -898,7 +898,7 @@ The ratio of the square of the number of candidates stored in GeomFPOP to the nu
 :::
 
 
-## Run time of the algorithm by multi-variate time series with changes in subset of dimension {#sec-Robustness}
+## Run time of the algorithm by multivariate time series with changes in subset of dimension {#sec-Robustness}
 
 We expect GeomFPOP $\mathtt{(random/random)}$ to be slightly less effective (but no worse than in the absence of changes) if changes are only present in a subset of dimensions. To this end, in this appendix for dimension $2\le p\le 4$ we examine the run time of GeomFPOP $\mathtt{(random/random)}$ as in @sec-Run_time_segment_nb (see @fig-Figure9) but removing all changes in the last $k$ dimensions (with $k = 0,\dots, p-1$). The results are presented in @fig-Figure12. There are two regimes. For a small number of segments (the threshold between small and large numbers of segments is around $2\times 10^3$ for all considered dimensions $p$), the run time decreases with the number of segments and the difference between the run time of GeomFPOP $\mathtt{(random/random)}$ for $k=0$ (this case corresponds to changes in all dimensions) and $k>0$ is very small. For larger number of segments, the run time increases with the number of segments, as in @sec-Run_time_segment_nb and also increases with $k$. Importantly, in this regime the run time is never lower than for $1$ segment.
 
