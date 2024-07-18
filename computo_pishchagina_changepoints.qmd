@@ -644,7 +644,7 @@ We thank Paul Fearnhead for fruitful discussions.
 
 ## Examples of Likelihood-Based Cost Functions  {#sec-AppendixA}
 
-We define a cost function for segmentation as in @eq-Cy_it by the function $\Omega(\cdot,\cdot)$ (the opposite log-likelihood (times two)). Below is the expression of this function  linked to data point $y_i = (y_i^1,\dots, y_i^p)$ in $\mathbb R^p$ for three examples of parametric multivariate models:
+We define a cost function for segmentation as in equation ([-@eq-Cy_it]) by the function $\Omega(\cdot,\cdot)$ (the opposite log-likelihood (times two)). Below is the expression of this function  linked to data point $y_i = (y_i^1,\dots, y_i^p)$ in $\mathbb R^p$ for three examples of parametric multivariate models:
 
 $$
 \Omega(\theta,y_i)=
